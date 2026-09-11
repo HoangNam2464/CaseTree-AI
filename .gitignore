@@ -1,0 +1,106 @@
+# ==============================================================================
+# EduBranch AI — Monorepo .gitignore
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Environment & Secrets (CRITICAL: NEVER COMMIT SECRETS)
+# ------------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+!.env.example.*
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+credentials.json
+service-account*.json
+serviceAccountKey*.json
+
+# ------------------------------------------------------------------------------
+# 2. Local IDE & OS Files
+# ------------------------------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/*
+*.iml
+*.iws
+*.ipr
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ------------------------------------------------------------------------------
+# 3. Node.js / TypeScript (backend/, frontend/)
+# ------------------------------------------------------------------------------
+node_modules/
+dist/
+build/
+coverage/
+.vite/
+.cache/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ------------------------------------------------------------------------------
+# 4. Python / FastAPI (ai-service/)
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+coverage.xml
+.venv/
+venv/
+env/
+ENV/
+*.egg-info/
+.eggs/
+
+# ------------------------------------------------------------------------------
+# 5. Legacy / Generated Java & Build Outputs (Safety Ignores)
+# ------------------------------------------------------------------------------
+target/
+*.class
+*.jar
+*.war
+hs_err_pid*
+.factorypath
+.classpath
+.project
+.settings/
+
+# ------------------------------------------------------------------------------
+# 6. Logs & Temporary Files
+# ------------------------------------------------------------------------------
+*.log
+logs/
+tmp/
+temp/
+scratch/
+scratch_*
+*.local
+*.tmp
+*.bak
+*.orig
+
+# ------------------------------------------------------------------------------
+# 7. Docker & Local Data Persistence
+# ------------------------------------------------------------------------------
+docker-compose.override.yml
+.data/
+data/

@@ -1,0 +1,57 @@
+﻿# ==============================================================================
+# EduBranch AI — Git Attributes
+# ==============================================================================
+
+# Auto-detect text files and normalize line endings to LF in repository
+* text=auto eol=lf
+
+# Java
+*.java text eol=lf
+*.xml text eol=lf
+*.properties text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sql text eol=lf
+
+# Python
+*.py text eol=lf
+*.txt text eol=lf
+*.md text eol=lf
+*.cfg text eol=lf
+*.ini text eol=lf
+*.toml text eol=lf
+
+# JavaScript / TypeScript
+*.js text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.jsx text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.html text eol=lf
+
+# Shell scripts
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Windows scripts — preserve CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Maven wrappers — preserve CRLF on Windows
+backend/mvnw.cmd text eol=crlf
+
+# Binary files — do not modify
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary
+*.pdf binary
+*.docx binary
+*.zip binary
+*.jar binary
+*.war binary
+*.class binary

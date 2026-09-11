@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# EduBranch AI — Lightweight Pre-commit Git Hook
+# Safeguard against accidental secret and credential commits
+# Enable with: git config core.hooksPath .githooks
+# ==============================================================================
+
+set -e
+
+# Forbidden file patterns (regex)
+FORBIDDEN_PATTERNS=(
+  '^\.env$'
+  '^\.env\..+$'
+  '\.pem$'
+  '\.key$'
+  '\.crt$'
+  '\.p12$'
+  '\.pfx$'
+  'credentials\.json$'
+  'service-account.*\.json$'
+  'serviceAccountKey.*\.json$'
+  'id_rsa$'
+  'id_ed25519$'
+)
+
+# Allowed exceptions
+ALLOWED_EXCEPTIONS=(
+  '.env.example'
+  '.env.example.local'
+)
+
+# 1. Check staged filenames
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM)
+
+EXIT_CODE=0
+
+for FILE in $STAGED_FILES; do
+  # Check if file is in allowed exceptions
+  IS_ALLOWED=0
+  for ALLOWED in "${ALLOWED_EXCEPTIONS[@]}"; do
+    if [[ "$FILE" == *"$ALLOWED"* ]]; then
+      IS_ALLOWED=1
+      break
+    fi
+  done
+
+  if [[ $IS_ALLOWED -eq 1 ]]; then
+    continue
+  fi
+
+  for PATTERN in "${FORBIDDEN_PATTERNS[@]}"; do
+    if echo "$FILE" | grep -iE "$PATTERN" > /dev/null; then
+      echo "❌ [GIT HOOK ERROR] Sensitive file blocked from commit: $FILE"
+      echo "   Please unstage using: git reset HEAD $FILE"
+      EXIT_CODE=1
+    fi
+  done
+done
+
+# 2. Check for obvious staged private keys or tokens in content
+if git diff --cached | grep -E "BEGIN (RSA |EC |OPENSSH |DSA |PGP )?PRIVATE KEY" > /dev/null 2>&1; then
+  echo "❌ [GIT HOOK ERROR] Detected unencrypted private key block in staged content!"
+  EXIT_CODE=1
+fi
+
+if [[ $EXIT_CODE -ne 0 ]]; then
+  echo "Commit aborted by EduBranch AI safety pre-commit hook."
+  exit 1
+fi
+
+exit 0
