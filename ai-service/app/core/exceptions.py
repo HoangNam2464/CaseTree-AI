@@ -1,5 +1,5 @@
 ﻿"""
-EduBranch AI — Custom Exception Types for the AI Service.
+CaseTree AI — Custom Exception Types for the AI Service.
 """
 
 

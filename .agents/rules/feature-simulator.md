@@ -1,5 +1,5 @@
----
-description: Rules for the student interactive case simulator in EduBranch AI.
+﻿---
+description: Rules for the student interactive case simulator in CaseTree AI.
 trigger: keyword
 keywords: [simulator, simulation, student, decision, node, consequence, navigate, case play]
 ---

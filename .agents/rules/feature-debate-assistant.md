@@ -1,5 +1,5 @@
----
-description: Rules for the AI Debate Assistant in EduBranch AI.
+﻿---
+description: Rules for the AI Debate Assistant in CaseTree AI.
 trigger: keyword
 keywords: [debate, counter-question, debate assistant, devil advocate, challenge argument, ai debate]
 ---

@@ -1,5 +1,5 @@
 ﻿"""
-EduBranch AI — Structured logging configuration.
+CaseTree AI — Structured logging configuration.
 """
 
 import structlog

@@ -1,5 +1,5 @@
-/**
- * EduBranch AI — Shared TypeScript Types
+﻿/**
+ * CaseTree AI — Shared TypeScript Types
  *
  * All types mirror the Backend Gateway API response structures.
  */

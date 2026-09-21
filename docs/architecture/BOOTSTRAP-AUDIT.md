@@ -1,9 +1,9 @@
-# EduBranch AI — Post-Scaffold Audit, Alignment & Self-Audit Report
+﻿# CaseTree AI — Post-Scaffold Audit, Alignment & Self-Audit Report
 
 > **Document Status**: Authoritative Final Post-Scaffold Self-Audit  
 > **Date**: 2026-09-11  
 > **Authoritative Sources**:
-> 1. `C1SE_65-EduBranch-AI-Proposal_V1.0(5).docx` (Product Source of Truth)
+> 1. `C1SE_65-CaseTree-AI-Proposal_V1.0(5).docx` (Product Source of Truth)
 > 2. Explicit Project Owner Decisions (Service boundary, PostgreSQL+pgvector, Redis, MinIO, AI-service separation)
 > 3. Repository Governance Rules (`.agents/rules/`, `.github/copilot-instructions.md`)
 
@@ -23,8 +23,8 @@ The repository contains a clean, verified multi-tier skeleton following initial 
 
 ## 2. Proposal Alignment
 
-A comprehensive audit against `C1SE_65-EduBranch-AI-Proposal_V1.0.docx` confirms:
-- **Project Identity**: Fully compliant. EduBranch AI is established as an AI platform for interactive branching case studies and open review in university teaching (for Lecturers and Students).
+A comprehensive audit against `C1SE_65-CaseTree-AI-Proposal_V1.0.docx` confirms:
+- **Project Identity**: Fully compliant. CaseTree AI is established as an AI platform for interactive branching case studies and open review in university teaching (for Lecturers and Students).
 - **Core Value Stream**: Fully compliant. Grounded in teaching material → RAG retrieval → Structured decision tree generation → Mandatory lecturer review & approval → Student simulation → Consequence reveal & argument justification → AI Debate Assistant (Devil's Advocate 1–2 rounds max, no grading) → Lecturer statistics.
 - **Target Audience**: University education (NOT K-12).
 - **Scope Compliance**:

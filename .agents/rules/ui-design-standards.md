@@ -1,5 +1,5 @@
----
-description: Rules for UI/UX implementation in EduBranch AI.
+﻿---
+description: Rules for UI/UX implementation in CaseTree AI.
 trigger: always_on
 ---
 
@@ -7,7 +7,7 @@ trigger: always_on
 
 ## 1. Core Mandate
 
-EduBranch AI is a university-level professional tool.
+CaseTree AI is a university-level professional tool.
 UI must be: **simple, clean, functional, and consistent.**
 
 ## 2. Technology Stack

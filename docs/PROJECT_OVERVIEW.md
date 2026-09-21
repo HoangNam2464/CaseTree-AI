@@ -1,14 +1,14 @@
-# EduBranch AI — Project Overview
+﻿# CaseTree AI — Project Overview
 
-**Full Name**: EduBranch AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching
+**Full Name**: CaseTree AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching
 **Version**: 0.0.1-SNAPSHOT (Scaffolded)
-**Repository**: https://github.com/HoangNam2464/EduBranch-AI
+**Repository**: https://github.com/HoangNam2464/CaseTree-AI
 
 ---
 
 ## Problem Statement
 
-University lecturers need engaging, pedagogically rich case studies that challenge students to make decisions under uncertainty and justify their reasoning. Creating these manually is time-consuming. EduBranch AI automates case generation from existing teaching materials while keeping the lecturer in control of what students receive.
+University lecturers need engaging, pedagogically rich case studies that challenge students to make decisions under uncertainty and justify their reasoning. Creating these manually is time-consuming. CaseTree AI automates case generation from existing teaching materials while keeping the lecturer in control of what students receive.
 
 ---
 

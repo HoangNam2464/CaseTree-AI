@@ -1,4 +1,4 @@
-﻿# EduBranch AI — Data Model
+﻿# CaseTree AI — Data Model
 
 **Status**: Scaffolded (see V1__init_schema.sql for the current migration)
 

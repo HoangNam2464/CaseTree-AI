@@ -1,5 +1,5 @@
 ﻿---
-description: Rules for the RAG pipeline in EduBranch AI.
+description: Rules for the RAG pipeline in CaseTree AI.
 trigger: keyword
 keywords: [rag, retrieval, embedding, pgvector, chunking, vector search, langchain]
 ---

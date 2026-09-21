@@ -1,4 +1,4 @@
-# EduBranch AI — AI Debate Assistant
+﻿# CaseTree AI — AI Debate Assistant
 
 **Status**: Scaffolded
 

@@ -1,6 +1,6 @@
-﻿# EduBranch AI — FastAPI AI Service
+﻿# CaseTree AI — FastAPI AI Service
 
-Internal-only AI service for the EduBranch AI platform.
+Internal-only AI service for the CaseTree AI platform.
 
 > ⚠️ This service is INTERNAL ONLY. It must not be exposed to the internet.
 > All requests must include the `X-Internal-API-Key` header.

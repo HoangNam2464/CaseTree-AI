@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# EduBranch AI — Lightweight Pre-commit Git Hook
+# CaseTree AI — Lightweight Pre-commit Git Hook
 # Safeguard against accidental secret and credential commits
 # Enable with: git config core.hooksPath .githooks
 # ==============================================================================
@@ -64,7 +64,7 @@ if git diff --cached | grep -E "BEGIN (RSA |EC |OPENSSH |DSA |PGP )?PRIVATE KEY"
 fi
 
 if [[ $EXIT_CODE -ne 0 ]]; then
-  echo "Commit aborted by EduBranch AI safety pre-commit hook."
+  echo "Commit aborted by CaseTree AI safety pre-commit hook."
   exit 1
 fi
 

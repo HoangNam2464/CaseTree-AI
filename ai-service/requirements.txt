@@ -1,5 +1,5 @@
 ﻿# ==============================================================================
-# EduBranch AI — FastAPI AI Service Dependencies
+# CaseTree AI — FastAPI AI Service Dependencies
 # ==============================================================================
 
 # Web framework

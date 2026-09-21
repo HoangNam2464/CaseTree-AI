@@ -1,6 +1,6 @@
-﻿# Changelog — EduBranch AI
+﻿# Changelog — CaseTree AI
 
-All notable changes to EduBranch AI are documented in this file.
+All notable changes to CaseTree AI are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ## [Unreleased]
 
 ### Scaffolded
-- Initial repository skeleton for EduBranch AI
+- Initial repository skeleton for CaseTree AI
 - Spring Boot 3 backend project structure with domain packages: `auth`, `user`, `course`, `material`, `case`, `simulation`, `argument`, `debate`, `statistics`, `evaluation`, `notification`, `common`
 - FastAPI AI service project structure with domain packages: `core`, `providers`, `ingestion`, `retrieval`, `generation`, `debate`, `evaluation`
 - React + Vite + TypeScript + TailwindCSS frontend with feature-based module structure

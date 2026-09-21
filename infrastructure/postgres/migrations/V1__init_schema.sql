@@ -1,5 +1,5 @@
--- ==============================================================================
--- EduBranch AI — Initial Schema Migration V1
+﻿-- ==============================================================================
+-- CaseTree AI — Initial Schema Migration V1
 -- ==============================================================================
 -- Establishes the base schema for all core domain entities.
 -- Uses UUID as primary key strategy throughout.

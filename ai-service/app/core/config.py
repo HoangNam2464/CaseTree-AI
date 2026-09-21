@@ -1,5 +1,5 @@
 ﻿"""
-EduBranch AI — FastAPI Core Configuration
+CaseTree AI — FastAPI Core Configuration
 
 All configuration is loaded from environment variables.
 Never hardcode secrets or API keys here.
@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     # =========================================================================
     # Application
     # =========================================================================
-    app_name: str = "EduBranch AI — FastAPI AI Service"
+    app_name: str = "CaseTree AI — FastAPI AI Service"
     app_version: str = "0.0.1"
     debug: bool = False
 
@@ -32,8 +32,8 @@ class Settings(BaseSettings):
     # =========================================================================
     postgres_host: str = "localhost"
     postgres_port: int = 5432
-    postgres_db: str = "edubranch_ai"
-    postgres_user: str = "edubranch"
+    postgres_db: str = "casetree_ai"
+    postgres_user: str = "casetree"
     postgres_password: str = "changeme_db_password"
 
     @property

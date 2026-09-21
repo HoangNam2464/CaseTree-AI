@@ -1,5 +1,5 @@
----
-description: Rules for the Course domain in EduBranch AI.
+﻿---
+description: Rules for the Course domain in CaseTree AI.
 trigger: keyword
 keywords: [course, lecturer course, course management, course ownership]
 ---

@@ -1,8 +1,8 @@
-# EduBranch AI — Project Direction Audit
+﻿# CaseTree AI — Project Direction Audit
 
 > **Audit Type**: Read-Only Source-of-Truth & Architectural Direction Audit  
-> **Target System**: EduBranch AI (`https://github.com/HoangNam2464/EduBranch-AI`)  
-> **Primary Benchmark (Priority 1)**: `C1SE_65-EduBranch-AI-Proposal_V1.0.docx`  
+> **Target System**: CaseTree AI (`https://github.com/HoangNam2464/CaseTree-AI`)  
+> **Primary Benchmark (Priority 1)**: `C1SE_65-CaseTree-AI-Proposal_V1.0.docx`  
 > **Project Owner Decisions (Priority 2)**: 3-tier boundary (Frontend → Backend → AI Service), PostgreSQL+pgvector, Redis, MinIO, separate internal AI service, skeleton/docs only.  
 > **Engineering Reference (Priority 4)**: `ai-teacher-copilot` (`D:\DU_AN_2026\Python\ai-teacher-copilot`)  
 > **Audit Date**: 2026-09-11  
@@ -25,9 +25,9 @@
 
 ## 2. What the Proposal Actually Defines
 
-Extracted directly from `C1SE_65-EduBranch-AI-Proposal_V1.0.docx`:
+Extracted directly from `C1SE_65-CaseTree-AI-Proposal_V1.0.docx`:
 
-- **Full Project Identity**: *"EduBranch AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching"* (Acronym: EBA, Lead: International School, Duy Tan University, Capstone 1, 2026).
+- **Full Project Identity**: *"CaseTree AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching"* (Acronym: EBA, Lead: International School, Duy Tan University, Capstone 1, 2026).
 - **Target Audience & Actors**:
   - Higher education / university teaching (Business, Law, Medicine, IT, Engineering).
   - Primary Actors: **Lecturer** and **Student**.
@@ -217,7 +217,7 @@ The current repository reflects the state after bootstrap scaffolding and docume
 | **2. Course & Materials** | Fully Aligned | High (15 sections complete) | MinIO S3 storage pattern adapted | `Structurally Scaffolded` |
 | **3. Document Processing & RAG** | Fully Aligned | High (15 sections complete) | `<sources>` boundary from reference | `Structurally Scaffolded` |
 | **4. Case Generation** | Fully Aligned | High (15 sections complete) | Pydantic JSON schema pattern adapted | `Structurally Scaffolded` |
-| **5. Decision Tree Model** | Fully Aligned | High (15 sections complete) | Novel EduBranch domain model | `Structurally Scaffolded` |
+| **5. Decision Tree Model** | Fully Aligned | High (15 sections complete) | Novel CaseTree domain model | `Structurally Scaffolded` |
 | **6. Case Review & Publishing** | Fully Aligned | High (15 sections complete) | Novel human-in-the-loop workflow | `Structurally Scaffolded` |
 | **7. Simulator & Argument** | Fully Aligned | High (15 sections complete) | Novel role-play & argument capture | `Structurally Scaffolded` |
 | **8. Debate Assistant** | Fully Aligned | High (15 sections complete) | Novel Devil's Advocate Socratic rules | `Structurally Scaffolded` |
@@ -241,7 +241,7 @@ The current repository reflects the state after bootstrap scaffolding and docume
 - **Bloom's Taxonomy Categorization**: Specific to K-12 test question generation.
 - **Word/DOCX Export Engines**: Specific to lesson plan exporting.
 
-### 9.3 Reference-Specific Business Concepts Leaked into EduBranch AI
+### 9.3 Reference-Specific Business Concepts Leaked into CaseTree AI
 - **Finding**: Zero business logic leaks found in source code or feature documentation.
 - **Minor Artifact**: In `frontend/src/layouts/LecturerLayout.tsx` line 3, a comment reads `/** Lecturer workspace layout — navigation sidebar + content area. */`. The term "workspace" was inherited colloquially from `ai-teacher-copilot`, though the layout itself is just a standard navigation shell.
 
@@ -286,7 +286,7 @@ The current repository reflects the state after bootstrap scaffolding and docume
 
 - **Current Presence**:
   - `backend/pom.xml` defines a Spring Boot 3.3.4 parent project with Java 17.
-  - Entity classes (`vn.edubranch.*`) model the domain using Jakarta Persistence (JPA) annotations (`@Entity`, `@Table`, `@Id`, `@Enumerated`).
+  - Entity classes (`vn.CaseTree.*`) model the domain using Jakarta Persistence (JPA) annotations (`@Entity`, `@Table`, `@Id`, `@Enumerated`).
   - `HealthController.java` provides a minimal Spring Web MVC health check endpoint.
   - `application.yml` configures PostgreSQL, Flyway, MinIO, and Redis connections.
 - **Origin**: Cloned from the engineering scaffold of `ai-teacher-copilot`.
@@ -303,7 +303,7 @@ Verified across the entire codebase:
 
 | Component | Code Inspected | Result |
 | :--- | :--- | :---: |
-| **Authentication** | `backend/src/main/java/vn/edubranch/auth/` | **NOT IMPLEMENTED** (no login/register controllers or JWT filters) |
+| **Authentication** | `backend/src/main/java/vn/CaseTree/auth/` | **NOT IMPLEMENTED** (no login/register controllers or JWT filters) |
 | **Courses & Materials**| `backend/.../course/`, `backend/.../material/` | **NOT IMPLEMENTED** (entities exist; no CRUD services or upload streams) |
 | **Case Generation** | `ai-service/app/generation/` | **NOT IMPLEMENTED** (schemas exist; no active LLM prompt chain or route) |
 | **Case Review/Publish**| `backend/.../case_/`, `frontend/.../CaseReviewPage` | **NOT IMPLEMENTED** (view shell exists; no state machine update logic) |
@@ -345,7 +345,7 @@ Verified across the entire codebase:
 ## 17. Final Verdict
 
 ### **YELLOW**
-**The project direction is generally well-aligned with the EduBranch AI Proposal, but contains technical inheritance debt and rule contradictions that must be formally resolved before feature development begins.**
+**The project direction is generally well-aligned with the CaseTree AI Proposal, but contains technical inheritance debt and rule contradictions that must be formally resolved before feature development begins.**
 
 - **Why Not GREEN?** The hardcoding of Spring Boot 3 across all `.agents/rules/` contradicts both the Proposal's primary backend options (Node.js/FastAPI) and the Project Owner's explicit directive to treat backend frameworks as candidate options. Additionally, minor frontend dependency version mismatches exist.
 - **Why Not RED?** The repository has **zero scope drift** into K-12 features, strictly **zero business implementation**, flawless service boundary isolation, valid Flyway DDL syntax, and 100% valid documentation link integrity. The core pedagogical value stream (Material → RAG → Case Tree → Review → Simulator → Debate → Stats) is perfectly captured.

@@ -1,5 +1,5 @@
 ﻿"""
-EduBranch AI — Document Chunker.
+CaseTree AI — Document Chunker.
 
 Splits parsed document text into overlapping chunks suitable for embedding.
 Uses LangChain text splitters.

@@ -1,5 +1,5 @@
----
-description: Rules for student argument capture in EduBranch AI.
+﻿---
+description: Rules for student argument capture in CaseTree AI.
 trigger: keyword
 keywords: [argument, justification, student argument, reasoning, written response]
 ---

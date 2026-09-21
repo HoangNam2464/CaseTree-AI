@@ -1,8 +1,8 @@
-# Security Policy — EduBranch AI
+﻿# Security Policy — CaseTree AI
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in EduBranch AI, **do not create a public GitHub issue**.
+If you discover a security vulnerability in CaseTree AI, **do not create a public GitHub issue**.
 
 Please report it privately by emailing the project maintainer or opening a GitHub Security Advisory:
 `Settings → Security → Advisories → New draft security advisory`

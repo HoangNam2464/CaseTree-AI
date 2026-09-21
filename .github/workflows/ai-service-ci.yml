@@ -44,8 +44,8 @@ jobs:
           GEMINI_API_KEY: ci-fake-key-not-called-in-unit-tests
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
-          POSTGRES_DB: edubranch_ai
-          POSTGRES_USER: edubranch
+          POSTGRES_DB: casetree_ai
+          POSTGRES_USER: casetree
           POSTGRES_PASSWORD: test
 
       - name: Upload coverage

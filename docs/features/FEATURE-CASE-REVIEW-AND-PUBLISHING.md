@@ -1,4 +1,4 @@
-# Feature: Lecturer Case Review, Edit & Publishing Workflow
+﻿# Feature: Lecturer Case Review, Edit & Publishing Workflow
 
 > **Authoritative Traceability**: Items 17, 18, 19 (Proposal Section 2 p. 6, Section 4 p. 7, Section 7 p. 11, Section 10 p. 14)  
 > **Target Package / Module**: Backend `case/` · Frontend `pages/lecturer/CaseReviewPage.tsx`, `features/case-review/`
@@ -6,7 +6,7 @@
 ---
 
 ## 1. Purpose
-Enforces the mandatory **Human-in-the-Loop** governance gate in EduBranch AI. Ensures that AI-generated decision tree cases are never shown directly to university students. A lecturer must inspect the generated situations, options, and consequences, make manual editorial adjustments via an interactive form/canvas editor, formally approve the case, and publish it to the student cohort.
+Enforces the mandatory **Human-in-the-Loop** governance gate in CaseTree AI. Ensures that AI-generated decision tree cases are never shown directly to university students. A lecturer must inspect the generated situations, options, and consequences, make manual editorial adjustments via an interactive form/canvas editor, formally approve the case, and publish it to the student cohort.
 
 ---
 

@@ -1,4 +1,4 @@
-# Feature: Course Context & Teaching Materials
+﻿# Feature: Course Context & Teaching Materials
 
 > **Authoritative Traceability**: Items 4, 5, 6 (Proposal Section 2 p. 6, Section 4 p. 7, Section 11 p. 16)  
 > **Target Package / Module**: Backend `course/`, `material/` · Frontend `features/courses/`, `features/materials/` · Storage MinIO
@@ -31,7 +31,7 @@ Enables university lecturers to organize their teaching domains by establishing 
 - **FR-MAT-02**: The system shall restrict course updates and material uploads strictly to the course owner.
 - **FR-MAT-03**: The system shall accept material uploads in **PDF** (`application/pdf`) and **DOCX** (`application/vnd.openxmlformats-officedocument.wordprocessingml.document`) formats.
 - **FR-MAT-04**: The system shall enforce a configurable maximum upload file size (default 50 MB).
-- **FR-MAT-05**: The system shall store raw document binaries in MinIO under bucket `edubranch-materials` using non-guessable object keys.
+- **FR-MAT-05**: The system shall store raw document binaries in MinIO under bucket `casetree-materials` using non-guessable object keys.
 - **FR-MAT-06**: The system shall record material metadata in PostgreSQL table `teaching_materials` and initiate document processing.
 
 ---
@@ -78,7 +78,7 @@ Enables university lecturers to organize their teaching domains by establishing 
 
 ## 10. Dependencies
 - PostgreSQL `courses` and `teaching_materials` tables.
-- MinIO Object Storage (`edubranch-materials` bucket).
+- MinIO Object Storage (`casetree-materials` bucket).
 - Internal AI Service ingestion endpoint.
 
 ---

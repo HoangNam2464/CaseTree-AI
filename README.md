@@ -1,5 +1,5 @@
-<p align="center">
-  <h1 align="center">🎓 EduBranch AI</h1>
+﻿<p align="center">
+  <h1 align="center">🎓 CaseTree AI</h1>
   <p align="center">
     <strong>AI Platform for Interactive Branching Case Studies and Open Review in University Teaching</strong>
   </p>
@@ -37,7 +37,7 @@
 
 ## 📖 Overview
 
-**EduBranch AI** is a university-focused AI platform that empowers lecturers to generate interactive branching case studies directly from their syllabus materials (PDF / DOCX) and provides students with an interactive decision-tree simulator paired with an AI Debate Assistant for active learning.
+**CaseTree AI** is a university-focused AI platform that empowers lecturers to generate interactive branching case studies directly from their syllabus materials (PDF / DOCX) and provides students with an interactive decision-tree simulator paired with an AI Debate Assistant for active learning.
 
 The system integrates **RAG (Retrieval-Augmented Generation)** with **Strict Structured Output** to construct well-formed decision trees. Every generated case begins in `DRAFT` status and requires explicit human review and approval by the course lecturer before publication (`APPROVED → PUBLISHED`), enforcing a mandatory **Human-in-the-Loop** gate.
 
@@ -47,7 +47,7 @@ The system integrates **RAG (Retrieval-Augmented Generation)** with **Strict Str
 
 > **IMPORTANT NOTICE FOR CONTRIBUTORS AND AUDITORS:**
 > 
-> The EduBranch AI repository is currently in the **STRUCTURAL SKELETON ONLY** phase.
+> The CaseTree AI repository is currently in the **STRUCTURAL SKELETON ONLY** phase.
 > - ✅ Project structure, module boundaries, routing layouts, and configurations are established.
 > - ✅ Database schemas (DDL), indexes, vector extensions, and enums are defined.
 > - ✅ Pydantic schemas, TypeScript interfaces, DTO declarations, and health check endpoints (`/health`) are active.
@@ -156,7 +156,7 @@ flowchart TD
 ## 📁 Repository Structure
 
 ```
-EduBranch-AI/
+CaseTree-AI/
 ├── backend/                         ← NestJS 10 Backend Gateway (Node.js 20)
 │   ├── src/
 │   │   ├── app.module.ts            ← Main application module
@@ -295,7 +295,7 @@ npm run dev
 
 ## 🔒 Git Safety & Secret Protection
 
-EduBranch AI enforces strict repository rules to prevent the accidental leakage of secrets, keys, and environment files.
+CaseTree AI enforces strict repository rules to prevent the accidental leakage of secrets, keys, and environment files.
 
 ### 1. Pre-commit Hook Safeguard
 A zero-dependency pre-commit hook is provided in `.githooks/pre-commit`. It scans staged files and rejects commits containing:

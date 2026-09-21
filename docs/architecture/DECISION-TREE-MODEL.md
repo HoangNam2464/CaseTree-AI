@@ -1,4 +1,4 @@
-﻿# EduBranch AI — Decision Tree Domain Model
+﻿# CaseTree AI — Decision Tree Domain Model
 
 **Status**: Scaffolded
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-The decision tree is the core data structure of EduBranch AI.
+The decision tree is the core data structure of CaseTree AI.
 A Case is composed of CaseNodes connected by CaseOptions.
 
 ## Entity Model

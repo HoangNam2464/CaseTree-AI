@@ -1,4 +1,4 @@
-# EduBranch AI — RAG Pipeline
+﻿# CaseTree AI — RAG Pipeline
 
 **Status**: Scaffolded
 

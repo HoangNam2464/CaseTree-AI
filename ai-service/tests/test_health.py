@@ -1,5 +1,5 @@
 ﻿"""
-EduBranch AI — AI Service health endpoint smoke test.
+CaseTree AI — AI Service health endpoint smoke test.
 """
 
 import pytest

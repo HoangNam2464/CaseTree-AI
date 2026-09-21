@@ -1,5 +1,5 @@
 ﻿"""
-EduBranch AI — LLM Provider Abstraction Base.
+CaseTree AI — LLM Provider Abstraction Base.
 
 RULE: Route handlers and orchestration code MUST use this abstraction.
 Never import openai or google.generativeai SDKs directly in route handlers.

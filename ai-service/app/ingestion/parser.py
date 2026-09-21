@@ -1,5 +1,5 @@
 ﻿"""
-EduBranch AI — Document Parser.
+CaseTree AI — Document Parser.
 
 Parses PDF and DOCX teaching material files into plain text.
 Uses PyPDF for PDF parsing and python-docx for DOCX parsing.

@@ -1,5 +1,5 @@
----
-description: Rules for authentication and authorization implementation in EduBranch AI.
+﻿---
+description: Rules for authentication and authorization implementation in CaseTree AI.
 trigger: keyword
 keywords: [auth, login, register, jwt, security, role, permission, password]
 ---

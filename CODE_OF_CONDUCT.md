@@ -1,8 +1,8 @@
-﻿# Code of Conduct — EduBranch AI
+﻿# Code of Conduct — CaseTree AI
 
 ## Our Pledge
 
-We as contributors and maintainers pledge to make participation in the EduBranch AI project a respectful and collaborative experience for everyone.
+We as contributors and maintainers pledge to make participation in the CaseTree AI project a respectful and collaborative experience for everyone.
 
 ## Our Standards
 

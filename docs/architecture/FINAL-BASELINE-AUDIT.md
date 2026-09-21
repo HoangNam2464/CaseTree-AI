@@ -1,4 +1,4 @@
-# FINAL BASELINE AUDIT — EduBranch AI
+﻿# FINAL BASELINE AUDIT — CaseTree AI
 # Post-Technology-Migration Verification Report
 
 > **Audit Date**: 2026-09-11
@@ -11,7 +11,7 @@
 
 ## 1. Executive Summary
 
-This audit independently verifies the entire EduBranch AI repository against the confirmed Final Technology Baseline, following the technology migration from Java 17 / Spring Boot 3 to Node.js / NestJS 10.
+This audit independently verifies the entire CaseTree AI repository against the confirmed Final Technology Baseline, following the technology migration from Java 17 / Spring Boot 3 to Node.js / NestJS 10.
 
 **Overall Outcome: YELLOW**
 
@@ -116,7 +116,7 @@ However, `README.md`, `CONTRIBUTING.md`, and `SECURITY.md` portray the old `Fron
 | MinIO | S3-compatible | `minio/minio:latest` | CORRECT |
 | pgvector extension | Enabled | Baked into `pgvector/pgvector:pg16` image | CORRECT |
 | Health checks | All services | Defined for postgres, redis, minio | CORRECT |
-| Network isolation | Single internal network | `edubranch_network` bridge network | CORRECT |
+| Network isolation | Single internal network | `casetree_network` bridge network | CORRECT |
 
 `.env.example` correctly documents `SERVER_PORT=8080` (NestJS), `FASTAPI_PORT=8000` (AI Service), `DEBATE_MAX_ROUNDS=2`, and all infrastructure connection variables. No Spring Boot-specific variables are present.
 
@@ -473,7 +473,7 @@ Decision tree Pydantic schema structure, field definitions, `validate_tree_struc
 
 **Status: FIXED**
 
-Action: `Remove-Item -Recurse -Force "d:\CAPSTONE_2026\EduBranch-AI\backend\target"` — **exit code 0**.
+Action: `Remove-Item -Recurse -Force "d:\CAPSTONE_2026\CaseTree-AI\backend\target"` — **exit code 0**.
 
 The empty Maven build output directory (`target/generated-sources/`, `target/test-classes/`, etc.) has been deleted. Verified: no `.class`, `.jar`, or active source files were present in the directory.
 
@@ -545,5 +545,5 @@ No business feature logic was added during this correction session. The reposito
 > **CORRECTIONS COMPLETE**
 > Findings C-01 through C-07 have been resolved.
 > All validation checks passed.
-> Repository documentation is now consistent with the approved EduBranch AI Technology Baseline.
+> Repository documentation is now consistent with the approved CaseTree AI Technology Baseline.
 

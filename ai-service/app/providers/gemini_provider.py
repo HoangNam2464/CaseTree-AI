@@ -1,5 +1,5 @@
 ﻿"""
-EduBranch AI — Google Gemini LLM Provider Implementation.
+CaseTree AI — Google Gemini LLM Provider Implementation.
 
 Implements BaseLLMProvider using the Google Generative AI SDK.
 Used when app.core.config.settings.ai_provider == "gemini".

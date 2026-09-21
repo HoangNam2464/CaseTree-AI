@@ -1,4 +1,4 @@
-# Feature: Branching Decision Tree Domain Model
+﻿# Feature: Branching Decision Tree Domain Model
 
 > **Authoritative Traceability**: Items 12, 13, 14, 15, 16 (Proposal Section 2 p. 6, Section 4 p. 7, Section 9 p. 13)  
 > **Target Package / Module**: Backend `case/` · AI Service `generation/schemas/` · Frontend `components/tree/`
@@ -6,7 +6,7 @@
 ---
 
 ## 1. Purpose
-Defines the mathematical and relational domain structure of the **Branching Decision Tree**, the core pedagogical mechanism of EduBranch AI. The decision tree models sequential decision-making under uncertainty through structured nodes (`Situation`), branches (`Options`), immediate feedback (`Consequences`), and directed transitions (`Next Node`).
+Defines the mathematical and relational domain structure of the **Branching Decision Tree**, the core pedagogical mechanism of CaseTree AI. The decision tree models sequential decision-making under uncertainty through structured nodes (`Situation`), branches (`Options`), immediate feedback (`Consequences`), and directed transitions (`Next Node`).
 
 ---
 

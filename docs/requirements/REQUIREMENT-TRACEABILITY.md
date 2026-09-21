@@ -1,6 +1,6 @@
-# EduBranch AI — Proposal Requirement Traceability Matrix
+﻿# CaseTree AI — Proposal Requirement Traceability Matrix
 
-> **Authoritative Source**: `C1SE_65-EduBranch-AI-Proposal_V1.0(5).docx` (International School, Duy Tan University — Capstone 1, 2026)  
+> **Authoritative Source**: `C1SE_65-CaseTree-AI-Proposal_V1.0(5).docx` (International School, Duy Tan University — Capstone 1, 2026)  
 > **Mandatory Status States**:
 > - **`Documented`**: Specification authored in `docs/` according to the 15-section standard; no code skeleton exists.
 > - **`Structurally Scaffolded`**: Specification documented AND non-business architectural skeleton exists (entity placeholders, DTO records, routing shell, health checks).

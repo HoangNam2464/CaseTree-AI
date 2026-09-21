@@ -1,5 +1,5 @@
 ﻿/**
- * EduBranch AI — React Application Entry Point
+ * CaseTree AI — React Application Entry Point
  */
 
 import React from "react";

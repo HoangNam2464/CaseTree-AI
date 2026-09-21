@@ -1,4 +1,4 @@
-# EduBranch AI — AI Coding Agent Instructions
+﻿# CaseTree AI — AI Coding Agent Instructions
 
 > **Document Status**: Authoritative Agent Governance Instructions  
 > **Target Audience**: GitHub Copilot, Antigravity, Claude, and all AI coding assistants operating on this repository.
@@ -7,11 +7,11 @@
 
 ## 1. The 12 Cardinal Rules for AI Coding Agents
 
-Every AI agent working on EduBranch AI MUST strictly adhere to the following 12 rules:
+Every AI agent working on CaseTree AI MUST strictly adhere to the following 12 rules:
 
 1. **Read Project Foundation Rules First**: Always read `.agents/rules/00-project-foundation.md` before analyzing, planning, or modifying any code.
 2. **Read Applicable Feature Rules Before Changing a Feature**: Consult the corresponding rule in `.agents/rules/feature-*.md` and specification in `docs/features/FEATURE-*.md` before proposing or touching code in that feature area.
-3. **Follow the Proposal**: The authoritative product definition is the EduBranch AI Proposal (`C1SE_65-EduBranch-AI-Proposal_V1.0.docx`). Never invent features not grounded in this document.
+3. **Follow the Proposal**: The authoritative product definition is the CaseTree AI Proposal (`C1SE_65-CaseTree-AI-Proposal_V1.0.docx`). Never invent features not grounded in this document.
 4. **Follow Applicable Markdown Rules**: Project governance is defined in Markdown rules. They are mandatory constraints, not optional suggestions.
 5. **Never Invent Scope**: Keep strictly to university branching case studies and debate. Exclude lesson planners, quiz generators, LMS integrations, social login, and unrelated features.
 6. **Never Copy AI Teacher Copilot Business Logic**: The reference repository (`ai-teacher-copilot`) is an engineering reference only. Do NOT copy its source code, K-12 domain models, or teacher workspace features.
@@ -26,8 +26,8 @@ Every AI agent working on EduBranch AI MUST strictly adhere to the following 12 
 
 ## 2. Project Identity & Purpose
 
-- **Name**: EduBranch AI (NOT "AI Teacher Copilot").
-- **Full Title**: EduBranch AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching.
+- **Name**: CaseTree AI (NOT "AI Teacher Copilot").
+- **Full Title**: CaseTree AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching.
 - **Target Audience**: University lecturers and undergraduate/graduate students (NOT K-12).
 - **Core Loop**: Teaching Material → RAG Processing → AI-Generated Branching Case Study → Lecturer Review/Edit → Lecturer Approval & Publication → Student Simulation → Immediate Consequence & Argument Justification → AI Debate Assistant (Devil's Advocate, 1–2 rounds max, no grading) → Lecturer Statistics.
 

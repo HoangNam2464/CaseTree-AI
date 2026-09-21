@@ -1,5 +1,5 @@
 ﻿"""
-EduBranch AI — LLM Provider Factory.
+CaseTree AI — LLM Provider Factory.
 
 Returns the configured provider based on the AI_PROVIDER environment variable.
 Use this factory in route handlers and services — never instantiate providers directly.

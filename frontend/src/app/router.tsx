@@ -1,5 +1,5 @@
 ﻿/**
- * EduBranch AI — Application Router
+ * CaseTree AI — Application Router
  */
 
 import { createBrowserRouter } from "react-router-dom";

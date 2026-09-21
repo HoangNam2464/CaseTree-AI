@@ -1,5 +1,5 @@
 ﻿"""
-EduBranch AI — Debate Assistant API Request/Response Schemas.
+CaseTree AI — Debate Assistant API Request/Response Schemas.
 
 IMPORTANT: The AI Debate Assistant is a Devil's Advocate tool only.
 It generates targeted counter-questions. It does NOT grade students,

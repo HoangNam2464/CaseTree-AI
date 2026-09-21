@@ -1,5 +1,5 @@
----
-description: Rules for the research evaluation boundary in EduBranch AI.
+﻿---
+description: Rules for the research evaluation boundary in CaseTree AI.
 trigger: keyword
 keywords: [evaluation, research, rubric, survey, dataset, export]
 ---

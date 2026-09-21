@@ -1,6 +1,6 @@
-# EduBranch AI — Backend Gateway
+﻿# CaseTree AI — Backend Gateway
 
-Node.js (NestJS + TypeScript) REST API Gateway for the EduBranch AI platform.
+Node.js (NestJS + TypeScript) REST API Gateway for the CaseTree AI platform.
 
 ## Responsibilities
 

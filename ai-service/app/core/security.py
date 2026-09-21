@@ -1,5 +1,5 @@
-"""
-EduBranch AI — FastAPI Internal Service Security
+﻿"""
+CaseTree AI — FastAPI Internal Service Security
 
 Validates the internal API key used for Backend Gateway → Internal AI Service communication.
 This service is NOT exposed to the internet.

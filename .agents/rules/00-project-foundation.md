@@ -1,17 +1,17 @@
----
+﻿---
 description: >-
-  Global project rules for EduBranch AI. Always loaded when working in this
+  Global project rules for CaseTree AI. Always loaded when working in this
   repository. Enforces architecture boundaries, coding standards, Git workflow,
   security rules, and engineering principles.
 trigger: always_on
 ---
 
-# EduBranch AI — Global Project Rules
+# CaseTree AI — Global Project Rules
 
 ## 1. Project Identity
 
-- **Name**: EduBranch AI
-- **Full Name**: EduBranch AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching
+- **Name**: CaseTree AI
+- **Full Name**: CaseTree AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching
 - **Target**: University education (NOT K-12)
 - **Users**: Lecturers and Students
 - **Stack**: Node.js (NestJS 10 + TypeScript) + FastAPI (Python 3.12) + React 19 (Vite + TailwindCSS v4)
@@ -25,7 +25,7 @@ trigger: always_on
 ## 2. Repository Structure
 
 ```
-EduBranch-AI/
+CaseTree-AI/
 ├── backend/                    ← Node.js (NestJS) API Gateway
 ├── ai-service/                 ← FastAPI AI / RAG Service (INTERNAL)
 ├── frontend/                   ← React 19 + Vite + TailwindCSS v4

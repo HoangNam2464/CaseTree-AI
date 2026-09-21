@@ -1,5 +1,5 @@
-# ==============================================================================
-# EduBranch AI — Local Development Infrastructure
+﻿# ==============================================================================
+# CaseTree AI — Local Development Infrastructure
 # ==============================================================================
 # Starts infrastructure services only:
 #   - PostgreSQL 16 + pgvector   (business data + vector embeddings)
@@ -22,11 +22,11 @@ services:
   # ============================================================================
   postgres:
     image: pgvector/pgvector:pg16
-    container_name: edubranch_postgres
+    container_name: casetree_postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-edubranch_ai}
-      POSTGRES_USER: ${POSTGRES_USER:-edubranch}
+      POSTGRES_DB: ${POSTGRES_DB:-casetree_ai}
+      POSTGRES_USER: ${POSTGRES_USER:-casetree}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme_db_password}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
@@ -34,20 +34,20 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./infrastructure/postgres/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-edubranch} -d ${POSTGRES_DB:-edubranch_ai}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-casetree} -d ${POSTGRES_DB:-casetree_ai}"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 20s
     networks:
-      - edubranch_network
+      - casetree_network
 
   # ============================================================================
   # Redis 7
   # ============================================================================
   redis:
     image: redis:7-alpine
-    container_name: edubranch_redis
+    container_name: casetree_redis
     restart: unless-stopped
     command: redis-server --requirepass ${REDIS_PASSWORD:-changeme_redis_password}
     ports:
@@ -61,14 +61,14 @@ services:
       retries: 5
       start_period: 10s
     networks:
-      - edubranch_network
+      - casetree_network
 
   # ============================================================================
   # MinIO — Object Storage for Teaching Materials (PDF/DOCX)
   # ============================================================================
   minio:
     image: minio/minio:latest
-    container_name: edubranch_minio
+    container_name: casetree_minio
     restart: unless-stopped
     command: server /data --console-address ":9001"
     environment:
@@ -86,7 +86,7 @@ services:
       retries: 5
       start_period: 20s
     networks:
-      - edubranch_network
+      - casetree_network
 
 # ==============================================================================
 # Volumes
@@ -103,6 +103,6 @@ volumes:
 # Networks
 # ==============================================================================
 networks:
-  edubranch_network:
+  casetree_network:
     driver: bridge
-    name: edubranch_network
+    name: casetree_network

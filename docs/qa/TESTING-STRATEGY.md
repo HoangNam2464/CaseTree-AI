@@ -1,4 +1,4 @@
-# EduBranch AI — Testing Strategy
+﻿# CaseTree AI — Testing Strategy
 
 **Status**: Scaffolded
 

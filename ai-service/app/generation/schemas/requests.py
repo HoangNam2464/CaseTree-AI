@@ -1,5 +1,5 @@
 ﻿"""
-EduBranch AI — Case Generation API Request/Response Schemas.
+CaseTree AI — Case Generation API Request/Response Schemas.
 """
 
 from pydantic import BaseModel, Field

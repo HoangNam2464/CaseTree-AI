@@ -1,13 +1,13 @@
-# Contributing to EduBranch AI
+﻿# Contributing to CaseTree AI
 
-> Applies to all development on **EduBranch AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching**.
+> Applies to all development on **CaseTree AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching**.
 > All code changes must comply with these standards before being integrated into `develop` or `main`.
 
 ---
 
 ## 🌳 1. Git Branching Strategy
 
-EduBranch AI uses **Git Feature Branch Workflow**. **Never** push code directly to `main` or `develop`.
+CaseTree AI uses **Git Feature Branch Workflow**. **Never** push code directly to `main` or `develop`.
 
 ```
 feature/<name>  →  develop  →  main

@@ -1,4 +1,4 @@
-# EduBranch AI — Service Boundaries & Contracts
+﻿# CaseTree AI — Service Boundaries & Contracts
 
 > **Document Status**: Authoritative Architecture Specification  
 > **Target Audience**: Backend Engineers, AI Engineers, Frontend Engineers  
@@ -52,7 +52,7 @@
 | **User Authentication & JWT Issuance** | ❌ (View only) | ✅ **Sole Owner** | ❌ Forbidden | Database (`users`) |
 | **Role Authorization (Lecturer vs. Student)** | ❌ (Client guard) | ✅ **Sole Owner** | ❌ Forbidden | Database (`users.role`) |
 | **Course & Material Metadata Management** | ❌ | ✅ **Sole Owner** | ❌ Forbidden | Database (`courses`, `materials`) |
-| **Binary File Upload & Storage** | Form upload | ✅ Verifies & Streams | ❌ Forbidden | MinIO (`edubranch-materials`) |
+| **Binary File Upload & Storage** | Form upload | ✅ Verifies & Streams | ❌ Forbidden | MinIO (`casetree-materials`) |
 | **Document Text Parsing (PDF/DOCX)** | ❌ | ❌ Delegated | ✅ **Sole Owner** | Streams from MinIO |
 | **Document Chunking & Token Splitting** | ❌ | ❌ Delegated | ✅ **Sole Owner** | Memory |
 | **Vector Embedding Generation** | ❌ | ❌ Delegated | ✅ **Sole Owner** | Provider API |
