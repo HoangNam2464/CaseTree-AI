@@ -1,4 +1,4 @@
-﻿/**
+/**
  * CaseTree AI — Shared TypeScript Types
  *
  * All types mirror the Backend Gateway API response structures.
@@ -65,7 +65,12 @@ export interface TeachingMaterial {
 }
 
 // ============================================================================
-// Decision Tree Case
+// Learning Mode
+// ============================================================================
+export type LearningMode = "BRANCHING_STUDY" | "REVIEW_STUDY";
+
+// ============================================================================
+// Case
 // ============================================================================
 export type CaseStatus = "DRAFT" | "REVIEWED" | "APPROVED" | "PUBLISHED";
 
@@ -74,9 +79,12 @@ export interface Case {
   title: string;
   description?: string;
   courseId: string;
+  learningMode: LearningMode;
+  contextText?: string;    // REVIEW_STUDY only
+  problemText?: string;    // REVIEW_STUDY only
   status: CaseStatus;
   version: number;
-  rootNodeId?: string;
+  rootNodeId?: string;     // BRANCHING_STUDY only
   createdAt: string;
   updatedAt: string;
 }
@@ -99,51 +107,89 @@ export interface CaseOption {
 }
 
 // ============================================================================
-// Simulation Session
+// Reflection (shared concept, two modes)
 // ============================================================================
-export interface SimulationSession {
+export type ReflectionStatus = "NOT_STARTED" | "SUBMITTED";
+
+// ============================================================================
+// Branching Study
+// ============================================================================
+export interface BranchingAttempt {
   id: string;
   studentId: string;
   caseId: string;
+  attemptNumber: number;
   currentNodeId?: string;
+  outcomeNodeId?: string;
   completed: boolean;
+  reflectionText?: string;
+  reflectionStatus: ReflectionStatus;
+  reflectionSubmittedAt?: string;
   startedAt: string;
   completedAt?: string;
 }
 
-// ============================================================================
-// Student Argument
-// ============================================================================
-export interface StudentArgument {
+export interface StudentReasoning {
   id: string;
-  sessionId: string;
-  caseId: string;
+  attemptId: string;
   nodeId: string;
-  optionId: string;
-  argumentText: string;
+  selectedOptionId: string;  // always set in Branching Study
+  reasoningText: string;
   submittedAt: string;
 }
 
 // ============================================================================
-// Debate
+// Review Study
 // ============================================================================
-export type MessageRole = "AI_ASSISTANT" | "STUDENT";
+export type SubmissionStatus = "SUBMITTED" | "REVIEWED" | "REFLECTED";
 
-export interface DebateMessage {
+export interface ReviewStudySubmission {
+  id: string;
+  studentId: string;
+  caseId: string;
+  studentAnalysis?: string;  // R2 = CONFIRMED OPTION A: nullable
+  proposedSolution: string;
+  reasoningText: string;
+  submissionStatus: SubmissionStatus;
+  reflectionText?: string;
+  reflectionStatus: ReflectionStatus;
+  reflectionSubmittedAt?: string;
+  submittedAt: string;
+}
+
+// ============================================================================
+// AI Reasoning / Challenge Support (both modes)
+// ============================================================================
+export type ChallengeMessageRole = "CHALLENGE_SUPPORT" | "STUDENT";
+
+export interface ChallengeMessage {
   id: string;
   sessionId: string;
-  roundNumber: number;
-  role: MessageRole;
+  roundNumber: number;     // 1 or 2
+  role: ChallengeMessageRole;
   content: string;
   createdAt: string;
 }
 
-export interface DebateSession {
+export interface ChallengeSupportSession {
   id: string;
-  argumentId: string;
-  currentRound: number;
+  reasoningId?: string;        // set when Branching Study
+  reviewSubmissionId?: string; // set when Review Study
+  currentRound: number;        // 0-2
   completed: boolean;
-  messages: DebateMessage[];
+  messages: ChallengeMessage[];
+}
+
+// ============================================================================
+// Lecturer Feedback (both modes)
+// ============================================================================
+export interface LecturerFeedback {
+  id: string;
+  lecturerId: string;
+  branchingAttemptId?: string;  // set when Branching Study
+  reviewSubmissionId?: string;  // set when Review Study
+  feedbackText: string;
+  createdAt: string;
 }
 
 // ============================================================================
