@@ -1,5 +1,8 @@
-﻿-- ==============================================================================
+-- ==============================================================================
 -- CaseTree AI — Initial Schema Migration V1
+-- ==============================================================================
+-- NOTE: For Proposal V1.1 flow (Branching Study, Review Study, Attempt model,
+-- Student Reasoning, AI Challenge Support, Lecturer Feedback), see V2__new_flow_schema.sql.
 -- ==============================================================================
 -- Establishes the base schema for all core domain entities.
 -- Uses UUID as primary key strategy throughout.
