@@ -1,4 +1,4 @@
-﻿# CaseTree AI — FastAPI AI Service
+# CaseTree AI — FastAPI AI Service
 
 Internal-only AI service for the CaseTree AI platform.
 
@@ -13,7 +13,7 @@ Internal-only AI service for the CaseTree AI platform.
 - pgvector semantic retrieval
 - RAG orchestration
 - Case generation with structured JSON output (validated by Pydantic)
-- AI Debate Assistant (targeted counter-questions, max 2 rounds)
+- AI Reasoning/Challenge Support (targeted counter-questions, max 2 rounds, no grading)
 - AI evaluation utilities
 
 ## Technology
@@ -30,13 +30,13 @@ Internal-only AI service for the CaseTree AI platform.
 
 ```
 app/
-├── core/          ← Config, security, logging, exceptions
-├── providers/     ← LLM provider abstraction (base, openai, gemini, factory)
-├── ingestion/     ← Document parser + chunker
-├── retrieval/     ← Embedding + pgvector retrieval
-├── generation/    ← Case generator + decision tree schemas
-├── debate/        ← AI Debate Assistant + schemas
-└── evaluation/    ← AI evaluation utilities
+├── core/              ← Config, security, logging, exceptions
+├── providers/         ← LLM provider abstraction (base, openai, gemini, factory)
+├── ingestion/         ← Document parser + chunker
+├── retrieval/         ← Embedding + pgvector retrieval
+├── generation/        ← Case generator + decision tree schemas
+├── challenge_support/ ← AI Reasoning/Challenge Support + schemas
+└── evaluation/        ← AI evaluation utilities
 ```
 
 ## Local Setup
@@ -73,4 +73,4 @@ pytest
 - Always use `app.providers.factory.get_provider()` for LLM access
 - Always wrap retrieved document chunks in `<sources>...</sources>` boundary
 - Never pass raw user/document content directly to system prompts
-- The Debate Assistant MUST NOT grade students or make pass/fail decisions
+- AI Reasoning/Challenge Support MUST NOT grade students or make pass/fail decisions

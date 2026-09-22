@@ -1,4 +1,4 @@
-﻿"""
+"""
 CaseTree AI — FastAPI AI Service Entry Point.
 
 IMPORTANT: This service is INTERNAL ONLY.
@@ -38,7 +38,7 @@ app = FastAPI(
     description=(
         "CaseTree AI — Internal FastAPI AI Service. "
         "Responsible for: document ingestion, RAG retrieval, "
-        "case generation, and AI debate assistance."
+        "case generation, and AI reasoning/challenge support."
     ),
     # Disable docs in production — internal service should not expose Swagger publicly
     docs_url="/docs" if settings.debug else None,
@@ -83,11 +83,11 @@ async def health():
 
 # from app.ingestion.router import router as ingestion_router
 # from app.generation.router import router as generation_router
-# from app.debate.router import router as debate_router
+# from app.challenge_support.router import router as challenge_support_router
 
 # app.include_router(ingestion_router, prefix="/ingestion", tags=["Ingestion"])
 # app.include_router(generation_router, prefix="/generation", tags=["Generation"])
-# app.include_router(debate_router, prefix="/debate", tags=["Debate"])
+# app.include_router(challenge_support_router, prefix="/challenge-support", tags=["Challenge Support"])
 
 
 # ==============================================================================
