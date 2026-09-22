@@ -97,6 +97,7 @@ scratch_*
 *.tmp
 *.bak
 *.orig
+*.docx
 
 # ------------------------------------------------------------------------------
 # 7. Docker & Local Data Persistence
