@@ -1,10 +1,11 @@
 import { Controller } from "@nestjs/common";
 
 /**
- * SimulationController — Structural Skeleton.
+ * BranchingAttemptController — Structural Skeleton.
+ * Handles student attempts, navigation, and reflection in Branching Study.
  * Business logic unpopulated per Capstone MVP scaffolding rules.
  */
-@Controller("simulations")
-export class SimulationController {
+@Controller("branching-attempts")
+export class BranchingAttemptController {
   // Endpoints will be implemented in sprint feature branches
 }

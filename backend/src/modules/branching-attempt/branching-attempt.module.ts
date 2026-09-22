@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
-import { SimulationController } from "./simulation.controller";
+import { BranchingAttemptController } from "./branching-attempt.controller";
 
 @Module({
-  controllers: [SimulationController],
+  controllers: [BranchingAttemptController],
   providers: [],
   exports: [],
 })
-export class SimulationModule {}
+export class BranchingAttemptModule {}

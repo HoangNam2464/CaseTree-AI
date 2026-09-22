@@ -1,10 +1,11 @@
 import { Controller } from "@nestjs/common";
 
 /**
- * DebateController — Structural Skeleton.
+ * ChallengeSupportController — Structural Skeleton.
+ * Handles AI Reasoning/Challenge Support interactions (max 2 rounds, no grading).
  * Business logic unpopulated per Capstone MVP scaffolding rules.
  */
-@Controller("debates")
-export class DebateController {
+@Controller("challenge-support")
+export class ChallengeSupportController {
   // Endpoints will be implemented in sprint feature branches
 }

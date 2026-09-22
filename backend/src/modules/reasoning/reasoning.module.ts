@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
-import { ArgumentController } from "./argument.controller";
+import { ReasoningController } from "./reasoning.controller";
 
 @Module({
-  controllers: [ArgumentController],
+  controllers: [ReasoningController],
   providers: [],
   exports: [],
 })
-export class ArgumentModule {}
+export class ReasoningModule {}

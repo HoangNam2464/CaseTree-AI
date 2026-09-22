@@ -6,9 +6,11 @@ import { UserModule } from "./modules/user/user.module";
 import { CourseModule } from "./modules/course/course.module";
 import { MaterialModule } from "./modules/material/material.module";
 import { CaseModule } from "./modules/case/case.module";
-import { SimulationModule } from "./modules/simulation/simulation.module";
-import { ArgumentModule } from "./modules/argument/argument.module";
-import { DebateModule } from "./modules/debate/debate.module";
+import { BranchingAttemptModule } from "./modules/branching-attempt/branching-attempt.module";
+import { ReasoningModule } from "./modules/reasoning/reasoning.module";
+import { ChallengeSupportModule } from "./modules/challenge-support/challenge-support.module";
+import { ReviewStudyModule } from "./modules/review-study/review-study.module";
+import { LecturerFeedbackModule } from "./modules/lecturer-feedback/lecturer-feedback.module";
 import { StatisticsModule } from "./modules/statistics/statistics.module";
 import { NotificationModule } from "./modules/notification/notification.module";
 import { EvaluationModule } from "./modules/evaluation/evaluation.module";
@@ -25,9 +27,11 @@ import { EvaluationModule } from "./modules/evaluation/evaluation.module";
     CourseModule,
     MaterialModule,
     CaseModule,
-    SimulationModule,
-    ArgumentModule,
-    DebateModule,
+    BranchingAttemptModule,
+    ReasoningModule,
+    ChallengeSupportModule,
+    ReviewStudyModule,
+    LecturerFeedbackModule,
     StatisticsModule,
     NotificationModule,
     EvaluationModule,

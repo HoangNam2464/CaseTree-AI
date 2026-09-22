@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
-import { DebateController } from "./debate.controller";
+import { ChallengeSupportController } from "./challenge-support.controller";
 
 @Module({
-  controllers: [DebateController],
+  controllers: [ChallengeSupportController],
   providers: [],
   exports: [],
 })
-export class DebateModule {}
+export class ChallengeSupportModule {}
