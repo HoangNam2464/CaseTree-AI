@@ -1,7 +1,8 @@
-﻿# CaseTree AI — System Data Flows & Sequences
+# CaseTree AI — System Data Flows & Sequences
 
 > **Document Status**: Authoritative Architecture Specification  
-> **Purpose**: Traces end-to-end data flows and lifecycle sequences across the system components.
+> **Source of Truth**: Proposal V1.1 (C1SE_65-CaseTree-AI-Proposal_V1_1.docx)  
+> **Purpose**: Traces end-to-end data flows and lifecycle sequences across system components for both learning modes (Branching Study & Review Study).
 
 ---
 
@@ -35,7 +36,7 @@ sequenceDiagram
 
 ---
 
-## 2. Flow 2: AI Case Generation (RAG + Structured JSON Output)
+## 2. Flow 2: AI Case Draft Generation (RAG + Structured Output)
 
 ```mermaid
 sequenceDiagram
@@ -47,7 +48,7 @@ sequenceDiagram
     participant DB as PostgreSQL + pgvector
     participant LLM as LLM Provider (Gemini / OpenAI)
 
-    Lecturer->>FE: Clicks "Generate Case Study" (provides topic hint, material selection)
+    Lecturer->>FE: Clicks "Generate Case Draft" (provides topic hint, material selection)
     FE->>BE: POST /api/v1/cases/generate (courseId, materialIds, topic)
     BE->>AI: POST /internal/v1/generation/generate-case (course_id, material_ids, topic)
     AI->>AI: Generate query embedding for topic
@@ -58,10 +59,10 @@ sequenceDiagram
     LLM-->>AI: Structured JSON decision tree
     AI->>AI: Validate JSON schema & BFS cycle detection (no loops, no orphans, terminal exists)
     AI-->>BE: 200 OK (Validated DecisionTree JSON)
-    BE->>DB: INSERT INTO cases (status='DRAFT', title, ...)
+    BE->>DB: INSERT INTO cases (learning_mode='BRANCHING_STUDY', status='DRAFT', title, ...)
     BE->>DB: INSERT INTO case_nodes & case_options
-    BE-->>FE: 201 Created (Case generated in DRAFT status)
-    FE->>Lecturer: Renders decision tree in form editor
+    BE-->>FE: 201 Created (Case draft generated in DRAFT status)
+    FE->>Lecturer: Renders decision tree in review editor
 ```
 
 ---
@@ -76,11 +77,11 @@ sequenceDiagram
     participant BE as Backend Gateway
     participant DB as PostgreSQL
 
-    Lecturer->>FE: Views decision tree in ReactFlow editor
-    Lecturer->>FE: Modifies situation text, options, or consequences
-    FE->>BE: PUT /api/v1/cases/{caseId} (updated nodes & options)
-    BE->>BE: Validate tree integrity (no cycles, reachability from root)
-    BE->>DB: UPDATE case_nodes, case_options, cases (status='REVIEWED')
+    Lecturer->>FE: Reviews case in editor (ReactFlow for Branching; text form for Review Study)
+    Lecturer->>FE: Modifies content (nodes/options for Branching; context/problem for Review)
+    FE->>BE: PUT /api/v1/cases/{caseId}
+    BE->>BE: Validate integrity (tree DAG / non-empty fields)
+    BE->>DB: UPDATE cases SET status='REVIEWED' (and update nodes/text)
     BE-->>FE: 200 OK (Updated)
     Lecturer->>FE: Clicks "Approve Case"
     FE->>BE: POST /api/v1/cases/{caseId}/approve
@@ -88,89 +89,148 @@ sequenceDiagram
     BE-->>FE: 200 OK
     Lecturer->>FE: Clicks "Publish to Students"
     FE->>BE: POST /api/v1/cases/{caseId}/publish
+    BE->>BE: Enforce publication invariants (INV-02 / INV-03)
     BE->>DB: UPDATE cases SET status='PUBLISHED'
     BE-->>FE: 200 OK (Case now accessible to students)
 ```
 
 ---
 
-## 4. Flow 4: Student Simulator & Decision Argument Capture
+## 4. Flow 4: Branching Study (Player, Attempt, Reasoning, Outcome, Reflection & Retry)
 
 ```mermaid
 sequenceDiagram
     autonumber
     actor Student
-    participant FE as React Frontend (Simulator)
+    participant FE as React Frontend (BranchingCasePlayerPage)
     participant BE as Backend Gateway
     participant DB as PostgreSQL
 
-    Student->>FE: Enters Simulator for published case
-    FE->>BE: POST /api/v1/cases/{caseId}/simulation/start
+    Student->>FE: Starts Branching Case (/student/cases/:caseId/branching-play)
+    FE->>BE: POST /api/v1/cases/{caseId}/branching-attempts
     BE->>DB: Verify case status is PUBLISHED
-    BE->>DB: INSERT INTO simulation_sessions (student_id, current_node=root_node_id)
+    BE->>DB: INSERT INTO branching_attempts (student_id, case_id, attempt_number=1, current_node_id=root_node_id)
     BE-->>FE: 200 OK (root CaseNode: situation, options)
-    Student->>FE: Selects Option B, reads immediate consequence
-    Student->>FE: Types short justification argument
-    FE->>BE: POST /api/v1/simulation/{sessionId}/decision (nodeId, optionId, argumentText)
-    BE->>DB: INSERT INTO student_arguments (argument_text, option_id, node_id)
-    BE->>DB: UPDATE simulation_sessions SET current_node_id=option.next_node_id
-    BE-->>FE: 200 OK (Saved; triggers Debate Assistant modal)
-```
-
----
-
-## 5. Flow 5: AI Debate Assistant (Devil's Advocate Challenge)
-
-```mermaid
-sequenceDiagram
-    autonumber
-    actor Student
-    participant FE as React Frontend
-    participant BE as Backend Gateway
-    participant AI as FastAPI AI Service
-    participant LLM as LLM Provider (Gemini / OpenAI)
-    participant DB as PostgreSQL
-
-    FE->>BE: POST /api/v1/debate/start (argumentId)
-    BE->>DB: INSERT INTO debate_sessions (argument_id, current_round=1)
-    BE->>AI: POST /internal/v1/debate/challenge (argument_text, situation, option, round=1)
-    AI->>AI: System Prompt: "You are a Socratic Devil's Advocate. Ask 1 counter-question. DO NOT GRADE."
-    AI->>LLM: Generate counter-question
-    LLM-->>AI: Single targeted counter-question
-    AI-->>BE: 200 OK (question_text)
-    BE->>DB: INSERT INTO debate_messages (role='AI_ASSISTANT', round=1, content=question_text)
-    BE-->>FE: 200 OK (Displays Round 1 counter-question to Student)
     
-    opt Student Responds (Round 2)
-        Student->>FE: Types rebuttal / response
-        FE->>BE: POST /api/v1/debate/{debateId}/respond (response_text)
-        BE->>DB: INSERT INTO debate_messages (role='STUDENT', round=2, content=response_text)
-        BE->>AI: POST /internal/v1/debate/challenge (student_response, round=2)
-        AI->>LLM: Generate final counter-question / reflection
-        LLM-->>AI: Final reflection question
-        AI-->>BE: 200 OK (final_question)
-        BE->>DB: INSERT INTO debate_messages (role='AI_ASSISTANT', round=2, content=final_question)
-        BE->>DB: UPDATE debate_sessions SET current_round=2, is_completed=TRUE
-        BE-->>FE: 200 OK (Debate completed — no further rounds permitted)
+    loop At each Decision Point
+        Student->>FE: Selects Option, enters written reasoning per attempt
+        FE->>BE: POST /api/v1/branching-attempts/{attemptId}/reasoning (nodeId, selectedOptionId, reasoningText)
+        BE->>DB: INSERT INTO student_reasoning (attempt_id, node_id, selected_option_id, reasoning_text)
+        BE->>DB: UPDATE branching_attempts SET current_node_id=option.next_node_id
+        BE-->>FE: 200 OK (Reveals lecturer-authored consequence card)
+        opt Optional Challenge Support
+            FE->>BE: Initiate Challenge Support (see Flow 6)
+        end
+    end
+
+    Note over Student,DB: Student reaches terminal node (is_terminal=TRUE)
+    BE->>DB: UPDATE branching_attempts SET outcome_node_id=terminalNodeId, is_completed=TRUE
+    FE->>Student: Displays final outcome summary
+    Student->>FE: Navigates to Reflection (/student/cases/:caseId/attempt/:attemptId/reflect)
+    Student->>FE: Submits reflection text
+    FE->>BE: POST /api/v1/branching-attempts/{attemptId}/reflection (reflectionText)
+    BE->>DB: UPDATE branching_attempts SET reflection_text=..., reflection_status='SUBMITTED'
+    BE-->>FE: 200 OK
+
+    opt Student Decides to Retry
+        Student->>FE: Clicks "Retry Case"
+        FE->>BE: POST /api/v1/cases/{caseId}/branching-attempts (starts Attempt #2)
+        BE->>DB: INSERT INTO branching_attempts (attempt_number=2, ...)
     end
 ```
 
 ---
 
-## 6. Flow 6: Lecturer Statistics & Research Data Inspection
+## 5. Flow 5: Review Study (Context/Data, Problem, Submission, Feedback & Reflection)
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Student
+    actor Lecturer
+    participant FE as React Frontend (ReviewStudyPage)
+    participant BE as Backend Gateway
+    participant DB as PostgreSQL
+
+    Student->>FE: Opens Review Study Case (/student/cases/:caseId/review-study)
+    FE->>BE: GET /api/v1/cases/{caseId}
+    BE-->>FE: 200 OK (context_text, problem_text)
+    Student->>FE: Enters analysis (optional), proposed solution, and reasoning
+    FE->>BE: POST /api/v1/cases/{caseId}/review-study/submissions
+    BE->>DB: INSERT INTO review_study_submissions (student_id, case_id, student_analysis, proposed_solution, reasoning_text, submission_status='SUBMITTED')
+    BE-->>FE: 201 Created (Submission recorded)
+
+    Lecturer->>FE: Inspects submissions (/lecturer/cases/:caseId/feedback)
+    Lecturer->>FE: Enters feedback text
+    FE->>BE: POST /api/v1/lecturer-feedback (reviewSubmissionId, feedbackText)
+    BE->>DB: INSERT INTO lecturer_feedback (lecturer_id, review_submission_id, feedback_text)
+    BE->>DB: UPDATE review_study_submissions SET submission_status='REVIEWED'
+    BE-->>FE: 201 Created
+
+    Student->>FE: Views feedback (/student/cases/:caseId/review-study/:submissionId/feedback)
+    Student->>FE: Writes reflection on lecturer feedback
+    FE->>BE: POST /api/v1/review-study/submissions/{submissionId}/reflection (reflectionText)
+    BE->>DB: UPDATE review_study_submissions SET reflection_text=..., reflection_status='SUBMITTED', submission_status='REFLECTED'
+    BE-->>FE: 200 OK
+```
+
+---
+
+## 6. Flow 6: AI Reasoning & Challenge Support (Both Modes)
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Student
+    participant FE as React Frontend (ChallengeSupportPage)
+    participant BE as Backend Gateway
+    participant AI as FastAPI AI Service
+    participant LLM as LLM Provider (Gemini / OpenAI)
+    participant DB as PostgreSQL
+
+    FE->>BE: POST /api/v1/challenge-support/start (reasoningId OR reviewSubmissionId)
+    BE->>DB: INSERT INTO challenge_support_sessions (reasoning_id OR review_submission_id, current_round=1)
+    BE->>AI: POST /internal/v1/challenge-support/question (student_reasoning, case_context, round=1)
+    AI->>AI: System Prompt: "You are an AI Reasoning & Challenge Support assistant. Ask 1 challenge question. NO GRADING."
+    AI->>LLM: Generate counter-question
+    LLM-->>AI: Single targeted challenge question
+    AI-->>BE: 200 OK (counter_question)
+    BE->>DB: INSERT INTO challenge_messages (role='CHALLENGE_SUPPORT', round_number=1, content=counter_question)
+    BE-->>FE: 200 OK (Displays Round 1 question)
+    
+    opt Student Responds (Round 2)
+        Student->>FE: Enters response
+        FE->>BE: POST /api/v1/challenge-support/{sessionId}/respond (response_text)
+        BE->>DB: INSERT INTO challenge_messages (role='STUDENT', round_number=2, content=response_text)
+        BE->>AI: POST /internal/v1/challenge-support/question (student_response, round=2)
+        AI->>LLM: Generate final challenge question
+        LLM-->>AI: Final question
+        AI-->>BE: 200 OK (final_question)
+        BE->>DB: INSERT INTO challenge_messages (role='CHALLENGE_SUPPORT', round_number=2, content=final_question)
+        BE->>DB: UPDATE challenge_support_sessions SET current_round=2, is_completed=TRUE
+        BE-->>FE: 200 OK (Session completed — hard cap 2 rounds enforced)
+    end
+```
+
+---
+
+## 7. Flow 7: Basic Learning-Flow Statistics
 
 ```mermaid
 sequenceDiagram
     autonumber
     actor Lecturer
-    participant FE as React Frontend (Statistics)
+    participant FE as React Frontend (StatisticsPage)
     participant BE as Backend Gateway
     participant DB as PostgreSQL
 
-    Lecturer->>FE: Navigates to Course Statistics
-    FE->>BE: GET /api/v1/courses/{courseId}/statistics
-    BE->>DB: Aggregate branch selections (COUNT per case_option_id)
-    BE->>DB: Aggregate session completion rates
-    BE-->>FE: 200 OK (JSON with branch distribution, student argument list)
-    FE->>Lecturer: Renders decision breakdown charts & argument review table
+    Lecturer->>FE: Navigates to Case Statistics (/lecturer/statistics)
+    FE->>BE: GET /api/v1/cases/{caseId}/statistics
+    BE->>DB: Query completion rates (branching_attempts.is_completed)
+    BE->>DB: Query branch distributions (student_reasoning.selected_option_id)
+    BE->>DB: Query attempt distributions (branching_attempts.attempt_number)
+    BE->>DB: Query terminal outcomes (branching_attempts.outcome_node_id)
+    BE->>DB: Query progression status (reflection_status / submission_status)
+    BE-->>FE: 200 OK (Aggregated metrics DTO)
+    FE->>Lecturer: Renders summary cards and distribution breakdowns
 ```

@@ -1,4 +1,4 @@
-﻿# CaseTree AI — Project Direction Audit
+# CaseTree AI — Project Direction Audit
 
 > **Audit Type**: Read-Only Source-of-Truth & Architectural Direction Audit  
 > **Target System**: CaseTree AI (`https://github.com/HoangNam2464/CaseTree-AI`)  
@@ -101,9 +101,9 @@ The current repository reflects the state after bootstrap scaffolding and docume
 | Area | Proposal Specification | Current Repository Reality | Alignment | Issue / Discrepancy |
 | :--- | :--- | :--- | :---: | :--- |
 | **Product Purpose** | Branching case studies + AI debate for university education | Accurately documented in README, architecture, and feature specs | **Fully Aligned** | None. |
-| **Target Actors** | Lecturer and Student | Entity `Role.java` (`LECTURER`, `STUDENT`), route guards, UI layouts | **Fully Aligned** | None. |
-| **Course Context** | Course container bound to lecturer; materials belong to course | `Course.java`, `courses` table, `/lecturer/courses` UI shell | **Fully Aligned** | None. |
-| **Teaching Materials** | PDF / DOCX upload stored for RAG processing | `TeachingMaterial.java`, MinIO object storage config | **Fully Aligned** | None. |
+| **Target Actors** | Lecturer and Student | Entity `Role` (`LECTURER`, `STUDENT`), route guards, UI layouts | **Fully Aligned** | None. |
+| **Course Context** | Course container bound to lecturer; materials belong to course | `Course` entity, `courses` table, `/lecturer/courses` UI shell | **Fully Aligned** | None. |
+| **Teaching Materials** | PDF / DOCX upload stored for RAG processing | `TeachingMaterial` entity, MinIO object storage config | **Fully Aligned** | None. |
 | **RAG Pipeline** | Parse → Chunk → Embed → pgvector → Context | `document_chunks` table, PyPDF/python-docx/LangChain stubs | **Fully Aligned** | LangChain must remain allowed option, not mandatory. |
 | **Decision Tree Model** | Situation → Options → Consequences → Next Node | `CaseNode`, `CaseOption`, Pydantic tree schema, DAG cycle validator | **Fully Aligned** | None. |
 | **Human-in-the-Loop** | Lecturer review & approval before publishing | `CaseStatus` state machine (`DRAFT→REVIEWED→APPROVED→PUBLISHED`) | **Fully Aligned** | None. |

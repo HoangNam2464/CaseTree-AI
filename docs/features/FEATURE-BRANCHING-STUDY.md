@@ -1,138 +1,79 @@
-# Feature: Interactive Case Simulator & Student Argument Capture
+# Feature: Branching Study & Student Reasoning Capture
 
-> **Authoritative Traceability**: Items 20, 21, 22, 23 (Proposal Section 2 p. 6, Section 4 p. 7, Section 6 p. 10)  
-> **Target Package / Module**: Backend `simulation/`, `argument/` · Frontend `pages/student/SimulatorPage.tsx`, `features/simulator/`
+> **Authoritative Traceability**: Proposal V1.1 (lines 35, 59, 76, 84)  
+> **Target Package / Module**: Backend `branching-attempt/`, `reasoning/` · Frontend `pages/student/BranchingCasePlayerPage.tsx`, `pages/student/ReflectionPage.tsx`
 
 ---
 
 ## 1. Purpose
-Provides university students with an active, immersive **Interactive Case Simulator** where they role-play decision-making in branching scenarios. Rather than passively reading text, students make critical decisions at each situation node, view immediate real-world consequences of their choices, and are required to articulate a concise written justification/argument for each choice made.
+Provides university students with an active, immersive **Branching Case Player** where they navigate complex dilemma scenarios structured as a decision tree. Rather than passively reading text, students make critical decisions at each situation node (Decision Point), articulate written reasoning justifying each choice per attempt, view lecturer-authored consequences, reach an outcome, reflect, and may optionally retry the scenario to explore alternative paths.
 
 ---
 
 ## 2. Actors
-- **Student**: Traverses the case study, selects decisions, views consequences, and writes reasoning arguments.
-- **Backend Gateway**: Manages simulation sessions, verifies publication status, records decisions and arguments.
-- **Frontend (SimulatorPage)**: Interactive student UI rendering the current situation node, option cards, consequence reveal, and argument input form.
+- **Student**: Navigates branching cases, chooses decision options, provides written reasoning per attempt, reflects upon reaching an outcome, and retries if desired.
+- **Lecturer**: Authors/approves case tree nodes and consequences, inspects student reasoning and completion metrics, provides qualitative feedback.
+- **Backend Gateway**: Manages `branching_attempts`, verifies case publication status, stores `student_reasoning`, and tracks reflection status.
+- **Frontend (BranchingCasePlayerPage)**: Interactive student UI rendering the current situation node, option choices, consequence reveal, reasoning form, and progression controls.
 
 ---
 
 ## 3. Scope
-- Initializing simulation sessions for published cases.
-- Step-by-step node presentation (situation text, available decision options).
-- Capturing student option selection (`StudentDecision`).
-- Revealing the immediate consequence corresponding to the selected option.
-- Capturing student written justification/argument (minimum length enforced).
-- Triggering the AI Debate Assistant upon argument submission.
-- Advancing the simulation session to the next node until reaching a terminal state.
+- Initiating a new attempt (`branching_attempts`) for `PUBLISHED` cases in `BRANCHING_STUDY` mode.
+- Presenting Decision Points (situation text, available options).
+- Capturing student option selection (`selected_option_id NOT NULL`).
+- Capturing written justification (`student_reasoning.reasoning_text`, owned by `attempt_id NOT NULL`).
+- Revealing lecturer-authored immediate consequences (`case_options.consequence`).
+- Optional AI Reasoning/Challenge Support on the submitted reasoning (max 2 rounds, no grading).
+- Advancing the attempt to the next situation node until reaching a terminal outcome node (`outcome_node_id`).
+- Student Reflection after outcome (`reflection_text`, `reflection_status`).
+- Starting a new attempt (Retry) with incremented `attempt_number`.
 
 ---
 
 ## 4. Functional Requirements
-- **FR-SIM-01**: The system shall permit enrolled students to start a simulation session for any case in `PUBLISHED` status.
-- **FR-SIM-02**: The simulator shall present the current node's `situation` and display all available `CaseOption` choices.
-- **FR-SIM-03**: Upon student selection of an option, the system shall display the immediate `consequence` text.
-- **FR-SIM-04**: The system shall require the student to submit a short written justification (`argument_text`) explaining the rationale behind their decision before progressing.
-- **FR-SIM-05**: The system shall record the argument in `student_arguments` table, linked to the `simulation_sessions` record, node, and selected option.
-- **FR-SIM-06**: After argument submission, the system shall transition to the AI Debate Assistant modal or next situation node.
-- **FR-SIM-07**: When the student reaches a node with `is_terminal = TRUE` (or an option where `next_node_id = NULL`), the session shall be marked as completed (`is_completed = TRUE`).
+- **FR-BS-01**: The system shall permit students to start an attempt (`branching_attempts`) for any case in `PUBLISHED` status with `learning_mode = 'BRANCHING_STUDY'`.
+- **FR-BS-02**: The player shall present the current node's `situation` and display all available `CaseOption` choices.
+- **FR-BS-03**: Upon selecting an option, the student must provide written reasoning (`reasoning_text`) before advancing.
+- **FR-BS-04**: The system shall record reasoning in `student_reasoning`, owned strictly by `attempt_id NOT NULL` with `UNIQUE(attempt_id, node_id)`.
+- **FR-BS-05**: After reasoning submission, the system reveals the lecturer-authored `consequence` text.
+- **FR-BS-06**: The student may optionally engage in AI Reasoning/Challenge Support (max 2 rounds, counter-questions only).
+- **FR-BS-07**: When reaching a terminal node (`is_terminal = TRUE`), the attempt records `outcome_node_id` and is marked `is_completed = TRUE`.
+- **FR-BS-08**: Upon completion, the student is prompted to write a reflection (`reflection_text`).
+- **FR-BS-09**: Students may initiate a retry, creating a new `branching_attempts` record with `attempt_number = previous + 1`.
 
 ---
 
 ## 5. Main Flow
-1. Student navigates to `/student/cases/:caseId/simulate`.
-2. Frontend requests `POST /api/v1/cases/{caseId}/simulation/start`.
-3. Backend creates a record in `simulation_sessions` with `current_node_id = case.root_node_id` and returns the root `CaseNode`.
-4. Student reads the initial dilemma situation and reviews Option A and Option B.
-5. Student clicks "Select Option A".
-6. The UI reveals Option A's immediate consequence card.
-7. An argument input field appears: *"Explain your reasoning for choosing this action (50–500 words)."*
-8. Student types justification and clicks "Submit Argument".
-9. Frontend sends `POST /api/v1/simulation/{sessionId}/decision` with `{ nodeId, optionId, argumentText }`.
-10. Backend saves the `StudentArgument` record and opens a `DebateSession`.
-11. The AI Debate Assistant challenges the student's argument (see `FEATURE-DEBATE-ASSISTANT.md`).
-12. Once the debate round concludes, the student clicks "Continue to Next Situation".
-13. Backend updates `simulation_sessions.current_node_id = option.next_node_id`.
-14. Simulator loads the next situation node.
-15. If the next node is terminal, simulator presents final outcome summary and marks session complete.
+1. Student navigates to `/student/cases/:caseId/branching-play`.
+2. Frontend requests `POST /api/v1/cases/{caseId}/branching-attempts`.
+3. Backend creates a record in `branching_attempts` (`attempt_number = 1`, `current_node_id = case.root_node_id`) and returns the root `CaseNode`.
+4. Student reads the situation and options at the Decision Point.
+5. Student selects an option and enters written reasoning in the justification form.
+6. Frontend sends `POST /api/v1/branching-attempts/{attemptId}/reasoning` with `{ nodeId, selectedOptionId, reasoningText }`.
+7. Backend validates option belongs to node and stores record in `student_reasoning`.
+8. Consequence card is revealed to the student.
+9. [Optional] Student interacts with AI Reasoning/Challenge Support (see `FEATURE-AI-REASONING-CHALLENGE-SUPPORT.md`).
+10. Student clicks "Continue to Next Situation". Attempt advances to `option.next_node_id`.
+11. Steps 4–10 repeat until reaching a terminal node (`is_terminal = TRUE`).
+12. Terminal outcome is displayed, `outcome_node_id` is recorded, and `is_completed` is set to `TRUE`.
+13. Student navigates to `/student/cases/:caseId/attempt/:attemptId/reflect` to submit their reflection.
+14. Student may return to case dashboard or click "Retry Case" to start Attempt #2.
 
 ---
 
-## 6. Inputs
-- Start Session: `caseId` (UUID).
-- Submit Decision: `sessionId` (UUID), `nodeId` (UUID), `optionId` (UUID), `argumentText` (string, required, e.g., 20–2000 chars).
+## 6. Business Rules & Invariants
+- **INV-01**: Students cannot access cases that are not `PUBLISHED`.
+- **INV-05**: `student_reasoning.attempt_id` is the structural owner of reasoning. Reasoning belongs to the attempt, not to the option globally.
+- **INV-06**: One reasoning record per Decision Point per Attempt (`UNIQUE(attempt_id, node_id)`).
+- **INV-07**: `selected_option_id` must belong to `node_id`'s options (service layer validation).
+- **INV-12**: Retrying creates a NEW `branching_attempts` row (`attempt_number + 1`); attempts are immutable in retrospect.
+- **INV-18**: No automated comparison, ranking, or scoring across attempts.
 
 ---
 
-## 7. Outputs
-- Current Node State: `{ nodeId, situation, options: [{ id, text }], isTerminal: boolean }`.
-- Consequence & Argument Confirmation: `{ argumentId, consequenceText, debateAvailable: boolean }`.
-- Session Summary: `{ sessionId, isCompleted: boolean, pathTaken: [{ nodeTitle, optionChosen, consequence }] }`.
-
----
-
-## 8. Business Rules
-- **BR-SIM-01**: **No Blind Skipping**: A student cannot advance to the next node without submitting an argument justifying their choice.
-- **BR-SIM-02**: **Immutable Decision Path**: Once an argument is submitted for a node, the decision at that node cannot be altered during that active session.
-- **BR-SIM-03**: **Access Gated to Published**: Sessions cannot be initiated for non-published cases under any circumstances.
-- **BR-SIM-04**: **Argument Privacy**: A student's arguments are visible only to that student and the lecturer of the course.
-
----
-
-## 9. Permissions
-- Role `STUDENT`: Authorized to simulate published cases and submit arguments for their own sessions.
-- Role `LECTURER`: Authorized to inspect anonymized or cohort-level simulation progress and argument submissions.
-
----
-
-## 10. Dependencies
-- PostgreSQL tables `simulation_sessions`, `student_arguments`.
-- Case Domain Model (`CaseNode`, `CaseOption`).
-- Feature Debate Assistant for triggering post-argument debate.
-
----
-
-## 11. Data Involved
-- **Table `simulation_sessions`**:
-  - `id`: UUID (PK)
-  - `student_id`: UUID NOT NULL REFERENCES users(id)
-  - `case_id`: UUID NOT NULL REFERENCES cases(id)
-  - `current_node_id`: UUID REFERENCES case_nodes(id)
-  - `is_completed`: BOOLEAN DEFAULT FALSE
-  - `started_at`, `updated_at`, `completed_at`: TIMESTAMPTZ
-- **Table `student_arguments`**:
-  - `id`: UUID (PK)
-  - `session_id`: UUID NOT NULL REFERENCES simulation_sessions(id)
-  - `student_id`: UUID NOT NULL REFERENCES users(id)
-  - `case_id`: UUID NOT NULL REFERENCES cases(id)
-  - `node_id`: UUID NOT NULL REFERENCES case_nodes(id)
-  - `option_id`: UUID NOT NULL REFERENCES case_options(id)
-  - `argument_text`: TEXT NOT NULL
-  - `submitted_at`: TIMESTAMPTZ
-
----
-
-## 12. Error / Edge Cases
-- Argument too short (< 20 characters): Reject client-side and server-side with validation error "Please elaborate on your reasoning".
-- Network interruption during submission: Frontend caches argument in local storage / Zustand until successfully acknowledged.
-- Attempting to advance an already completed session: Return HTTP 400 "Simulation session is already finished".
-
----
-
-## 13. Out of Scope
-- Multiplayer concurrent simulation where students take simultaneous collective votes.
-- Timed speed-run simulations with countdown clocks.
-- Audio/video argument submissions (text only in MVP).
-
----
-
-## 14. Related Documentation
-- [`docs/requirements/REQUIREMENT-TRACEABILITY.md`](../requirements/REQUIREMENT-TRACEABILITY.md) (Items 20, 21, 22, 23)
-- [`docs/architecture/DATA-FLOW.md`](../architecture/DATA-FLOW.md) (Flow 4)
-- [`docs/features/FEATURE-DEBATE-ASSISTANT.md`](FEATURE-DEBATE-ASSISTANT.md)
-
----
-
-## 15. Implementation Status
-**Structurally Scaffolded**  
-*(Modules in `backend/src/modules/simulation/` and `argument/`, database migration schema, and frontend `SimulatorPage.tsx` exist; active simulation session controllers and state transition logic remain unimplemented.)*
+## 7. Data Structures Involved
+- `cases` (`learning_mode = 'BRANCHING_STUDY'`, `root_node_id NOT NULL`)
+- `case_nodes`, `case_options`
+- `branching_attempts` (`attempt_number`, `outcome_node_id`, `reflection_text`, `reflection_status`)
+- `student_reasoning` (`attempt_id`, `node_id`, `selected_option_id`, `reasoning_text`)

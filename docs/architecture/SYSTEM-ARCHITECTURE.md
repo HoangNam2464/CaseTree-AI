@@ -1,4 +1,4 @@
-﻿# CaseTree AI — System Architecture
+# CaseTree AI — System Architecture
 
 **Status**: Scaffolded
 
@@ -11,7 +11,7 @@
 │  Client Tier (Browser)                                          │
 │  React 19 + Vite + TypeScript + TailwindCSS v4 + ReactFlow      │
 │  • Lecturer: courses, materials, case generation, review, stats │
-│  • Student: simulator, argument submission, debate              │
+│  • Student: branching player, review study, reasoning, challenge│
 └───────────────────────────────┬─────────────────────────────────┘
                                 │ REST API + JWT
                                 ▼
@@ -21,10 +21,12 @@
 │  • Users, Roles (LECTURER, STUDENT)                             │
 │  • Courses, Teaching Materials (metadata)                       │
 │  • Case Lifecycle (DRAFT→REVIEWED→APPROVED→PUBLISHED)           │
-│  • Simulation Sessions, Student Arguments                       │
-│  • Debate Session History (Max 2 Rounds)                        │
-│  • Lecturer Statistics                                          │
-│  • Internal HTTP Client → FastAPI                              │
+│  • Learning Modes: Branching Study & Review Study               │
+│  • Branching Attempts & Student Reasoning                       │
+│  • Review Study Submissions & Student Reflection                │
+│  • Challenge Support Sessions (Max 2 Rounds, No Grading)        │
+│  • Lecturer Feedback & Basic Statistics                         │
+│  • Internal HTTP Client → FastAPI                               │
 └────────────┬──────────────────┬──────────────────────┬──────────┘
              │ SQL / Schema     │ S3 Client            │ Internal HTTP + API Key
              ▼                  ▼                      ▼
@@ -33,9 +35,9 @@
 │  + pgvector      │  │  (PDF/DOCX)      │  │  • Document Parsing + Chunking  │
 │  (Business +     │  │                  │  │  • Embedding Generation         │
 │   Embeddings)    │  │                  │  │  • pgvector Retrieval           │
-└──────────────────┘  └──────────────────┘  │  • RAG Orchestration (Allowed)  │
-                                            │  • Case Generation (Structured)│
-┌──────────────────┐                        │  • Debate Counter-Questions     │
+└──────────────────┘  └──────────────────┘  │  • RAG Orchestration            │
+                                            │  • Case Generation (Structured) │
+┌──────────────────┐                        │  • AI Challenge Support         │
 │  Redis 7         │                        └────────────────────┬────────────┘
 │  (Cache/Session) │                                             │ LLM API
 └──────────────────┘                                             ▼
@@ -52,11 +54,11 @@
 ```mermaid
 flowchart TD
     subgraph Client ["🖥️ Client Tier (Browser)"]
-        FE["Frontend (React 19 + TypeScript)\n• TailwindCSS v4\n• ReactFlow (Decision Tree Visualization)\n• Lecturer Case Review & Student Simulator"]
+        FE["Frontend (React 19 + TypeScript)\n• TailwindCSS v4\n• ReactFlow (Decision Tree Visualization)\n• Lecturer Case Review & Student Players (Branching & Review)"]
     end
 
     subgraph Gateway ["🛡️ Backend Gateway (Node.js 20 LTS)"]
-        BG["NestJS 10 API Gateway\n• Auth & JWT (RBAC: Lecturer / Student)\n• Courses & Material Metadata\n• Case Lifecycle Management\n• Simulation Sessions & Argument Persistence\n• Debate Session History\n• Lecturer Statistics & REST API Gateway"]
+        BG["NestJS 10 API Gateway\n• Auth & JWT (RBAC: Lecturer / Student)\n• Courses & Material Metadata\n• Case Lifecycle (Branching & Review Modes)\n• Branching Attempts & Student Reasoning\n• Review Study Submissions & Reflection\n• Lecturer Feedback & Challenge Support Sessions\n• Basic Statistics & REST API Gateway"]
     end
 
     subgraph Storage ["💾 Persistence, Cache & Storage"]
@@ -66,7 +68,7 @@ flowchart TD
     end
 
     subgraph InternalAI ["🧠 AI Service (Python 3.12 — Internal Only)"]
-        AI["FastAPI AI Service\n• Document Parsing & Chunking\n• Embedding Generation\n• pgvector Retrieval & LangChain\n• Case Generation (Structured Output)\n• AI Debate Assistant (Max 2 Rounds)"]
+        AI["FastAPI AI Service\n• Document Parsing & Chunking\n• Embedding Generation\n• pgvector Retrieval & LangChain\n• Case Generation (Structured Output)\n• AI Reasoning/Challenge Support (Max 2 Rounds)"]
     end
 
     subgraph Providers ["☁️ External LLM Providers"]
@@ -88,7 +90,7 @@ flowchart TD
 2. **FastAPI is internal**: Never exposed to the public internet; requires `X-Internal-API-Key` authentication.
 3. **Untrusted document content**: Retrieved chunks always wrapped in `<sources>...</sources>` boundary.
 4. **Human-in-the-loop**: All AI-generated cases start as `DRAFT`; a lecturer must explicitly approve before publication.
-5. **AI does not grade**: Debate Assistant generates targeted counter-questions only (no grades, no pass/fail).
+5. **AI does not grade**: Challenge Support generates targeted counter-questions only (no grades, no scores, no pass/fail).
 
 ## See Also
 

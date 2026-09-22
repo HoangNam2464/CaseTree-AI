@@ -6,7 +6,9 @@
 ---
 
 ## 1. Purpose
-Empowers university lecturers to automatically transform static teaching materials into rich, interactive **Branching Decision Tree Case Studies**. Uses an LLM with **Structured Output** (JSON Schema enforcement) and RAG context to synthesize realistic situations, dilemma options, and immediate consequences grounded in authentic course content.
+Empowers university lecturers to automatically transform static teaching materials into rich, interactive **Branching Decision Tree Case Studies** (`learning_mode = 'BRANCHING_STUDY'`). Uses an LLM with **Structured Output** (JSON Schema enforcement) and RAG context to synthesize realistic situations, dilemma options, and immediate consequences grounded in authentic course content.
+
+> **Note on Learning Modes (Proposal V1.1)**: AI Case Generation in this pipeline generates Case Drafts for **Branching Study** (`learning_mode = 'BRANCHING_STUDY'`). Cases for **Review Study** (`learning_mode = 'REVIEW_STUDY'`) focus on `context_text` and `problem_text` without decision trees. Both modes follow the Common Flow: AI+RAG Draft → Lecturer Review/Edit → Lecturer Approve → Publish.
 
 ---
 

@@ -1,9 +1,9 @@
-﻿# CaseTree AI — Post-Scaffold Audit, Alignment & Self-Audit Report
+# CaseTree AI — Post-Scaffold Audit, Alignment & Self-Audit Report
 
 > **Document Status**: Authoritative Final Post-Scaffold Self-Audit  
 > **Date**: 2026-09-11  
 > **Authoritative Sources**:
-> 1. `C1SE_65-CaseTree-AI-Proposal_V1.0(5).docx` (Product Source of Truth)
+> 1. `C1SE_65-CaseTree-AI-Proposal_V1_1.docx` (Product Source of Truth — Updated to Proposal V1.1)
 > 2. Explicit Project Owner Decisions (Service boundary, PostgreSQL+pgvector, Redis, MinIO, AI-service separation)
 > 3. Repository Governance Rules (`.agents/rules/`, `.github/copilot-instructions.md`)
 
@@ -115,10 +115,10 @@ Across **all 11 feature areas and all 30 traceability items**, verified that **N
 
 | Feature Area / Traceability Concept | Business Implementation Status | Verification Evidence |
 | :--- | :---: | :--- |
-| 1. Authentication & JWT Workflow | **NOT IMPLEMENTED** | Only entity `User.java` and security filter shell exist; no registration/login controllers or token issuance services. |
-| 2. User & Role Management | **NOT IMPLEMENTED** | `Role.java` enum exists; no user CRUD or role assignment logic implemented. |
-| 3. Course Context Management | **NOT IMPLEMENTED** | `Course.java` entity exists; no course creation, update, or deletion services. |
-| 4. Teaching Material Upload | **NOT IMPLEMENTED** | `TeachingMaterial.java` entity and MinIO bucket script exist; no upload controller or multipart streaming logic. |
+| 1. Authentication & JWT Workflow | **NOT IMPLEMENTED** | User entity/schema and security filter shell exist; no registration/login controllers or token issuance services. |
+| 2. User & Role Management | **NOT IMPLEMENTED** | Role enum/type exists; no user CRUD or role assignment logic implemented. |
+| 3. Course Context Management | **NOT IMPLEMENTED** | Course entity/schema exists; no course creation, update, or deletion services. |
+| 4. Teaching Material Upload | **NOT IMPLEMENTED** | TeachingMaterial entity/schema and MinIO bucket script exist; no upload controller or multipart streaming logic. |
 | 5. Document Parsing (PDF/DOCX) | **NOT IMPLEMENTED** | Module placeholder exists; PyPDF / python-docx extraction loops are not implemented. |
 | 6. Document Chunking & Embeddings | **NOT IMPLEMENTED** | `chunker.py` and provider stubs exist; no active embedding batch generation or chunk persistence. |
 | 7. Vector Retrieval (RAG) | **NOT IMPLEMENTED** | pgvector schema defined; no active cosine similarity search queries or retriever classes. |
@@ -126,10 +126,10 @@ Across **all 11 feature areas and all 30 traceability items**, verified that **N
 | 9. Decision Tree Graph Invariants | **NOT IMPLEMENTED** | BFS validator function stub exists; no database graph assembly or interactive graph editing service. |
 | 10. Lecturer Review & Edit Workflow | **NOT IMPLEMENTED** | `CaseReviewPage.tsx` UI shell exists; no form submission handlers or node update endpoints. |
 | 11. Case Approval & Publishing | **NOT IMPLEMENTED** | `CaseStatus` enum exists; no state transition service or publication gate queries. |
-| 12. Student Interactive Simulator | **NOT IMPLEMENTED** | `SimulatorPage.tsx` UI shell and `SimulationSession.java` entity exist; no simulation navigation controller. |
+| 12. Student Interactive Simulator | **NOT IMPLEMENTED** | `BranchingCasePlayerPage.tsx` UI shell exists; no simulation navigation controller. |
 | 13. Student Decision & Consequence | **NOT IMPLEMENTED** | Consequence column exists in schema; no decision evaluation or consequence delivery controller. |
-| 14. Student Argument Capture | **NOT IMPLEMENTED** | `StudentArgument.java` entity exists; no argument submission or validation endpoints. |
-| 15. AI Debate Assistant | **NOT IMPLEMENTED** | `DebateSession.java` entity and request schema exist; no Socratic prompt generation or debate controller. |
+| 14. Student Argument Capture | **NOT IMPLEMENTED** | Student reasoning entity exists; no argument submission or validation endpoints. |
+| 15. AI Debate Assistant | **NOT IMPLEMENTED** | Challenge support session schema exists; no Socratic prompt generation or debate controller. |
 | 16. Lecturer Statistics & Analytics | **NOT IMPLEMENTED** | `StatisticsPage.tsx` shell exists; no database aggregation queries or statistics endpoints. |
 | 17. Notification Extension Point | **NOT IMPLEMENTED** | Package placeholder only; no email/in-app dispatch logic. |
 | 18. Quantitative Research Evaluation | **NOT IMPLEMENTED** | Boundary documented; no rubric scoring endpoints or trial data export logic. |

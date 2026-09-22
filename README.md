@@ -1,4 +1,4 @@
-﻿<p align="center">
+<p align="center">
   <h1 align="center">🎓 CaseTree AI</h1>
   <p align="center">
     <strong>AI Platform for Interactive Branching Case Studies and Open Review in University Teaching</strong>
@@ -37,9 +37,12 @@
 
 ## 📖 Overview
 
-**CaseTree AI** is a university-focused AI platform that empowers lecturers to generate interactive branching case studies directly from their syllabus materials (PDF / DOCX) and provides students with an interactive decision-tree simulator paired with an AI Debate Assistant for active learning.
+**CaseTree AI** is a university-focused AI platform that empowers lecturers to generate and facilitate interactive case studies directly from their syllabus materials (PDF / DOCX). It supports two distinct learning modes defined in Proposal V1.1:
 
-The system integrates **RAG (Retrieval-Augmented Generation)** with **Strict Structured Output** to construct well-formed decision trees. Every generated case begins in `DRAFT` status and requires explicit human review and approval by the course lecturer before publication (`APPROVED → PUBLISHED`), enforcing a mandatory **Human-in-the-Loop** gate.
+1. **Branching Study**: Students navigate interactive decision-tree dilemma scenarios, articulate written reasoning per attempt, view lecturer-authored consequences, reach an outcome, reflect, and optionally retry the scenario to explore alternative paths.
+2. **Review Study**: Students receive real-world case context, data, and an open problem, analyze it, propose a solution with reasoning, receive qualitative lecturer review and feedback, and engage in reflection.
+
+The platform includes embedded **AI Reasoning & Challenge Support** (1–2 rounds maximum, counter-questions only, strictly no grading or scoring). Every case follows the mandatory Human-in-the-Loop gate: `DRAFT → REVIEWED → APPROVED → PUBLISHED`.
 
 ---
 
@@ -49,34 +52,53 @@ The system integrates **RAG (Retrieval-Augmented Generation)** with **Strict Str
 > 
 > The CaseTree AI repository is currently in the **STRUCTURAL SKELETON ONLY** phase.
 > - ✅ Project structure, module boundaries, routing layouts, and configurations are established.
-> - ✅ Database schemas (DDL), indexes, vector extensions, and enums are defined.
+> - ✅ Database schemas (V1 Base + V2 New Flow Migration), indexes, vector extensions, and enums are defined.
 > - ✅ Pydantic schemas, TypeScript interfaces, DTO declarations, and health check endpoints (`/health`) are active.
-> - ❌ **NO business logic has been implemented yet.** Authentication flows, document chunking/parsing, pgvector RAG queries, LLM prompts, interactive simulator navigation, Debate Assistant turn generation, and lecturer analytics will be developed incrementally across feature sprint branches.
+> - ❌ **NO business logic has been implemented yet.** Feature implementations will be developed incrementally across sprint feature branches.
 
 ---
 
-## 🎓 Core Workflow
+## 🎓 Core Workflows
 
+### Common Flow (Case Creation to Publication)
 ```
-Lecturer uploads teaching materials (PDF / DOCX)
+Teaching Material (PDF / DOCX)
             ↓
-Material parsed, chunked, and embedded → stored in PostgreSQL + pgvector
+AI Service + RAG generates Case Draft (learning_mode = BRANCHING_STUDY or REVIEW_STUDY)
             ↓
-RAG retrieves relevant domain context for case generation
+Lecturer inspects, edits, and refines case (DRAFT → REVIEWED)
             ↓
-AI Service generates branching Decision Tree case (Validated JSON Schema)
+Lecturer approves the case (APPROVED)
             ↓
-Lecturer reviews and edits the tree via ReactFlow (DRAFT → REVIEWED → APPROVED)
+Lecturer publishes the case (PUBLISHED — accessible to students)
+```
+
+### Branching Study Flow
+```
+Context & Data → Decision Point → Select Option → Student Reasoning per Attempt
             ↓
-Lecturer publishes the case (PUBLISHED)
+Lecturer-authored Consequence revealed
             ↓
-Students navigate the Interactive Case Simulator node by node
+[Optional: AI Challenge Support, max 2 rounds, counter-questions only]
             ↓
-Student chooses decision branch & submits written justification / argument
+Next Node → ... → Terminal Outcome reached
             ↓
-AI Debate Assistant provides Socratic counter-questions (Max 2 rounds · No grading)
+Student Reflection submitted → [Optional: Retry creates New Attempt]
+```
+
+### Review Study Flow
+```
+Context & Data → Problem / Question Statement
             ↓
-Lecturer inspects branch choices, student reasoning, and aggregate analytics
+Student Analysis (optional) → Proposed Solution & Reasoning submitted
+            ↓
+[Optional: AI Challenge Support, max 2 rounds, counter-questions only]
+            ↓
+Submission Status: SUBMITTED
+            ↓
+Lecturer Reviews submission & provides Feedback → Status: REVIEWED
+            ↓
+Student Reflection on Feedback submitted → Status: REFLECTED
 ```
 
 ---
@@ -93,11 +115,11 @@ The system strictly enforces a three-tier architecture:
 ```mermaid
 flowchart TD
     subgraph Client ["🖥️ Client Tier (Browser)"]
-        FE["Frontend (React 19 + TypeScript)\n• TailwindCSS v4\n• ReactFlow (Decision Tree Visualization)\n• Lecturer Review Canvas & Student Simulator"]
+        FE["Frontend (React 19 + TypeScript)\n• TailwindCSS v4\n• ReactFlow (Decision Tree Visualization)\n• Lecturer Review Canvas & Student Players (Branching & Review)"]
     end
 
     subgraph Gateway ["🛡️ Backend Gateway (Node.js 20 LTS)"]
-        BG["NestJS 10 API Gateway\n• Auth & JWT (RBAC: Lecturer / Student)\n• Courses & Teaching Material Metadata\n• Case Lifecycle Management (DRAFT → PUBLISHED)\n• Simulation Sessions & Argument Persistence\n• Debate Session History (Max 2 Rounds)\n• Lecturer Statistics & REST API Gateway"]
+        BG["NestJS 10 API Gateway\n• Auth & JWT (RBAC: Lecturer / Student)\n• Courses & Teaching Material Metadata\n• Case Lifecycle Management (Two Learning Modes)\n• Branching Attempts & Student Reasoning\n• Review Submissions, Reflection & Lecturer Feedback\n• Challenge Support Sessions (Max 2 Rounds)\n• Basic Statistics & REST API Gateway"]
     end
 
     subgraph Storage ["💾 Persistence, Cache & Storage"]
@@ -107,7 +129,7 @@ flowchart TD
     end
 
     subgraph InternalAI ["🧠 AI Service (Python 3.12 — Internal Only)"]
-        AI["FastAPI AI Service\n• Document Parsing & Chunking\n• Embedding Generation\n• pgvector Retrieval & LangChain\n• Case Generation (Structured Tree Output)\n• AI Debate Assistant (Socratic Questions)"]
+        AI["FastAPI AI Service\n• Document Parsing & Chunking\n• Embedding Generation\n• pgvector Retrieval & LangChain\n• Case Draft Generation (Structured Output)\n• AI Reasoning/Challenge Support (Max 2 Rounds)"]
     end
 
     subgraph Providers ["☁️ External LLM Providers"]
@@ -129,7 +151,7 @@ flowchart TD
 2. **AI Service is Internal**: FastAPI requires the `X-Internal-API-Key` header and does not expose Swagger documentation or endpoints to the public internet.
 3. **Untrusted Data Boundary**: Teaching materials and RAG chunks are treated as untrusted data. Content passed to the LLM must be wrapped in `<sources>...</sources>` to prevent prompt injection.
 4. **Mandatory Human-in-the-Loop**: Cases automatically generate in `DRAFT` status. Students can never view or simulate unapproved cases (`PUBLISHED` status enforced at the query level).
-5. **Debate Assistant Does Not Grade**: The Debate Assistant provides Devil's Advocate Socratic counter-questions capped at 2 rounds. It does not grade, assign scores, or evaluate pass/fail criteria.
+5. **AI Challenge Support Does Not Grade**: AI Challenge Support provides Socratic counter-questions capped at 2 rounds. It does not grade, assign scores, or evaluate pass/fail criteria.
 
 ---
 
@@ -149,7 +171,7 @@ flowchart TD
 | **Cache & Sessions** | Redis 7 | Revocation blacklist, transient session cache |
 | **Object Storage** | MinIO (S3 Compatible) | PDF / DOCX teaching syllabus uploads |
 | **Infrastructure** | Docker, Docker Compose | Multi-container local development stack |
-| **Database Migrations**| Flyway / SQL Migrations | Versioned DDL scripts (`infrastructure/postgres/migrations/`) |
+| **Database Migrations**| Flyway / SQL Migrations | Versioned DDL scripts (`V1__init_schema.sql`, `V2__new_flow_schema.sql`) |
 
 ---
 
@@ -162,16 +184,18 @@ CaseTree-AI/
 │   │   ├── app.module.ts            ← Main application module
 │   │   ├── main.ts                  ← Bootstrap entry point (Port 8080, /api/v1)
 │   │   ├── common/                  ← Health checks, guards, interceptors
-│   │   └── modules/                 ← 11 Domain feature modules (Skeleton)
+│   │   └── modules/                 ← Domain feature modules (Skeleton)
 │   │       ├── auth/                ← JWT authentication & login/register
 │   │       ├── user/                ← User entities & role management
 │   │       ├── course/              ← Course metadata & ownership
 │   │       ├── material/            ← Teaching material files
 │   │       ├── case/                ← Case lifecycle & decision tree graphs
-│   │       ├── simulation/          ← Student simulation sessions
-│   │       ├── argument/            ← Student decision justifications
-│   │       ├── debate/              ← Debate session state & 2-round cap
-│   │       ├── statistics/          ← Aggregate lecturer analytics
+│   │       ├── branching-attempt/   ← Branching Study student attempts & navigation
+│   │       ├── reasoning/           ← Student reasoning per attempt
+│   │       ├── challenge-support/   ← AI Reasoning/Challenge Support session state
+│   │       ├── review-study/        ← Review Study submissions & workflow
+│   │       ├── lecturer-feedback/   ← Lecturer Review/Feedback on student work
+│   │       ├── statistics/          ← Basic learning-flow statistics
 │   │       ├── notification/        ← Notification extension point
 │   │       └── evaluation/          ← Research rubric & export boundary
 │   └── package.json
@@ -184,7 +208,7 @@ CaseTree-AI/
 │   │   ├── ingestion/               ← Document parser (PDF/DOCX) & chunker
 │   │   ├── retrieval/               ← pgvector similarity search & LangChain
 │   │   ├── generation/              ← Structured decision tree generation schemas
-│   │   ├── debate/                  ← Socratic debate assistant schemas & caps
+│   │   ├── challenge_support/       ← AI challenge support schemas & 2-round cap
 │   │   └── evaluation/              ← Research evaluation helper stubs
 │   ├── requirements.txt
 │   └── .env.example
@@ -205,13 +229,13 @@ CaseTree-AI/
 │   ├── minio/                       ← MinIO bucket initialization scripts
 │   └── postgres/
 │       ├── init/                    ← Initial pgvector & database setup
-│       └── migrations/              ← V1__init_schema.sql (Complete DDL)
+│       └── migrations/              ← V1__init_schema.sql, V2__new_flow_schema.sql
 │
 ├── docs/                            ← Authoritative Project Documentation
 │   ├── architecture/                ← ADRs, system architecture, data flow
 │   ├── requirements/                ← Proposal traceability matrix
-│   ├── features/                    ← 11 Feature specifications
-│   └── ai/                          ← RAG & Debate Assistant specifications
+│   ├── features/                    ← Feature specifications (both learning modes)
+│   └── ai/                          ← RAG & Challenge Support specifications
 │
 ├── .githooks/                       ← Zero-dependency pre-commit safety hooks
 ├── scripts/                         ← Infrastructure startup automation scripts
