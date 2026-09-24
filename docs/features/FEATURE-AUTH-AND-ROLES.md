@@ -6,13 +6,13 @@
 ---
 
 ## 1. Purpose
-Provides secure identity management, authentication, and role-based access control (RBAC) separating university **Lecturers** and **Students**. Ensures that case authoring, review, and publishing workflows are restricted to lecturers, while case simulation and argument submission are scoped to enrolled students.
+Provides secure identity management, authentication, and role-based access control (RBAC) separating university **Lecturers** and **Students**. Ensures that case authoring, review, feedback, and publishing workflows are restricted to lecturers, while branching attempts, reasoning submissions, review study submissions, and reflections are scoped to enrolled students.
 
 ---
 
 ## 2. Actors
-- **Lecturer**: Authenticated university instructor who manages courses, uploads materials, and reviews/publishes cases.
-- **Student**: Authenticated university learner who accesses published cases, role-plays decision trees, and debates with the AI assistant.
+- **Lecturer**: Authenticated university instructor who manages courses, uploads materials, reviews/publishes cases, authors feedback, and inspects statistics.
+- **Student**: Authenticated university learner who accesses published cases, role-plays decision trees, submits reasoning, engages in AI reasoning/challenge support, and submits reflections.
 - **System**: Backend security filter validating JWT tokens and enforcing ownership boundaries.
 
 ---
@@ -30,8 +30,8 @@ Provides secure identity management, authentication, and role-based access contr
 - **FR-AUTH-01**: The system shall allow users to register with email, password, full name, and role (`LECTURER` or `STUDENT`).
 - **FR-AUTH-02**: The system shall authenticate users against stored password hashes and issue signed JWT access tokens.
 - **FR-AUTH-03**: The system shall enforce role checks on all protected API endpoints:
-  - Lecturer-only endpoints: Course creation, material upload, case generation, case review/edit, approval, publication, statistics.
-  - Student-only endpoints: Simulation session start, decision option selection, argument submission, debate participation.
+  - Lecturer-only endpoints: Course creation, material upload, case generation, case review/edit, approval, publication, feedback authoring, statistics.
+  - Student-only endpoints: Branching attempts, reasoning submission, review study submissions, challenge support interactions, student reflection.
 - **FR-AUTH-04**: The system shall provide an endpoint to inspect the currently authenticated user profile and active role (`GET /api/v1/auth/me`).
 
 ---
@@ -72,8 +72,8 @@ Provides secure identity management, authentication, and role-based access contr
 ## 9. Permissions
 - Public: `POST /api/v1/auth/login`, `POST /api/v1/auth/register`, `GET /api/v1/health`.
 - Authenticated (Any Role): `GET /api/v1/auth/me`.
-- Role `LECTURER`: All `/api/v1/courses/**`, `/api/v1/cases/**`, `/api/v1/materials/**`.
-- Role `STUDENT`: All `/api/v1/simulation/**`, `/api/v1/debate/**`.
+- Role `LECTURER`: All `/api/v1/courses/**`, `/api/v1/cases/**`, `/api/v1/materials/**`, `/api/v1/lecturer-feedback/**`, `/api/v1/statistics/**`.
+- Role `STUDENT`: All `/api/v1/branching-attempts/**`, `/api/v1/reasoning/**`, `/api/v1/review-study/**`, `/api/v1/challenge-support/**`.
 
 ---
 

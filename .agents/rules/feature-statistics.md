@@ -1,4 +1,4 @@
-﻿---
+---
 description: Rules for lecturer statistics in CaseTree AI.
 trigger: keyword
 keywords: [statistics, analytics, branch selection, participation, completion]
@@ -14,7 +14,7 @@ Frontend — `features/statistics/`.
 - Branch selection frequency per node per case
 - Participation count per case (how many students started/completed)
 - Completion rate per case
-- Simple argument inspection (list of student arguments for a case)
+- Simple reasoning inspection (list of student reasoning for a case)
 
 ## Excluded
 - Complex learning analytics dashboard — out of scope

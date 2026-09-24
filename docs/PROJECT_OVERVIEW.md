@@ -1,4 +1,4 @@
-﻿# CaseTree AI — Project Overview
+# CaseTree AI — Project Overview
 
 **Full Name**: CaseTree AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching
 **Version**: 0.0.1-SNAPSHOT (Scaffolded)
@@ -15,10 +15,12 @@ University lecturers need engaging, pedagogically rich case studies that challen
 ## Core Value Proposition
 
 1. **AI generates branching case studies** from the lecturer's own teaching materials (not generic content)
-2. **Lecturer reviews and controls publication** — mandatory human-in-the-loop
-3. **Students engage interactively** — not passive reading, but active decision-making
-4. **AI Debate Assistant challenges reasoning** — Socratic counter-questioning (not grading)
-5. **Lecturer can inspect outcomes** — simple statistics on branch choices and arguments
+2. **Lecturer reviews and controls publication** — mandatory human-in-the-loop (DRAFT → REVIEWED → APPROVED → PUBLISHED)
+3. **Supports dual learning modes**:
+   - **Branching Study**: interactive decision tree navigation, choice consequences, student reasoning capture, and post-outcome reflection
+   - **Review Study**: case data/context analysis, student proposed solutions, reasoning, lecturer feedback, and student reflection
+4. **AI Reasoning / Challenge Support probes reasoning** — Socratic counter-questions (1-2 rounds, NO grading)
+5. **Lecturer feedback & statistics** — qualitative commentary on student attempts/submissions, plus branch selection frequency and completion statistics
 
 ---
 
@@ -26,29 +28,34 @@ University lecturers need engaging, pedagogically rich case studies that challen
 
 | Actor | Role |
 |---|---|
-| **Lecturer** | Creates courses, uploads materials, reviews/publishes cases, inspects statistics |
-| **Student** | Navigates simulator, makes decisions, writes arguments, engages in debate |
+| **Lecturer** | Creates courses, uploads materials, reviews/publishes cases, authors feedback on student work, inspects statistics |
+| **Student** | Navigates Branching Case Player or Review Study, submits reasoning/solutions, engages in challenge support, reflects post-outcome/post-feedback |
 
 ---
 
 ## Core Workflow
 
+### Branching Study Flow
 ```
-1. Lecturer creates a Course
-2. Lecturer uploads Teaching Materials (PDF / DOCX)
-3. Materials are processed: parsed → chunked → embedded → pgvector
-4. Lecturer triggers AI Case Generation
-5. RAG retrieves relevant material → LLM generates branching case (JSON)
-6. Case created as DRAFT
-7. Lecturer reviews, edits, approves the case
-8. Lecturer publishes the case (PUBLISHED)
-9. Student opens the Case Simulator
-10. Student navigates the decision tree (Situation → Option → Consequence → Next Node)
-11. Student writes a justification/argument
-12. AI Debate Assistant asks 1 counter-question
-13. Student may respond (Round 2)
-14. Debate ends — session completed
-15. Lecturer reviews branch patterns and student arguments
+1. Lecturer creates Course and uploads Teaching Materials (PDF / DOCX)
+2. Materials processed: parsed → chunked → embedded → pgvector
+3. Lecturer triggers AI Case Generation (Branching Study)
+4. RAG retrieves relevant material → LLM generates decision tree (JSON)
+5. Lecturer reviews, edits, approves, and publishes the case (PUBLISHED)
+6. Student opens Branching Case Player, navigates nodes: Situation → Option selection → Student Reasoning submission → Consequence reveal
+7. Optional AI Reasoning / Challenge Support (1-2 rounds of counter-questions, no grading)
+8. Terminal outcome node reached → Student submits Post-Outcome Reflection
+9. Lecturer inspects attempt path/reasoning and provides Lecturer Feedback
+```
+
+### Review Study Flow
+```
+1. Lecturer creates Review Study case with context_text and problem_text, then publishes
+2. Student analyzes context, formulates proposed_solution and reasoning_text
+3. Optional AI Reasoning / Challenge Support probes student solution/reasoning (1-2 rounds)
+4. Student submits work (SUBMITTED)
+5. Lecturer reviews submission and writes qualitative Lecturer Feedback (transitions to REVIEWED)
+6. Student reviews lecturer feedback and submits Student Reflection (transitions to REFLECTED)
 ```
 
 ---
@@ -80,9 +87,9 @@ University lecturers need engaging, pedagogically rich case studies that challen
 | | [Decision Tree Model](architecture/DECISION-TREE-MODEL.md) | Invariants & JSON schema for branching cases |
 | | [Bootstrap Audit](architecture/BOOTSTRAP-AUDIT.md) | Comprehensive 11-section self-audit |
 | **Features** | [Feature Specifications](features/) | 11 comprehensive 15-section specifications |
-| **Data & AI** | [Data Model](database/DATA-MODEL.md) | PostgreSQL schema & Flyway migration guide |
+| **Data & AI** | [Data Model](database/DATA-MODEL.md) | PostgreSQL schema & SQL migration guide |
 | | [RAG Pipeline](ai/RAG-PIPELINE.md) | Document parsing, chunking, retrieval & sources |
-| | [Debate Assistant](ai/DEBATE-ASSISTANT.md) | Devil's advocate rules & 2-round cap |
+| | [Reasoning & Challenge Support](ai/REASONING-CHALLENGE-SUPPORT.md) | Counter-question rules, 2-round cap, non-grading mandate |
 | **Research & QA** | [Testing Strategy](qa/TESTING-STRATEGY.md) | Test profiles, test boundaries & CI checks |
 | | [Evaluation Design](research/EVALUATION-DESIGN.md) | Research questions, rubrics & dataset export |
 
@@ -101,12 +108,15 @@ All features are classified strictly under three states:
 | Course Context | Structurally Scaffolded | Course entity, DTOs, and page shell |
 | Teaching Materials & Upload | Structurally Scaffolded | Material metadata entity, MinIO config |
 | Document Processing & RAG | Structurally Scaffolded | Parser/chunker shells, pgvector retrieval schema |
-| AI Case Generation | Structurally Scaffolded | Pydantic schema, BFS validator, provider abstraction |
+| AI Case Generation | Structurally Scaffolded | Pydantic schema, DFS validator, provider abstraction |
 | Decision Tree Model | Structurally Scaffolded | Node, Option, Consequence domain models |
 | Lecturer Review & Publishing | Structurally Scaffolded | ReactFlow canvas shell, status lifecycle |
-| Student Simulator | Structurally Scaffolded | Simulation session model, node navigation shell |
-| Student Argument Capture | Structurally Scaffolded | Argument model, justification submission shell |
-| AI Debate Assistant | Structurally Scaffolded | 2-round schema validator, debate message model |
+| Branching Case Player & Attempts | Structurally Scaffolded | Attempt entity, node navigation shell, retry support |
+| Student Reasoning Capture | Structurally Scaffolded | Reasoning entity, justification submission shell |
+| Review Study Mode | Structurally Scaffolded | Submission entity, solution/reasoning forms |
+| AI Reasoning / Challenge Support | Structurally Scaffolded | 2-round schema validator, challenge message model |
+| Student Reflection | Structurally Scaffolded | Post-outcome / post-feedback reflection shell |
+| Lecturer Feedback & Review | Structurally Scaffolded | Qualitative feedback entity, review dashboard |
 | Lecturer Statistics | Structurally Scaffolded | Statistics aggregation query shells, page shell |
 | Notifications | Documented | Proposal options (In-App / Email / Hybrid) |
 | Quantitative Evaluation & Research | Documented | Rubric / export boundary (Implementation open) |

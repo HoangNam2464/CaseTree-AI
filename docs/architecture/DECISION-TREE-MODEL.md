@@ -1,15 +1,15 @@
-﻿# CaseTree AI — Decision Tree Domain Model
+# CaseTree AI — Decision Tree Domain Model
 
-**Status**: Scaffolded
+**Status**: Scaffolded | **Source of Truth**: Proposal V1.1
 
 ---
 
-## Overview
+## 1. Overview
 
-The decision tree is the core data structure of CaseTree AI.
+The decision tree is the core data structure of CaseTree AI for `BRANCHING_STUDY` mode.
 A Case is composed of CaseNodes connected by CaseOptions.
 
-## Entity Model
+## 2. Entity Model
 
 ```
 Case
@@ -18,9 +18,12 @@ Case
 ├── description: String
 ├── course_id: UUID → Course
 ├── created_by: UUID → User (LECTURER)
+├── learning_mode: CaseLearningMode (BRANCHING_STUDY | REVIEW_STUDY)
+├── context_text: TEXT?     ← Review Study background data
+├── problem_text: TEXT?     ← Review Study problem statement
 ├── status: CaseStatus (DRAFT | REVIEWED | APPROVED | PUBLISHED)
 ├── version: int
-├── root_node_id: UUID → CaseNode
+├── root_node_id: UUID? → CaseNode (Branching Study only)
 └── nodes: List<CaseNode>
 
 CaseNode
@@ -39,15 +42,15 @@ CaseOption
 └── next_node_id: UUID?      ← NULL = terminal path; FK → CaseNode (same Case)
 ```
 
-## Structural Invariants
+## 3. Structural Invariants
 
 1. **No orphan nodes**: Every node (except root) must be reachable from rootNode
 2. **No invalid references**: next_node_id must refer to a CaseNode in the same Case
-3. **No cycles**: BFS cycle detection must pass before case can be saved
+3. **No cycles**: DFS 3-color cycle detection must pass before case can be saved
 4. **At least one terminal**: Every decision tree must have at least one terminal path
 5. **Root node is valid**: root_node_id must point to an existing CaseNode in the Case
 
-## JSON Representation (AI Output Format)
+## 4. JSON Representation (AI Output Format)
 
 ```json
 {
@@ -94,7 +97,7 @@ CaseOption
 }
 ```
 
-## Case Lifecycle Flow
+## 5. Case Lifecycle Flow
 
 ```
 AI Generator produces DRAFT case
@@ -109,7 +112,7 @@ Lecturer approves (APPROVED)
           ↓
 Lecturer publishes (PUBLISHED)
           ↓
-Students access simulator
+Students access Branching Case Player
 ```
 
 Students can ONLY see cases in PUBLISHED status.

@@ -35,20 +35,26 @@ UI must be: **simple, clean, functional, and consistent.**
 
 ## 5. Page Structure by User Role
 
+> Route list mirrors the live `frontend/src/app/router.tsx` (see `docs/design/GLOBAL-DESIGN-SYSTEM.md` and `docs/design/screens/` for full per-screen specs).
+
 ### Lecturer Pages
 - `/lecturer/courses` — course list and creation
 - `/lecturer/courses/:courseId/materials` — material upload and status
-- `/lecturer/courses/:courseId/cases` — case list, trigger generation
-- `/lecturer/cases/:caseId/review` — decision tree review (ReactFlow), edit, approve, publish
+- `/lecturer/courses/:courseId/cases` — case list, filter by learning mode, trigger AI case generation
+- `/lecturer/cases/:caseId/review` — decision tree review (ReactFlow) for Branching Study / form editor for Review Study — edit, approve, publish
+- `/lecturer/cases/:caseId/feedback` — review student Review Study submissions / Branching Study attempts, write lecturer feedback
 - `/lecturer/statistics` — simple participation and branch statistics
 
 ### Student Pages
-- `/student/cases/:caseId/simulate` — decision-tree navigator
-- `/student/cases/:caseId/debate/:sessionId` — debate interface (argument + AI counter-question)
+- `/student/cases/:caseId/branching-play` — Branching Case Player (situation → options → reasoning → consequence → next node → outcome)
+- `/student/cases/:caseId/attempt/:attemptId/reflect` — post-outcome reflection
+- `/student/cases/:caseId/challenge/:sessionId` — AI Reasoning / Challenge Support (max 2 rounds; supports both Branching Study and Review Study targets)
+- `/student/cases/:caseId/review-study` — Review Study case analysis, proposed solution, and reasoning
+- `/student/cases/:caseId/review-study/:submissionId/feedback` — lecturer feedback + reflection for a Review Study submission
 
 ## 6. Decision Tree Visualization
 
-- Use ReactFlow for interactive decision tree display in case-review and simulator
+- Use ReactFlow for interactive decision tree display in Case Review (lecturer, editable) and the Branching Case Player (student, read-only navigation)
 - Nodes represent `CaseNode` (situation)
 - Edges represent `CaseOption` (decision + consequence)
 - Lecturer view: editable, node click opens edit panel

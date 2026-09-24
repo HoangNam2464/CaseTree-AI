@@ -1,4 +1,4 @@
-﻿# Feature: Quantitative Evaluation & Research Methodology
+# Feature: Quantitative Evaluation & Research Methodology
 
 > **Authoritative Traceability**: Items 28, 29, 30 (Proposal Section 2 p. 6, Section 4 p. 7, Section 6 p. 10, Section 10 p. 14)  
 > **Target Package / Module**: Backend `evaluation/` · AI Service `evaluation/` · Research Boundary  
@@ -14,7 +14,7 @@ Supports the core empirical research contribution of the Capstone project. Provi
 
 ## 2. Actors
 - **Lecturer / Evaluator**: Assesses case studies against educational rubrics.
-- **Student**: Participates in the classroom trial and completes post-simulation evaluation surveys.
+- **Student**: Participates in the classroom trial and completes post-outcome/post-case evaluation surveys.
 - **Research Lead (Product / QA)**: Analyzes quantitative outcomes, calculates statistical metrics, and prepares research findings.
 
 ---
@@ -24,7 +24,7 @@ Supports the core empirical research contribution of the Capstone project. Provi
   1. **Realism**: Plausibility of situations, options, and consequences.
   2. **Difficulty**: Cognitive challenge, trade-off complexity, ambiguity.
   3. **Course Alignment**: Grounding in authentic syllabus and lecture materials.
-- Tracking student argumentation metrics and debate engagement depth.
+- Tracking student reasoning metrics and challenge support engagement depth.
 - Future evaluation options:
   - **Option 1**: In-Platform Manual Rubric Scoring (lecturer scores cases and arguments directly in the UI).
   - **Option 2**: Structured Data Export (CSV/JSON) for offline statistical analysis.
@@ -38,11 +38,11 @@ Supports the core empirical research contribution of the Capstone project. Provi
   - Difficulty (1–5 Likert scale)
   - Alignment with course content (1–5 Likert scale)
 - **FR-EVAL-02**: The system shall allow comparative evaluation between AI-generated cases (via RAG) and traditional lecturer-authored cases.
-- **FR-EVAL-03**: The system shall capture student self-reported engagement and critical thinking survey responses post-simulation.
-- **FR-EVAL-04**: The system shall support structured data export of anonymized simulation results:
+- **FR-EVAL-03**: The system shall capture student self-reported engagement and critical thinking survey responses post-activity.
+- **FR-EVAL-04**: The system shall support structured data export of anonymized activity results:
   - Branch selection distributions
-  - Word counts and argument lengths
-  - Number of debate rounds engaged (0, 1, or 2)
+  - Word counts and reasoning lengths
+  - Number of challenge support rounds engaged (0, 1, or 2)
   - Rubric ratings assigned by evaluators
 - **FR-EVAL-05**: All exported research datasets MUST strip Personally Identifiable Information (PII) including student names, emails, and student IDs.
 
@@ -50,7 +50,7 @@ Supports the core empirical research contribution of the Capstone project. Provi
 
 ## 5. Main Flow (Research Experiment Workflow)
 1. **Case Setup**: The lecturer selects a course topic; one case is authored manually, while a paired case is generated via CaseTree AI's RAG pipeline.
-2. **Classroom Trial**: Students are divided into cohorts to simulate both cases, make decisions, and debate with the AI assistant.
+2. **Classroom Trial**: Students are divided into cohorts to complete cases, make decisions, submit reasoning/solutions, and interact with AI challenge support.
 3. **Rubric Evaluation**: Evaluators assess the cases using the standardized rubric (covering Realism, Difficulty, and Alignment).
 4. **Survey Capture**: Students complete a short post-case questionnaire regarding cognitive load and reasoning challenge.
 5. **Data Export & Analysis**: The research dataset is exported in anonymized format for comparative statistical analysis (e.g. t-tests or Mann-Whitney U tests comparing AI vs. human case ratings).
@@ -59,13 +59,13 @@ Supports the core empirical research contribution of the Capstone project. Provi
 
 ## 6. Inputs
 - Rubric Ratings: `caseId` (UUID), `evaluatorId` (UUID), `realismScore` (1–5), `difficultyScore` (1–5), `alignmentScore` (1–5), `qualitativeNotes` (text).
-- Post-Simulation Survey: `sessionId` (UUID), `surveyResponses` (key-value ratings).
+- Post-Case Survey: `attemptId` / `submissionId` (UUID), `surveyResponses` (key-value ratings).
 
 ---
 
 ## 7. Outputs
 - Evaluation Record: `{ evaluationId, caseId, averageRealism, averageDifficulty, averageAlignment }`.
-- Anonymized Dataset File: CSV or JSON export containing trial logs, branch choices, debate round counts, and rubric scores.
+- Anonymized Dataset File: CSV or JSON export containing trial logs, branch choices, challenge support round counts, and rubric scores.
 
 ---
 
@@ -85,14 +85,14 @@ Supports the core empirical research contribution of the Capstone project. Provi
 
 ## 10. Dependencies
 - Course and Case domain entities.
-- Simulation sessions, arguments, and debate history logs.
+- Branching attempts, student reasoning, review submissions, and challenge support history logs.
 
 ---
 
 ## 11. Data Involved
 - Future Conceptual Schema:
   - `evaluations`: Links `case_id`, `evaluator_id`, rubric scores, and timestamps.
-  - `surveys`: Stores anonymized student feedback linked to `simulation_sessions`.
+  - `surveys`: Stores anonymized student feedback linked to `branching_attempts` or `review_study_submissions`.
 
 ---
 

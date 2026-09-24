@@ -1,4 +1,4 @@
-﻿# Feature: Deadline & Case Notification System
+# Feature: Deadline & Case Notification System
 
 > **Authoritative Traceability**: Item 27 (Proposal Section 4 p. 7)  
 > **Target Package / Module**: Backend `notification/` (Future Extension Boundary)  
@@ -7,7 +7,7 @@
 ---
 
 ## 1. Purpose
-Provides targeted educational reminders to university students to complete assigned interactive branching case studies before a designated deadline, ensuring timely participation in case simulations and debate sessions.
+Provides targeted educational reminders to university students to complete assigned interactive branching case studies or review studies before a designated deadline, ensuring timely participation in case activities.
 
 ---
 
@@ -39,10 +39,10 @@ Provides targeted educational reminders to university students to complete assig
 
 ## 5. Main Flow
 1. Lecturer publishes a case and sets a completion deadline (e.g., Friday at 23:59).
-2. The notification scheduler evaluates pending simulation sessions.
-3. Students who have not completed the session receive a reminder notification via the approved delivery channel.
-4. Student clicks the reminder link, taking them directly to `/student/cases/:caseId/simulate`.
-5. Upon session completion, subsequent reminders for that case are automatically suppressed.
+2. The notification scheduler evaluates pending attempts or submissions.
+3. Students who have not completed their work receive a reminder notification via the approved delivery channel.
+4. Student clicks the reminder link, navigating directly to `/student/cases/:caseId/branching-play` or `/student/cases/:caseId/review-study`.
+5. Upon attempt/submission completion, subsequent reminders for that case are automatically suppressed.
 
 ---
 
@@ -60,7 +60,7 @@ Provides targeted educational reminders to university students to complete assig
 
 ## 8. Business Rules
 - **BR-NOTIF-01**: Notifications must only be sent for cases in `PUBLISHED` status.
-- **BR-NOTIF-02**: Students who have already completed the simulation session (`is_completed = TRUE`) must NOT receive reminder notifications.
+- **BR-NOTIF-02**: Students who have already completed the attempt (`is_completed = TRUE`) or submitted their review study work must NOT receive reminder notifications.
 - **BR-NOTIF-03**: The notification system must never send promotional or non-academic messages; it is strictly limited to case deadline reminders.
 - **BR-NOTIF-04**: No specific delivery technology (such as WebSockets, SendGrid, or polling) is assumed at this stage; implementation will follow Project Owner approval.
 

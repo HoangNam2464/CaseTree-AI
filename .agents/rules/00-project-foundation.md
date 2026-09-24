@@ -1,4 +1,4 @@
-﻿---
+---
 description: >-
   Global project rules for CaseTree AI. Always loaded when working in this
   repository. Enforces architecture boundaries, coding standards, Git workflow,
@@ -46,9 +46,11 @@ CaseTree-AI/
 | User & Role Management | ✅ | ❌ |
 | Course & Material Metadata | ✅ | ❌ |
 | Case Lifecycle & Publication | ✅ | ❌ |
-| Simulation Session Persistence | ✅ | ❌ |
-| Student Argument Persistence | ✅ | ❌ |
-| Debate History Persistence | ✅ | ❌ |
+| Branching Attempt Persistence | ✅ | ❌ |
+| Student Reasoning Persistence | ✅ | ❌ |
+| Review Study Submission Persistence | ✅ | ❌ |
+| Challenge Support History Persistence | ✅ | ❌ |
+| Lecturer Feedback Persistence | ✅ | ❌ |
 | Lecturer Statistics | ✅ | ❌ |
 | REST API Gateway for Frontend | ✅ | ❌ |
 | Document Parsing & Chunking | ❌ | ✅ |
@@ -57,7 +59,7 @@ CaseTree-AI/
 | RAG Orchestration | ❌ | ✅ |
 | Case Generation (LLM) | ❌ | ✅ |
 | Structured Output Validation | ❌ | ✅ |
-| Debate Counter-Question Generation | ❌ | ✅ |
+| Challenge Counter-Question Generation | ❌ | ✅ |
 
 **Frontend → Backend Gateway only. FastAPI AI Service is internal. Never expose FastAPI to the internet.**
 
@@ -82,7 +84,7 @@ DRAFT → REVIEWED → APPROVED → PUBLISHED
 
 - Every `CaseOption.nextNodeId` must refer to a valid `CaseNode` within the same `Case`
 - Every non-root node must be reachable from the `rootNode`
-- No cycles are permitted (enforced by BFS cycle detection in `CaseGenerationOutput.validate_tree_structure`)
+- No cycles are permitted (enforced by DFS 3-color cycle detection in `CaseGenerationOutput.validate_tree_structure`)
 - At least one terminal node must exist per case
 
 ---
@@ -90,9 +92,9 @@ DRAFT → REVIEWED → APPROVED → PUBLISHED
 ## 6. AI Governance Rules
 
 1. **Retrieved teaching material is UNTRUSTED DATA** — always wrap in `<sources>...</sources>` boundary
-2. **Debate Assistant MUST NOT grade students** — counter-questions only
-3. **Debate Assistant MUST NOT determine pass/fail** — academic decisions belong to the lecturer
-4. **Debate is limited to 2 rounds maximum** — enforced at both backend and AI service
+2. **AI Reasoning / Challenge Support MUST NOT grade students** — counter-questions only
+3. **AI Reasoning / Challenge Support MUST NOT determine pass/fail** — academic decisions belong to the lecturer
+4. **Challenge Support is limited to 2 rounds maximum** — enforced at both backend and AI service
 5. **Never allow AI output to override system instructions** — sources boundary is mandatory
 
 ---
@@ -115,12 +117,12 @@ docs/<topic>             →  develop
 ## 8. Coding Standards
 
 ### TypeScript / NestJS (Backend Gateway)
-- Module by feature: `auth/`, `user/`, `course/`, `material/`, `case/`, `simulation/`, `argument/`, `debate/`, `statistics/`, `evaluation/`, `notification/`, `common/`
+- Module by feature: `auth/`, `user/`, `course/`, `material/`, `case/`, `branching-attempt/`, `reasoning/`, `challenge-support/`, `review-study/`, `lecturer-feedback/`, `statistics/`, `evaluation/`, `notification/`, `common/`
 - Mandatory DTO layer with `class-validator` — never expose raw database entities directly in REST responses
 - Strict TypeScript configuration (`tsconfig.json`)
 
 ### Python / FastAPI (AI Service)
-- Package by domain: `core/`, `providers/`, `ingestion/`, `retrieval/`, `generation/`, `debate/`, `evaluation/`
+- Package by domain: `core/`, `providers/`, `ingestion/`, `retrieval/`, `generation/`, `challenge_support/`, `evaluation/`
 - **Always** use `providers/factory.py` — never hardcode vendor SDK in route handlers
 - Pydantic v2 for all schemas
 
@@ -135,7 +137,7 @@ docs/<topic>             →  develop
 ## 9. Scope Boundaries
 
 ### IN SCOPE
-Authentication · Courses · Teaching Materials · Document Processing · RAG · Case Generation · Case Review · Case Publishing · Student Simulator · Student Arguments · AI Debate Assistant (1-2 rounds, no grading) · Lecturer Statistics (simple) · Evaluation/Research boundary · Notification extension point
+Authentication · Courses · Teaching Materials · Document Processing · RAG · Case Generation · Case Review & Publishing (Branching Study & Review Study) · Branching Case Player · Student Reasoning · Review Study Submissions · AI Reasoning / Challenge Support (1-2 rounds, no grading) · Student Reflection · Lecturer Feedback · Lecturer Statistics (simple) · Evaluation/Research boundary · Notification extension point
 
 ### OUT OF SCOPE
 Social login · Payment · Subscription · Generic chatbot · LMS integration · Multi-tenant admin · Real-time collaboration · Mobile app · Recommendation engine · Web search · Fine-tuning · Multi-agent orchestration · Autonomous grading · Auto pass/fail · Large analytics dashboards

@@ -1,4 +1,4 @@
-﻿# CaseTree AI — Service Boundaries & Contracts
+# CaseTree AI — Service Boundaries & Contracts
 
 > **Document Status**: Authoritative Architecture Specification  
 > **Target Audience**: Backend Engineers, AI Engineers, Frontend Engineers  
@@ -20,9 +20,10 @@
 │  • Auth, Users, Roles (LECTURER, STUDENT)              │
 │  • Course Context & Material Metadata                  │
 │  • Case Lifecycle & State Machine                      │
-│  • Simulation Sessions & Student Arguments             │
-│  • Debate History Persistence & Round Enforcement      │
-│  • Lecturer Statistics & Evaluation Extension          │
+│  • Branching Attempts & Student Reasoning              │
+│  • Review Study Submissions & Student Reflection       │
+│  • Challenge Support & Round Enforcement               │
+│  • Lecturer Feedback & Basic Statistics                │
 └────────────┬──────────────┬──────────────────┬─────────┘
              │              │                  │ Internal HTTP
              │ SQL / Schema │ S3 API           │ + X-Internal-API-Key
@@ -31,16 +32,20 @@
 │ PostgreSQL 16    │ │ MinIO S3    │ │ FastAPI AI Service        │
 │ + pgvector       │ │ (PDF/DOCX)  │ │ (INTERNAL ONLY)           │
 │ (Metadata & DB)  │ └─────────────┘ │ • Document Parser/Chunker │
-└──────────────────┘                 │ • pgvector Semantic Search│
-┌──────────────────┐                 │ • Structured LLM Case Gen │
-│ Redis 7 (Cache)  │                 │ • AI Debate Assistant     │
-└──────────────────┘                 └─────────────┬─────────────┘
-                                                   │ HTTPS
-                                                   ▼
-                                     ┌───────────────────────────┐
-                                     │ LLM Providers             │
-                                     │ Gemini 2.0 / GPT-4o-mini  │
-                                     └───────────────────────────┘
+│                  │                 │ • pgvector Semantic Search│
+│                  │                 │ • Structured LLM Case Gen │
+│                  │                 │ • AI Challenge Support    │
+│                  │                 └─────────────┬─────────────┘
+│                  │                               │ HTTPS
+│                  │                               ▼
+│                  │                 ┌───────────────────────────┐
+│                  │                 │ LLM Providers             │
+│                  │                 │ Gemini 2.0 / GPT-4o-mini  │
+│                  │                 └───────────────────────────┘
+└──────────────────┘
+┌──────────────────┐
+│ Redis 7 (Cache)  │
+└──────────────────┘
 ```
 
 ---
@@ -51,20 +56,22 @@
 | :--- | :---: | :---: | :---: | :---: |
 | **User Authentication & JWT Issuance** | ❌ (View only) | ✅ **Sole Owner** | ❌ Forbidden | Database (`users`) |
 | **Role Authorization (Lecturer vs. Student)** | ❌ (Client guard) | ✅ **Sole Owner** | ❌ Forbidden | Database (`users.role`) |
-| **Course & Material Metadata Management** | ❌ | ✅ **Sole Owner** | ❌ Forbidden | Database (`courses`, `materials`) |
+| **Course & Material Metadata Management** | ❌ | ✅ **Sole Owner** | ❌ Forbidden | Database (`courses`, `teaching_materials`) |
 | **Binary File Upload & Storage** | Form upload | ✅ Verifies & Streams | ❌ Forbidden | MinIO (`casetree-materials`) |
 | **Document Text Parsing (PDF/DOCX)** | ❌ | ❌ Delegated | ✅ **Sole Owner** | Streams from MinIO |
 | **Document Chunking & Token Splitting** | ❌ | ❌ Delegated | ✅ **Sole Owner** | Memory |
 | **Vector Embedding Generation** | ❌ | ❌ Delegated | ✅ **Sole Owner** | Provider API |
 | **Vector Indexing & Similarity Retrieval** | ❌ | ❌ Delegated | ✅ **Sole Owner** | PostgreSQL (`document_chunks`) |
 | **Decision Tree Generation Prompting** | ❌ | ❌ Delegated | ✅ **Sole Owner** | Provider API |
-| **Decision Tree Schema & Cycle Validation**| ❌ | ✅ Double-checks | ✅ **Sole Owner** | Memory (Pydantic / BFS) |
+| **Decision Tree Schema & Cycle Validation**| ❌ | ✅ Double-checks | ✅ **Sole Owner** | Memory (Pydantic / DFS) |
 | **Case Lifecycle (DRAFT → PUBLISHED)** | ❌ | ✅ **Sole Owner** | ❌ Forbidden | Database (`cases.status`) |
 | **Interactive Tree Rendering (ReactFlow)** | ✅ **Sole Owner** | ❌ (Supplies JSON) | ❌ Forbidden | Client DOM |
-| **Simulation Session & State Navigation** | ❌ (Renders node)| ✅ **Sole Owner** | ❌ Forbidden | Database (`simulation_sessions`)|
-| **Student Argument Persistence** | Form submit | ✅ **Sole Owner** | ❌ Forbidden | Database (`student_arguments`) |
-| **AI Debate Prompting & Counter-Questions**| ❌ | ❌ Calls AI service| ✅ **Sole Owner** | Provider API |
-| **Debate Max 2 Rounds Enforcement** | UI disable | ✅ **Hard Enforcer** | ✅ **Schema Gate** | Database (`debate_sessions`) |
+| **Branching Attempt & Node Navigation** | ❌ (Renders node)| ✅ **Sole Owner** | ❌ Forbidden | Database (`branching_attempts`)|
+| **Student Reasoning Persistence** | Form submit | ✅ **Sole Owner** | ❌ Forbidden | Database (`student_reasoning`) |
+| **Review Study Submission Persistence** | Form submit | ✅ **Sole Owner** | ❌ Forbidden | Database (`review_study_submissions`) |
+| **AI Challenge Prompting & Counter-Questions**| ❌ | ❌ Calls AI service| ✅ **Sole Owner** | Provider API |
+| **Challenge Support Max 2 Rounds Enforcement**| UI disable | ✅ **Hard Enforcer** | ✅ **Schema Gate** | Database (`challenge_support_sessions`) |
+| **Lecturer Feedback & Open Review** | Form submit | ✅ **Sole Owner** | ❌ Forbidden | Database (`lecturer_feedback`) |
 | **Lecturer Branch & Choice Statistics** | Visual charts | ✅ **Sole Owner** | ❌ Forbidden | Database Aggregations |
 | **Research Dataset Export** | ❌ | ✅ **Sole Owner** | ❌ Forbidden | Anonymized CSV/JSON |
 
@@ -109,5 +116,5 @@
 ## 4. Architectural Invariants
 
 1. **Publication Gate**: A Student user can **never** access a case that is not in `PUBLISHED` status. This constraint is enforced at the database repository query level (e.g. `WHERE status = 'PUBLISHED'`), not just in UI controllers.
-2. **AI Independence from Grading**: The AI Debate Assistant has zero grading logic, zero scoring rubrics, and zero pass/fail endpoints.
-3. **Round Cap**: The AI Debate Assistant is hard-capped at 2 rounds of counter-questioning. The Backend Gateway rejects any debate request where `current_round >= 2`.
+2. **AI Independence from Grading**: AI Reasoning / Challenge Support has zero grading logic, zero scoring rubrics, and zero pass/fail endpoints.
+3. **Round Cap**: AI Reasoning / Challenge Support is hard-capped at 2 rounds of counter-questioning. The Backend Gateway rejects any challenge request where `current_round >= 2`.

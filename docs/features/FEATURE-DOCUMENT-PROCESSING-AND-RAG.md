@@ -6,7 +6,7 @@
 ---
 
 ## 1. Purpose
-Extracts, chunks, embeds, and indexes university teaching materials to power Retrieval-Augmented Generation (RAG). Allows the AI Case Generator and AI Debate Assistant to retrieve semantically grounded course concepts, ensuring generated case studies and counter-questions align with authentic course syllabi and lecture content.
+Extracts, chunks, embeds, and indexes university teaching materials to power Retrieval-Augmented Generation (RAG). Allows the AI Case Generator and AI Reasoning / Challenge Support to retrieve semantically grounded course concepts, ensuring generated case studies and counter-questions align with authentic course syllabi and lecture content.
 
 ---
 

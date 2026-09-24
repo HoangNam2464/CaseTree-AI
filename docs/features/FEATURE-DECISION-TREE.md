@@ -119,7 +119,7 @@ Case (1) ────< CaseNode (N)
 - [`docs/requirements/REQUIREMENT-TRACEABILITY.md`](../requirements/REQUIREMENT-TRACEABILITY.md) (Items 12, 13, 14, 15, 16)
 - [`docs/architecture/DECISION-TREE-MODEL.md`](../architecture/DECISION-TREE-MODEL.md)
 - [`docs/features/FEATURE-CASE-REVIEW-AND-PUBLISHING.md`](FEATURE-CASE-REVIEW-AND-PUBLISHING.md)
-- [`docs/features/FEATURE-CASE-SIMULATOR-AND-ARGUMENT.md`](FEATURE-CASE-SIMULATOR-AND-ARGUMENT.md)
+- [`docs/features/FEATURE-BRANCHING-STUDY.md`](FEATURE-BRANCHING-STUDY.md)
 
 ---
 
