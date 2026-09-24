@@ -1,4 +1,4 @@
-﻿"""
+"""
 CaseTree AI — Decision Tree Case JSON Schema and Pydantic Models.
 
 These Pydantic models define the STRUCTURED OUTPUT contract for the AI Case Generator.
@@ -114,30 +114,42 @@ class CaseGenerationOutput(BaseModel):
             if not has_terminal_option:
                 raise ValueError("Decision tree must have at least one terminal path (option with next_node_index=None or node with no options)")
 
-        # Cycle detection — simple BFS from root
-        self._check_no_cycles(n)
+        # Structural integrity: cycle detection and reachability (no orphan nodes)
+        self._check_tree_integrity(n)
 
         return self
 
-    def _check_no_cycles(self, n: int) -> None:
-        """BFS cycle detection from the root node."""
-        visited: set[int] = set()
-        queue: list[int] = [self.root_node_index]
-        max_visits = n * n  # safety limit
+    def _check_tree_integrity(self, n: int) -> None:
+        """
+        Verify structural integrity of the directed graph:
+        1. Cycle detection using DFS 3-color algorithm (WHITE=0, GRAY=1, BLACK=2).
+           A back-edge pointing to a GRAY (currently visiting ancestor) node indicates a cycle.
+        2. Reachability validation: every non-root node must be reachable from root_node_index.
+           Any node remaining WHITE (unvisited) after DFS from root is an unreachable orphan node.
+        """
+        WHITE, GRAY, BLACK = 0, 1, 2
+        colors = [WHITE] * n
 
-        visit_count = 0
-        while queue:
-            if visit_count > max_visits:
-                raise ValueError("Decision tree contains a cycle or is too deeply nested")
-            current = queue.pop(0)
-            if current in visited:
-                raise ValueError(f"Cycle detected at node index {current}")
-            visited.add(current)
-            visit_count += 1
+        def dfs(u: int) -> None:
+            colors[u] = GRAY
+            for opt in self.nodes[u].options:
+                v = opt.next_node_index
+                if v is not None:
+                    if colors[v] == GRAY:
+                        raise ValueError(f"Cycle detected in decision tree involving node index {v}")
+                    if colors[v] == WHITE:
+                        dfs(v)
+            colors[u] = BLACK
 
-            for opt in self.nodes[current].options:
-                if opt.next_node_index is not None and opt.next_node_index not in visited:
-                    queue.append(opt.next_node_index)
+        # Run DFS traversal starting from root node
+        dfs(self.root_node_index)
+
+        # Check reachability: all nodes must have been visited (BLACK)
+        for i, color in enumerate(colors):
+            if color == WHITE:
+                raise ValueError(
+                    f"Orphan node detected: node index {i} is unreachable from root node {self.root_node_index}"
+                )
 
 
 # JSON Schema for LLM structured output (passed to provider.generate_structured)

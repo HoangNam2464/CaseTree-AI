@@ -1,4 +1,4 @@
-﻿"""
+"""
 CaseTree AI — FastAPI Core Configuration
 
 All configuration is loaded from environment variables.
@@ -66,9 +66,10 @@ class Settings(BaseSettings):
     rag_top_k: int = 5
 
     # =========================================================================
-    # Debate Assistant
+    # AI Reasoning / Challenge Support
     # =========================================================================
-    debate_max_rounds: int = 2
+    challenge_support_max_rounds: int = 2
+    debate_max_rounds: int = 2  # legacy alias
 
 
 # Singleton settings instance

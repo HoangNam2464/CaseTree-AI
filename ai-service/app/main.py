@@ -12,7 +12,7 @@ from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
-from datetime import datetime
+from datetime import datetime, timezone
 
 from app.core.config import settings
 from app.core.logging import configure_logging, logger
@@ -72,7 +72,7 @@ async def health():
         "service": settings.app_name,
         "version": settings.app_version,
         "provider": settings.ai_provider,
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
 

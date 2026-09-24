@@ -1,4 +1,4 @@
-﻿"""
+"""
 CaseTree AI — Custom Exception Types for the AI Service.
 """
 
@@ -23,5 +23,9 @@ class CaseGenerationException(Exception):
     """Raised when case generation fails or produces invalid output."""
 
 
-class DebateAssistantException(Exception):
-    """Raised when the debate assistant fails to generate a counter-question."""
+class ChallengeSupportException(Exception):
+    """Raised when AI Reasoning/Challenge Support fails to generate a counter-question."""
+
+
+# Backward compatibility alias
+DebateAssistantException = ChallengeSupportException
