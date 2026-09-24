@@ -1,4 +1,4 @@
-﻿/**
+/**
  * CaseTree AI — Centralized Axios API Client
  *
  * RULE: All API calls go through this client — never call FastAPI directly.
@@ -9,7 +9,7 @@ import axios from "axios";
 import type { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { useAuthStore } from "../stores/authStore";
 
-const BASE_URL: string = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
+const BASE_URL: string = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api/v1";
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,
