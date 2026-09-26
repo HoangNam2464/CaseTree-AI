@@ -1,5 +1,5 @@
 """
-CaseTree AI — FastAPI Core Configuration
+Edu-Branch-AI — FastAPI Core Configuration
 
 All configuration is loaded from environment variables.
 Never hardcode secrets or API keys here.
@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     # =========================================================================
     # Application
     # =========================================================================
-    app_name: str = "CaseTree AI — FastAPI AI Service"
+    app_name: str = "Edu-Branch-AI — FastAPI AI Service"
     app_version: str = "0.0.1"
     debug: bool = False
 

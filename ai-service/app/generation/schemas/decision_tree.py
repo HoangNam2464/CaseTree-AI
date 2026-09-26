@@ -1,5 +1,5 @@
 """
-CaseTree AI — Decision Tree Case JSON Schema and Pydantic Models.
+Edu-Branch-AI — Decision Tree Case JSON Schema and Pydantic Models.
 
 These Pydantic models define the STRUCTURED OUTPUT contract for the AI Case Generator.
 The LLM must produce output conforming to this schema (validated by the AI service
@@ -64,7 +64,7 @@ class NodeOutput(BaseModel):
 
 class CaseGenerationOutput(BaseModel):
     """
-    Structured output contract for the CaseTree AI Case Generator.
+    Structured output contract for the Edu-Branch-AI Case Generator.
 
     The LLM must produce a JSON object conforming to this schema.
     This is validated by the AI service before forwarding to the Backend Gateway (NestJS).

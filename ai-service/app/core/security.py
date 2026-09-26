@@ -1,7 +1,7 @@
-﻿"""
-CaseTree AI — FastAPI Internal Service Security
+"""
+Edu-Branch-AI � FastAPI Internal Service Security
 
-Validates the internal API key used for Backend Gateway → Internal AI Service communication.
+Validates the internal API key used for Backend Gateway ? Internal AI Service communication.
 This service is NOT exposed to the internet.
 All requests must include the X-Internal-API-Key header.
 """

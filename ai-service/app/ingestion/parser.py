@@ -1,10 +1,10 @@
-ï»¿"""
-CaseTree AI â€” Document Parser.
+"""
+Edu-Branch-AI — Document Parser.
 
 Parses PDF and DOCX teaching material files into plain text.
 Uses PyPDF for PDF parsing and python-docx for DOCX parsing.
 
-Status: Scaffolded â€” implementation in feature/document-processing
+Status: Scaffolded — implementation in feature/document-processing
 """
 
 from pathlib import Path

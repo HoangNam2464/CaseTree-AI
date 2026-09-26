@@ -1,5 +1,5 @@
-"""
-CaseTree AI — Unit Tests for Decision Tree Validation Schema and Graph Algorithms.
+﻿"""
+Edu-Branch-AI — Unit Tests for Decision Tree Validation Schema and Graph Algorithms.
 """
 
 import pytest

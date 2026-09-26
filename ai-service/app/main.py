@@ -1,5 +1,5 @@
 """
-CaseTree AI — FastAPI AI Service Entry Point.
+Edu-Branch-AI — FastAPI AI Service Entry Point.
 
 IMPORTANT: This service is INTERNAL ONLY.
 It is called exclusively by the NestJS Backend Gateway.
@@ -36,7 +36,7 @@ app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
     description=(
-        "CaseTree AI — Internal FastAPI AI Service. "
+        "Edu-Branch-AI — Internal FastAPI AI Service. "
         "Responsible for: document ingestion, RAG retrieval, "
         "case generation, and AI reasoning/challenge support."
     ),
