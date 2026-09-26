@@ -1,5 +1,5 @@
 ﻿---
-description: Rules for student reasoning capture in CaseTree AI.
+description: Rules for student reasoning capture in Edu-Branch-AI.
 trigger: keyword
 keywords: [reasoning, student reasoning, justification, written response]
 ---

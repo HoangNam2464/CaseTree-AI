@@ -1,5 +1,5 @@
 ﻿---
-description: Rules for the Branching Case Player and branching attempt/retry model in CaseTree AI.
+description: Rules for the Branching Case Player and branching attempt/retry model in Edu-Branch-AI.
 trigger: keyword
 keywords: [branching attempt, branching case player, branching study, student, decision, node, consequence, navigate, case play, retry]
 ---

@@ -1,7 +1,7 @@
-﻿# CaseTree AI — Technology & Documentation Correction Report
+﻿# Edu-Branch-AI — Technology & Documentation Correction Report
 
 > **Report Type**: Post-Audit Repository Migration & Consistency Report  
-> **Target System**: CaseTree AI (`https://github.com/HoangNam2464/CaseTree-AI`)  
+> **Target System**: Edu-Branch-AI (`https://github.com/HoangNam2464/CaseTree-AI`)  
 > **Primary Authority (Priority 1)**: `C1SE_65-CaseTree-AI-Proposal_V1.0.docx`  
 > **Project Owner Decisions (Priority 2)**: Ratified Backend Gateway (Node.js/NestJS), React 19 + TailwindCSS v4 baseline, 3-tier boundary, PostgreSQL+pgvector, Redis 7, MinIO, separate internal AI Service, structural skeleton only.  
 > **Date of Execution**: 2026-09-11  
@@ -36,7 +36,7 @@ The following technology and structural assets originated from the reference rep
 
 ---
 
-## 3. What the CaseTree AI Proposal Actually Allows
+## 3. What the Edu-Branch-AI Proposal Actually Allows
 
 Extracted directly from `C1SE_65-CaseTree-AI-Proposal_V1.0.docx`:
 
@@ -241,7 +241,7 @@ The following product-level choices from the Proposal remain open for future spr
 
 ### **GREEN**
 
-The CaseTree AI repository now presents a **100% unified, consistent, and Proposal-compliant technical direction**:
+The Edu-Branch-AI repository now presents a **100% unified, consistent, and Proposal-compliant technical direction**:
 - **Proposal** defines Node.js (NestJS/Express) backend and React/Tailwind frontend.
 - **Architecture** ADR-001 ratifies NestJS and React 19 + TailwindCSS v4.
 - **Rules** in `.agents/rules/` enforce NestJS, FastAPI, and React 19.

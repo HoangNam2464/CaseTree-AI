@@ -1,15 +1,15 @@
-# CaseTree AI — Website & Application Architecture Reference
+﻿# Edu-Branch-AI — Website & Application Architecture Reference
 
 > **Target Platform**: Google Stitch UI Generation  
-> **Product Name**: CaseTree AI  
-> **Full Title**: CaseTree AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching  
+> **Product Name**: Edu-Branch-AI  
+> **Full Title**: Edu-Branch-AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching  
 > **Repository**: https://github.com/HoangNam2464/CaseTree-AI
 
 ---
 
 ## 1. Product Vision
 
-CaseTree AI is an educational technology platform engineered specifically for **university-level teaching and learning**. It transforms static teaching materials (textbooks, lecture slides, academic papers, and syllabi) into rich, interactive **Branching Study** and **Review Study** cases.
+Edu-Branch-AI is an educational technology platform engineered specifically for **university-level teaching and learning**. It transforms static teaching materials (textbooks, lecture slides, academic papers, and syllabi) into rich, interactive **Branching Study** and **Review Study** cases.
 
 Rather than passively reading theoretical texts, students are immersed into realistic professional dilemmas where each decision reveals lecturer-authored/approved consequences and advances along predefined branches into subsequent scenarios. Built-in **AI Reasoning / Challenge Support** poses targeted challenge/counter-questions to challenge student reasoning without grading, scoring, or determining academic pass/fail.
 
@@ -101,7 +101,7 @@ Student submits reasoning (Branching Study or Review Study) → Optional Challen
 ## 7. Internal Design Tooling ("Bắt đầu với thiết kế của bạn")
 
 > **Classification: INTERNAL DESIGN TOOLING**  
-> This tooling is strictly used for Stitch/UI-authoring workflows during development. It is **NOT** a CaseTree AI user-facing product feature, is **NOT** part of the Lecturer or Student product sitemap, and must **NOT** be treated as a product requirement.
+> This tooling is strictly used for Stitch/UI-authoring workflows during development. It is **NOT** a Edu-Branch-AI user-facing product feature, is **NOT** part of the Lecturer or Student product sitemap, and must **NOT** be treated as a product requirement.
 
 - **Screen / Component Name**: `StartDesignModal` / `StartDesignPage` ("Bắt đầu với thiết kế của bạn").
 - **Tooling Context**: Used internally by designers and developers during prototyping to provide design references and context:
@@ -110,7 +110,7 @@ Student submits reasoning (Branching Study or Review Study) → Optional Challen
   3. Supplying a public GitHub repository URL for direct code/architecture inspection.
   4. Supplying a live website URL for visual and contextual reference.
   5. Providing specific additional natural-language prompts and instructions.
-- **Tooling Outcome**: Consolidates design inputs into a structured payload for Stitch UI generation; strictly excluded from CaseTree AI runtime product workflows.
+- **Tooling Outcome**: Consolidates design inputs into a structured payload for Stitch UI generation; strictly excluded from Edu-Branch-AI runtime product workflows.
 
 ---
 

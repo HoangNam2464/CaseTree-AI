@@ -1,4 +1,4 @@
-# CaseTree AI — System Data Flows & Sequences
+﻿# Edu-Branch-AI — System Data Flows & Sequences
 
 > **Document Status**: Authoritative Architecture Specification  
 > **Source of Truth**: Proposal V1.1 (C1SE_65-CaseTree-AI-Proposal_V1_1.docx)  

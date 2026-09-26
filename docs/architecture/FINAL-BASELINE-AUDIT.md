@@ -1,4 +1,4 @@
-﻿# FINAL BASELINE AUDIT — CaseTree AI
+﻿# FINAL BASELINE AUDIT — Edu-Branch-AI
 # Post-Technology-Migration Verification Report
 
 > **Audit Date**: 2026-09-11
@@ -11,7 +11,7 @@
 
 ## 1. Executive Summary
 
-This audit independently verifies the entire CaseTree AI repository against the confirmed Final Technology Baseline, following the technology migration from Java 17 / Spring Boot 3 to Node.js / NestJS 10.
+This audit independently verifies the entire Edu-Branch-AI repository against the confirmed Final Technology Baseline, following the technology migration from Java 17 / Spring Boot 3 to Node.js / NestJS 10.
 
 **Overall Outcome: YELLOW**
 
@@ -545,5 +545,5 @@ No business feature logic was added during this correction session. The reposito
 > **CORRECTIONS COMPLETE**
 > Findings C-01 through C-07 have been resolved.
 > All validation checks passed.
-> Repository documentation is now consistent with the approved CaseTree AI Technology Baseline.
+> Repository documentation is now consistent with the approved Edu-Branch-AI Technology Baseline.
 

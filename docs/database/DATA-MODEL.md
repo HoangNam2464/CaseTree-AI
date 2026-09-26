@@ -1,4 +1,4 @@
-# CaseTree AI — Data Model
+﻿# Edu-Branch-AI — Data Model
 
 **Status**: Aligned with Proposal V1.1 (V2 Migration applied)
 

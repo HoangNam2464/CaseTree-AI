@@ -1,5 +1,5 @@
----
-description: Rules for Lecturer Feedback / Open Review in CaseTree AI.
+﻿---
+description: Rules for Lecturer Feedback / Open Review in Edu-Branch-AI.
 trigger: keyword
 keywords: [lecturer feedback, open review, lecturer review, feedback, commentary]
 ---

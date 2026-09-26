@@ -1,4 +1,4 @@
-﻿# CaseTree AI — Evaluation & Research Design
+﻿# Edu-Branch-AI — Evaluation & Research Design
 
 **Status**: Scaffolded (architectural boundary only)
 
@@ -6,7 +6,7 @@
 
 ## Purpose
 
-This boundary supports the quantitative research dimension of CaseTree AI,
+This boundary supports the quantitative research dimension of Edu-Branch-AI,
 enabling comparison between AI-generated cases and lecturer-authored cases,
 and tracking student engagement with the debate mechanism.
 

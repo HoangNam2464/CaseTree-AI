@@ -1,8 +1,8 @@
-﻿# Security Policy — CaseTree AI
+# Security Policy — Edu-Branch-AI
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in CaseTree AI, **do not create a public GitHub issue**.
+If you discover a security vulnerability in Edu-Branch-AI, **do not create a public GitHub issue**.
 
 Please report it privately by emailing the project maintainer or opening a GitHub Security Advisory:
 `Settings → Security → Advisories → New draft security advisory`
@@ -41,7 +41,7 @@ The following areas are in scope for security reporting:
 
 - Role-based access control: `LECTURER` and `STUDENT` roles
 - The **Backend Gateway (NestJS)** enforces ownership: lecturers can only access their own courses and materials
-- Students can only access published cases assigned to them
+- Students can only access published cases via the direct link provided by the lecturer
 - **A student must never receive a case that is not in `PUBLISHED` status**
 - Authorization is enforced server-side — never trust client-provided owner IDs
 
@@ -63,18 +63,20 @@ The following areas are in scope for security reporting:
 - Uploaded teaching materials and retrieved RAG chunks are treated as **untrusted data**
 - All retrieved content passed to the LLM MUST be enclosed in `<sources>...</sources>` boundary
 - Retrieved content must never be able to override system instructions or prompt templates
-- User-provided text (student arguments) must be validated and length-limited before being sent to the LLM
+- User-provided text (student reasoning, proposed solutions) must be validated and length-limited before being sent to the LLM
 
 ### 6. AI Governance — Critical Rules
 
-> **The AI Debate Assistant MUST NOT:**
+> **The AI Reasoning / Challenge Support component MUST NOT:**
 > - Assign academic grades
 > - Make pass/fail academic decisions
 > - Perform academic integrity judgments
 > - Provide final evaluations of student performance
+> - Alter Lecturer-approved case content (branches, consequences, outcomes) at runtime
 >
-> The Debate Assistant is a **Devil's Advocate** tool: it generates targeted counter-questions only.
-> All academic decisions remain with the lecturer.
+> The AI Reasoning / Challenge Support is a **Socratic counter-question** tool only: it generates targeted, open-ended questions to prompt student reflection.
+> All academic decisions remain with the Lecturer.
+> Maximum 2 rounds of challenge support per session.
 
 ### 7. Secret Management
 
@@ -88,7 +90,7 @@ The following areas are in scope for security reporting:
 
 ### 8. Data Privacy
 
-- Student simulation data, arguments, and debate history are private to the student and the relevant lecturer
+- Student attempt data, reasoning, and challenge support history are private to the student and the relevant lecturer
 - No student data is shared across courses or lecturers without explicit authorization
 - Research/evaluation data exports must be anonymized (see `docs/research/EVALUATION-DESIGN.md`)
 

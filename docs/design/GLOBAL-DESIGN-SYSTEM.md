@@ -1,16 +1,16 @@
-# CaseTree AI — Global Design System
+# Edu-Branch-AI — Global Design System
 
 > **Status**: CANONICAL — supersedes `.stitch/DESIGN.md` (retired/deleted).
 > **Target Platform**: Google Stitch UI Generation + React 19 / TailwindCSS v4 implementation.
-> **Scope**: All CaseTree AI product screens (P0–P4). Does NOT cover the internal "Start Design" tooling — see `SITE.md §7` for its classification.
-> **Source of truth**: `CaseTree-AI_UX-Redesign_Discovery-Plan.md` (Sections E–G, P.2), `C1SE_65-CaseTree-AI-Proposal_V1_1.docx`.
+> **Scope**: All Edu-Branch-AI product screens (P0–P4). Does NOT cover the internal "Start Design" tooling — see `SITE.md §7` for its classification.
+> **Source of truth**: Product Direction V2 (Edu-Branch-AI), `C1SE_65-CaseTree-AI-Proposal_V1_1.docx`.
 
 ---
 
 ## 1. Visual Theme & Atmosphere
 
 ### 1.1. Core Philosophy
-CaseTree AI is a professional academic platform for university lecturers and students. The interface must read as **intellectually rigorous, calm, and content-first** — closer to a well-built academic research/authoring tool than a consumer SaaS product.
+Edu-Branch-AI is a professional academic platform for university lecturers and students. The interface must read as **intellectually rigorous, calm, and content-first** — closer to a well-built academic research/authoring tool than a consumer SaaS product.
 
 - **Theme Mode**: **LIGHT ONLY.** No dark mode in this phase. This is a locked decision (Discovery Plan §P.2) — do not design or generate dark-mode variants.
 - **Tone**: Neutral, academic, professional, calm, restrained, natural.
@@ -242,7 +242,7 @@ Minimal, restrained shadows — never a glow/blur decorative effect.
 
 ## 6. Product-Specific Components
 
-These are unique to CaseTree AI's domain and must be specified precisely so Stitch does not improvise product behavior.
+These are unique to Edu-Branch-AI's domain and must be specified precisely so Stitch does not improvise product behavior.
 
 ### 6.1. Case Card
 Used in `/lecturer/courses/:courseId/cases` list and course dashboards.
@@ -259,14 +259,14 @@ Horizontal 4-step stepper reflecting `DRAFT → REVIEWED → APPROVED → PUBLIS
 ### 6.4. Decision Node (ReactFlow)
 Rectangular card node, `radius-md`, `border-default`, `bg-surface`. Root node gets a small "Start" label chip. Terminal nodes get a distinct visual treatment: `border-strong` + a small flag/checkered icon in `text-muted`, label "Outcome". Non-terminal nodes show a truncated situation preview (`text-body`, 2 lines max) and an option-count badge. Selected/editing node: `border-focus` ring. Never color-code nodes by "correctness" — there is no correct path (Proposal V1.1 guardrail).
 
-### 6.5. Option Selector (Student, Branching Case Player)
-List of 2–4 option cards, each `bg-surface`, `border-default`, `radius-md`, full-width, showing the option text as the primary label. Selected option (before submission): `border-focus`. After submission (reasoning required before advancing — §6.6): the selected option is visually locked/highlighted, unselected options are dimmed to `text-muted`, not hidden.
+### 6.5. Option Selector (Student, Branching Case Player — Experience Phase)
+List of 2–4 option cards, each `bg-surface`, `border-default`, `radius-md`, full-width, showing the option text as the primary label. When a student selects an option: the selected option gets `border-focus` highlight, then the player advances **immediately and seamlessly** to the next situation. No reasoning form appears between decision points during the Experience phase. Unselected options are not shown after advancing — the player moves to the next situation node.
 
-### 6.6. Reasoning Input
-Large textarea (§5.2 long-form variant) shown after option selection, before consequence reveal — matches `FEATURE-BRANCHING-STUDY.md` FR-BS-03 (reasoning required before advancing). Label: "Your reasoning" (never "Your argument" — retired term). Helper caption: plain instruction to justify the choice, no rubric or grading language anywhere near this field.
+### 6.6. REVIEW Phase — Decision Reasoning Input
+Large textarea (§5.2 long-form variant) shown in the **REVIEW phase** (after the student has completed their full journey and reached the terminal node) — NOT mid-flow during the Experience phase. In the REVIEW interface, each decision point in the student's path shows: the situation, the option chosen, the alternatives available, and the consequence/outcome (revealed here for the first time). Adjacent to each decision point is an optional reasoning textarea: "Why did you choose this?" / "What would you change?". Label: "Your reasoning" (never "Your argument" — retired term). Helper caption: reflective, plain instruction; no rubric or grading language.
 
-### 6.7. Consequence Display
-Revealed only after reasoning submission. `bg-surface-muted` panel, `radius-lg`, left border accent in `mode-branching` teal (ties it visually to the Branching Study mode without introducing a new color). Label: "Consequence" (never "Result" or "Outcome" — outcome is reserved for the terminal node's final state per the data model).
+### 6.7. Consequence Display (REVIEW Phase Only)
+Revealed in the **REVIEW phase** alongside the reasoning input (§6.6) — **never shown mid-flow during the Experience phase**. Each decision point in the REVIEW timeline shows the consequence of the option the student chose and a brief note on what the alternative(s) would have led to. `bg-surface-muted` panel, `radius-lg`, left border accent in `mode-branching` teal (ties it visually to the Branching Study mode without introducing a new color). Label: "Consequence" (never "Result" or "Outcome" — outcome is reserved for the terminal node's final state per the data model).
 
 ### 6.8. Reflection Input
 Same visual pattern as Reasoning Input (§6.6), used post-outcome (Branching Study) or post-lecturer-feedback (Review Study). Label: "Your reflection."

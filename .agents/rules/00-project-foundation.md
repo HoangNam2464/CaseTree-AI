@@ -1,32 +1,32 @@
 ---
 description: >-
-  Global project rules for CaseTree AI. Always loaded when working in this
+  Global project rules for Edu-Branch-AI. Always loaded when working in this
   repository. Enforces architecture boundaries, coding standards, Git workflow,
   security rules, and engineering principles.
 trigger: always_on
 ---
 
-# CaseTree AI — Global Project Rules
+# Edu-Branch-AI — Global Project Rules
 
 ## 1. Project Identity & Strict Domain Boundary
 
-- **Name**: CaseTree AI
-- **Full Name**: CaseTree AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching
+- **Name**: Edu-Branch-AI
+- **Full Name**: Edu-Branch-AI — AI Platform for Experiential Case-Based Learning in University Teaching
 - **Target**: University / Higher Education ONLY (**ABSOLUTE BAN ON K-12**)
 - **Users**: Lecturers and Students
 - **Stack**: Node.js (NestJS 10 + TypeScript) + FastAPI (Python 3.12) + React 19 (Vite + TailwindCSS v4)
 - **Database**: PostgreSQL 16 + pgvector | MinIO (Object Storage) | SQL Migrations | Redis 7 (Cache)
 - **AI / LLM**: Gemini 2.0 Flash / OpenAI GPT-4o-mini via Provider Abstraction
 - **RAG**: LangChain (text splitters + retrieval orchestration)
-- **Decision Tree Visualization**: ReactFlow
+- **Decision Tree Visualization**: ReactFlow (used in Lecturer Case Review editor and REVIEW phase)
 
 ### CRITICAL RULE: STRICTLY HIGHER EDUCATION — ZERO K-12 CONCEPTS
-1. **Higher Education Only**: CaseTree AI is designed exclusively for university case-based learning (Business, Law, Medicine, Management, Engineering, etc.).
+1. **Higher Education Only**: Edu-Branch-AI is designed exclusively for university case-based learning (Business, Law, Medicine, Management, Engineering, etc.).
 2. **Prohibited K-12 Terms & Workflows**:
    - ❌ **NEVER** use: `K-12`, `Grade 1-12`, `Primary/Secondary/High School`, `Pupil`, `Teacher Copilot`.
    - ❌ **NEVER** use: `Lesson Plan`, `Lesson Planner`, `Lesson Planning`, `Curriculum Standards` (MOET, Common Core), `Homework Sheets`.
 3. **No Reference Repo Pollution**:
-   - ❌ **NEVER** import or mix tasks, schemas, or components from reference repositories designed for K-12 (such as `ai-teacher-copilot`). All CaseTree AI work derives strictly from the CaseTree AI Proposal V1.1 (C1SE.65).
+   - ❌ **NEVER** import or mix tasks, schemas, or components from reference repositories designed for K-12 (such as `ai-teacher-copilot`). All Edu-Branch-AI work derives strictly from the Edu-Branch-AI Proposal V1.1 (C1SE.65) and Product Direction V2.
 4. **Mandatory University Terminology**:
    - Users: **Lecturer** (Giảng viên) and **Student** (Sinh viên đại học).
    - Setting: **Course** (Học phần/Khóa học đại học) and **Teaching Materials** (Syllabus, giáo trình, case tài liệu đại học).
@@ -37,7 +37,7 @@ trigger: always_on
 ## 2. Repository Structure
 
 ```
-CaseTree-AI/
+Edu-Branch-AI/
 ├── backend/                    ← Node.js (NestJS) API Gateway
 ├── ai-service/                 ← FastAPI AI / RAG Service (INTERNAL)
 ├── frontend/                   ← React 19 + Vite + TailwindCSS v4
@@ -108,6 +108,15 @@ DRAFT → REVIEWED → APPROVED → PUBLISHED
 3. **AI Reasoning / Challenge Support MUST NOT determine pass/fail** — academic decisions belong to the lecturer
 4. **Challenge Support is limited to 2 rounds maximum** — enforced at both backend and AI service
 5. **Never allow AI output to override system instructions** — sources boundary is mandatory
+6. **AI must NOT alter Lecturer-approved case content** — branches, consequences, outcomes are immutable after APPROVED status
+
+## 6b. Branching Study Flow Rules (CRITICAL)
+
+1. **Experience-first**: During the Branching Case Player, students navigate decision points consecutively with NO blocking steps between them (no reasoning form, no consequence card mid-flow).
+2. **REVIEW phase timing**: Consequence text and full decision analysis are revealed ONLY in the REVIEW phase (after the student reaches the terminal node and completes the journey).
+3. **Reasoning capture is retrospective**: `student_reasoning.reasoning_text` is captured in the REVIEW phase, not mid-flow. The `selected_option_id` is recorded immediately upon selection.
+4. **No fixed decision count**: Each case has a unique number of decision points determined by its content. The system never imposes a fixed count.
+5. **Retry = new attempt**: `branching_attempts` records are immutable. A retry creates a new row with `attempt_number + 1`.
 
 ---
 

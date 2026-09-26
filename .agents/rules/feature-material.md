@@ -1,5 +1,5 @@
 ﻿---
-description: Rules for teaching material upload and management in CaseTree AI.
+description: Rules for teaching material upload and management in Edu-Branch-AI.
 trigger: keyword
 keywords: [material, upload, document, pdf, docx, teaching material, minio]
 ---

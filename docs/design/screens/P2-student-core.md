@@ -9,36 +9,66 @@
 ## 1. Branching Case Player (`/student/cases/:caseId/branching-play`)
 
 ### Purpose & Function
-The core Branching Study interaction loop: Context/Data → Decision Point → Select Option → Student's Own Reasoning per Attempt → Lecturer-authored Consequence → Next Node → Outcome (`FEATURE-BRANCHING-STUDY.md`).
+The Branching Study **Experience phase**: seamless, immersive decision-making journey. Student reads each situation, selects an option, and advances to the next situation with no blocking steps in between. The full consequence analysis and reasoning capture happen in the **REVIEW phase** (§1b below), not mid-flow.
 
 ### User & Context
-Student only. Requires the case to be `PUBLISHED` (`INV-01`) — non-published cases must 404, not show a locked/preview state (`FEATURE-CASE-REVIEW-AND-PUBLISHING.md §12`).
+Student only. Requires the case to be `PUBLISHED` (`INV-01`) — non-published cases must 404.
+Student accesses via a direct link provided by the Lecturer. There is no student browse page.
 
 ### Layout
-Full-width immersive reading layout (not a dashboard) — this is the "distraction-free decision interface" called for in `SITE.md §2`. Top: case title + a subtle progress indicator (not a percentage bar with false precision — a simple "Decision Point" step marker is enough, since branch length varies). Center: current node's `situation` text in a readable, capped-width column (`GLOBAL-DESIGN-SYSTEM.md §3` line-length rule). Below: Option Selector (`§6.5`). Once an option is picked: Reasoning Input (`§6.6`) appears inline, below the selected option — not a separate page/modal, to keep the decision and its justification visually connected.
+Full-width immersive reading layout (distraction-free decision interface). Top: case title + a subtle progress indicator (e.g. "Decision 2 of ?" — not a percentage bar, since branch length is variable and unknown). Center: current node's `situation` text in a readable, capped-width column (`GLOBAL-DESIGN-SYSTEM.md §3` line-length rule). Below: Option Selector (`§6.5`).
+
+**Important**: After selecting an option, the player advances immediately to the next situation. There is NO reasoning form, NO consequence card, NO delay between Decision Points during the Experience phase.
 
 ### Data
-`situation` (current node), list of `CaseOption` (`text`), and — once reasoning is submitted — `consequence` for the chosen option (`GLOBAL-DESIGN-SYSTEM.md §6.7`).
+`situation` (current node), list of `CaseOption` (`option_text` only — **consequence text is NOT displayed during Experience phase**).
 
-### Flow / States (sequential, matches `FEATURE-BRANCHING-STUDY.md §5` exactly)
-1. **Reading**: situation + options shown, no reasoning field yet.
-2. **Option selected, reasoning required**: Reasoning Input appears; "Continue" is disabled until reasoning text is non-empty (`FR-BS-03`) — the consequence must not be revealed before reasoning is submitted.
-3. **Consequence revealed**: after submit, the Consequence Display renders below the reasoning; an optional prompt to open Challenge Support appears here (see §3 below) — clearly optional, never a forced interstitial.
-4. **Advance**: "Continue to Next Situation" button moves to `option.next_node_id`; repeats from step 1.
-5. **Terminal reached** (`is_terminal = TRUE`): a distinct Outcome state renders (not just another situation card) — clearly marks this as the end of the path, records `outcome_node_id`, and offers "Reflect on this attempt" → routes to the Reflection screen (§2 below).
+### Flow / States (Experience Phase — matches `FEATURE-BRANCHING-STUDY.md §5 Phase 1`)
+1. **Reading**: situation text + option selector shown.
+2. **Option selected**: the selected option is briefly highlighted, then the player transitions seamlessly to the next situation (next node). No reasoning form. No consequence reveal.
+3. **Advance**: `current_node_id` moves to `option.next_node_id`. Steps 1–2 repeat at each Decision Point.
+4. **Terminal reached** (`is_terminal = TRUE`): a distinct Outcome state renders — clearly marks this as the end of the journey, records `outcome_node_id = TRUE`, marks `is_completed = TRUE`. The student is then automatically transitioned to the REVIEW phase (`§1b` below).
 
 ### Retry
-After reflection (or from a post-outcome summary state), a "Retry Case" action starts a new attempt (`attempt_number + 1`, `FR-BS-09`). Retrying must be visually framed as exploring an alternative path, not as "fixing a wrong answer" — there is no wrong answer (Proposal V1.1 guardrail).
+After Reflection (§2), a "Try Another Path" action creates a new attempt (`attempt_number + 1`, `FR-BS-10`). Retrying must be visually framed as exploring an alternative path, not as "fixing a wrong answer" — there is no wrong answer (Proposal V1.1 guardrail).
 
 ### Boundary
-No grading/scoring UI anywhere on this screen. No numeric or letter feedback on the option chosen. No comparison to other students' choices inline (that's a lecturer-only aggregate view — `FEATURE-BASIC-STATISTICS.md`, P3). Consequences are always pre-existing lecturer-authored/approved data returned by the API — never generated live by AI during play (`FEATURE-DECISION-TREE.md §13`: tree is static and pre-approved).
+No reasoning form between Decision Points. No consequence card between Decision Points. No grading/scoring UI. Consequences are pre-existing lecturer-authored/approved data — never generated live by AI during play.
+
+---
+
+## 1b. Branching REVIEW Phase (`/student/cases/:caseId/attempt/:attemptId/review`)
+
+### Purpose & Function
+Post-journey retrospective analysis. After completing the full journey (reaching a terminal node), the student enters the REVIEW phase to look back at every decision they made, understand how each choice shaped the outcome, and write reasoning retrospectively.
+
+### Layout
+Full-page sequential timeline view. Each decision point in the journey is shown in order:
+- **Situation** text (the scenario they saw)
+- **Option chosen** (highlighted; alternatives shown muted)
+- **Consequence** of that choice (revealed here for the first time, since it was withheld during Experience)
+- **Optional reasoning textarea**: "Why did you choose this? What would you do differently?" — encouraged for pivotal decisions, not required for every single node
+- Key moments are surfaced by the system: "This decision significantly affected your outcome."
+
+### Data
+Full attempt journey: all `student_reasoning` records for the attempt (with `selected_option_id`), all `case_nodes` and `case_options` visited (including `consequence` texts now revealed), `outcome_node_id`.
+
+### Flow
+1. Student sees full journey replay, top to bottom.
+2. Student writes reasoning for key decision points (optional per node, encouraged for pivotal ones).
+3. Frontend sends `PATCH /api/v1/branching-attempts/{attemptId}/reasoning/{nodeId}` for each filled-in reasoning.
+4. Student clicks "Complete Review" → navigates to Reflection (§2).
+5. Optional: Challenge Support may be accessed from here if student wants to probe their reasoning further (§3).
+
+### Boundary
+Consequences revealed here, never mid-flow. No grading/scoring. No "correct path" framing.
 
 ---
 
 ## 2. Reflection (`/student/cases/:caseId/attempt/:attemptId/reflect`)
 
 ### Purpose & Function
-Post-outcome meta-cognitive reflection prompt (`FEATURE-REFLECTION.md`).
+Post-journey meta-cognitive reflection (`FEATURE-REFLECTION.md`). Accessed after the student completes the REVIEW phase.
 
 ### Layout
 Focused single-column page (not a modal — reflection deserves a full, unhurried writing space). Shows a compact summary of the completed path (optional — e.g. final outcome title) above the Reflection Input (`GLOBAL-DESIGN-SYSTEM.md §6.8`).

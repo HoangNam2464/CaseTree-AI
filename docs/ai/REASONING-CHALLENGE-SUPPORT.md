@@ -1,4 +1,4 @@
-# CaseTree AI — AI Reasoning & Challenge Support
+﻿# Edu-Branch-AI — AI Reasoning & Challenge Support
 
 **Status**: Scaffolded | **Source of Truth**: Proposal V1.1 (lines 40, 63, 78, 86)
 

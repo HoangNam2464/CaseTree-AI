@@ -1,4 +1,4 @@
-# CaseTree AI — System Architecture
+﻿# Edu-Branch-AI — System Architecture
 
 **Status**: Scaffolded
 

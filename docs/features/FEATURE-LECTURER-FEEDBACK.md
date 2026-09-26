@@ -1,9 +1,9 @@
-# Feature: Lecturer Review & Feedback
+﻿# Feature: Lecturer Review & Feedback
 
 ## 1. Overview & Source of Truth
 
 - **Source of Truth**: Proposal V1.1 (C1SE_65-CaseTree-AI-Proposal_V1_1.docx, lines 37, 61, 77, 85).
-- **Core Purpose**: CaseTree AI maintains lecturer agency as a central pillar. The platform provides a dedicated feedback channel where lecturers evaluate student submissions, offer contextual comments, and guide student learning.
+- **Core Purpose**: Edu-Branch-AI maintains lecturer agency as a central pillar. The platform provides a dedicated feedback channel where lecturers evaluate student submissions, offer contextual comments, and guide student learning.
 - **Support Across Both Modes**:
   1. **Branching Study**: Lecturer can review a student's completed path, selected options, reasoning per Decision Point, outcome, and reflection on a specific attempt (`branching_attempts`), providing targeted feedback.
   2. **Review Study**: Lecturer reviews the student's proposed solution and reasoning (`review_study_submissions`), providing substantive qualitative feedback before the student reflects.

@@ -1,4 +1,4 @@
-# P0 — Global Foundation
+﻿# P0 — Global Foundation
 
 > **Priority**: NOW. Nothing else can be built consistently without this.
 > **Visual system**: `docs/design/GLOBAL-DESIGN-SYSTEM.md` (all tokens/components referenced below live there).
@@ -17,7 +17,7 @@ Provides the persistent frame (sidebar/nav + content area) that every authentica
 - **When used**: On every authenticated screen; this is the persistent frame, not a standalone route.
 
 ### Information Hierarchy & Layout
-- Sidebar (desktop, 240px fixed) or collapsible drawer (mobile): product wordmark (text only — "CaseTree AI", no logo mark specified), role indicator (small text badge under the wordmark: "Lecturer" / "Student"), primary nav items, user menu (name, sign-out) pinned to the bottom.
+- Sidebar (desktop, 240px fixed) or collapsible drawer (mobile): product wordmark (text only — "Edu-Branch-AI", no logo mark specified), role indicator (small text badge under the wordmark: "Lecturer" / "Student"), primary nav items, user menu (name, sign-out) pinned to the bottom.
 - Header bar within content area: page title (`text-display`), optional breadcrumb trail for nested routes (Course → Materials, Course → Cases → Review).
 - Content area: `bg-canvas`, centered max-width container on wide screens (avoid full-bleed tables/cards stretching beyond a readable measure on ultra-wide monitors).
 

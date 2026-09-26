@@ -1,4 +1,4 @@
-# CaseTree AI — Service Boundaries & Contracts
+﻿# Edu-Branch-AI — Service Boundaries & Contracts
 
 > **Document Status**: Authoritative Architecture Specification  
 > **Target Audience**: Backend Engineers, AI Engineers, Frontend Engineers  

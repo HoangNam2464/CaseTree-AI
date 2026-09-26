@@ -1,10 +1,10 @@
 <p align="center">
-  <h1 align="center">🎓 CaseTree AI</h1>
+  <h1 align="center">🌿 Edu-Branch-AI</h1>
   <p align="center">
-    <strong>AI Platform for Interactive Branching Case Studies and Open Review in University Teaching</strong>
+    <strong>AI Platform for Experiential Case-Based Learning in University Teaching</strong>
   </p>
   <p align="center">
-    AI Case Generator · Branching Decision Tree Simulator · Debate Assistant · Lecturer Review Workflow
+    AI-Assisted Case Authoring · Branching Study (Experiential Decision-Making) · Review Study (Open Analysis) · Lecturer-Controlled Publishing
   </p>
 </p>
 
@@ -37,20 +37,25 @@
 
 ## 📖 Overview
 
-**CaseTree AI** is a university-focused AI platform that empowers lecturers to generate and facilitate interactive case studies directly from their syllabus materials (PDF / DOCX). It supports two distinct learning modes defined in Proposal V1.1:
+**Edu-Branch-AI** is a university-focused AI platform that helps lecturers design and facilitate experiential case-based learning directly from their teaching materials (PDF / DOCX). It supports two distinct learning modes:
 
-1. **Branching Study**: Students navigate interactive decision-tree dilemma scenarios, articulate written reasoning per attempt, view lecturer-authored consequences, reach an outcome, reflect, and optionally retry the scenario to explore alternative paths.
-2. **Review Study**: Students receive real-world case context, data, and an open problem, analyze it, propose a solution with reasoning, receive qualitative lecturer review and feedback, and engage in reflection.
+1. **Branching Study** — Students experience a realistic situation, make a series of consecutive decisions, and complete the full journey before entering a structured REVIEW phase. In Review, students look back at every decision they made, understand how each choice shaped the outcome, write their reasoning in retrospect, and reflect. They may then retry with a new attempt to explore a different path.
 
-The platform includes embedded **AI Reasoning & Challenge Support** (1–2 rounds maximum, counter-questions only, strictly no grading or scoring). Every case follows the mandatory Human-in-the-Loop gate: `DRAFT → REVIEWED → APPROVED → PUBLISHED`.
+2. **Review Study** — Students receive real-world case context and data, analyze the situation, propose a solution with reasoning, receive qualitative lecturer feedback, and complete a reflection.
+
+### Why Edu-Branch-AI, not just reading a textbook or doing a quiz?
+
+Because students see the direct consequences of **their own** decisions — not generic outcomes from a textbook — and they revisit every choice in the REVIEW phase to understand *why* it led to that result. This turns passive knowledge into active decision-making experience.
+
+The platform includes embedded **AI Reasoning & Challenge Support** (1–2 rounds maximum, Socratic counter-questions only, strictly no grading). Every case follows the mandatory Human-in-the-Loop gate: `DRAFT → REVIEWED → APPROVED → PUBLISHED`.
 
 ---
 
 ## ⚠️ Current Status: STRUCTURAL SKELETON ONLY
 
 > **IMPORTANT NOTICE FOR CONTRIBUTORS AND AUDITORS:**
-> 
-> The CaseTree AI repository is currently in the **STRUCTURAL SKELETON ONLY** phase.
+>
+> The Edu-Branch-AI repository is currently in the **STRUCTURAL SKELETON ONLY** phase.
 > - ✅ Project structure, module boundaries, routing layouts, and configurations are established.
 > - ✅ Database schemas (V1 Base + V2 New Flow Migration), indexes, vector extensions, and enums are defined.
 > - ✅ Pydantic schemas, TypeScript interfaces, DTO declarations, and health check endpoints (`/health`) are active.
@@ -70,29 +75,56 @@ Lecturer inspects, edits, and refines case (DRAFT → REVIEWED)
             ↓
 Lecturer approves the case (APPROVED)
             ↓
-Lecturer publishes the case (PUBLISHED — accessible to students)
+Lecturer publishes the case and shares the link (PUBLISHED — accessible to students)
 ```
 
 ### Branching Study Flow
+
+#### Phase 1 — Experience (No interruptions)
 ```
-Context & Data → Decision Point → Select Option → Student Reasoning per Attempt
+Lecturer shares link → Student opens case
             ↓
-Lecturer-authored Consequence revealed
+Initial Situation + Context / Data
             ↓
-[Optional: AI Challenge Support, max 2 rounds, counter-questions only]
+Decision Point → Student selects an option
             ↓
-Next Node → ... → Terminal Outcome reached
+Next Situation (seamless transition — no consequence card mid-flow)
             ↓
-Student Reflection submitted → [Optional: Retry creates New Attempt]
+Decision Point → Student selects next option
+            ↓
+... (as many decision points as the case requires — no fixed count)
+            ↓
+Terminal Node reached → Journey complete
+```
+
+#### Phase 2 — REVIEW (After journey is complete)
+```
+Student sees full journey replay:
+  - Every decision point traversed
+  - The option chosen at each point
+  - The path taken and branches not taken
+  - How each choice shaped the outcome
+  - Which decisions were pivotal
+            ↓
+Student writes reasoning for key decisions (retrospective, not per-click)
+```
+
+#### Phase 3 — Reflection & Retry
+```
+Student submits overall Reflection
+            ↓
+[Optional: AI Reasoning / Challenge Support — max 2 rounds, counter-questions only]
+            ↓
+[Optional: Retry → New Attempt → Explore a different path]
 ```
 
 ### Review Study Flow
 ```
 Context & Data → Problem / Question Statement
             ↓
-Student Analysis (optional) → Proposed Solution & Reasoning submitted
+Student Analysis → Proposed Solution & Reasoning submitted
             ↓
-[Optional: AI Challenge Support, max 2 rounds, counter-questions only]
+[Optional: AI Reasoning / Challenge Support, max 2 rounds, counter-questions only]
             ↓
 Submission Status: SUBMITTED
             ↓
@@ -115,11 +147,11 @@ The system strictly enforces a three-tier architecture:
 ```mermaid
 flowchart TD
     subgraph Client ["🖥️ Client Tier (Browser)"]
-        FE["Frontend (React 19 + TypeScript)\n• TailwindCSS v4\n• ReactFlow (Decision Tree Visualization)\n• Lecturer Review Canvas & Student Players (Branching & Review)"]
+        FE["Frontend (React 19 + TypeScript)\n• TailwindCSS v4\n• ReactFlow (Decision Tree Visualization in Case Review)\n• Lecturer Case Authoring Canvas & Student Learning Players"]
     end
 
     subgraph Gateway ["🛡️ Backend Gateway (Node.js 20 LTS)"]
-        BG["NestJS 10 API Gateway\n• Auth & JWT (RBAC: Lecturer / Student)\n• Courses & Teaching Material Metadata\n• Case Lifecycle Management (Two Learning Modes)\n• Branching Attempts & Student Reasoning\n• Review Submissions, Reflection & Lecturer Feedback\n• Challenge Support Sessions (Max 2 Rounds)\n• Basic Statistics & REST API Gateway"]
+        BG["NestJS 10 API Gateway\n• Auth & JWT (RBAC: Lecturer / Student)\n• Courses & Teaching Material Metadata\n• Case Lifecycle Management (Two Learning Modes)\n• Branching Attempts & Post-Journey Reasoning\n• Review Submissions, Reflection & Lecturer Feedback\n• Challenge Support Sessions (Max 2 Rounds)\n• Basic Statistics & REST API Gateway"]
     end
 
     subgraph Storage ["💾 Persistence, Cache & Storage"]
@@ -150,8 +182,9 @@ flowchart TD
 1. **Frontend → Backend Gateway Only**: The React client communicates exclusively with the NestJS gateway. The AI Service is completely hidden from the browser.
 2. **AI Service is Internal**: FastAPI requires the `X-Internal-API-Key` header and does not expose Swagger documentation or endpoints to the public internet.
 3. **Untrusted Data Boundary**: Teaching materials and RAG chunks are treated as untrusted data. Content passed to the LLM must be wrapped in `<sources>...</sources>` to prevent prompt injection.
-4. **Mandatory Human-in-the-Loop**: Cases automatically generate in `DRAFT` status. Students can never view or simulate unapproved cases (`PUBLISHED` status enforced at the query level).
+4. **Mandatory Human-in-the-Loop**: Cases automatically generate in `DRAFT` status. Students can never view or access unapproved cases (`PUBLISHED` status enforced at the query level).
 5. **AI Challenge Support Does Not Grade**: AI Challenge Support provides Socratic counter-questions capped at 2 rounds. It does not grade, assign scores, or evaluate pass/fail criteria.
+6. **No Fixed Decision Count**: Each case has a unique structure determined by the teaching material and learning objective. The branching depth and breadth are authored by the lecturer, not prescribed by the system.
 
 ---
 
@@ -161,7 +194,7 @@ flowchart TD
 | :--- | :--- | :--- |
 | **Frontend** | React 19, TypeScript 5.x, Vite | Client SPA |
 | **Styling** | TailwindCSS v4 | Utility-first clean typography & layout |
-| **Tree Visualizer** | ReactFlow 11.x | Interactive node-based decision tree canvas |
+| **Tree Visualizer** | ReactFlow 11.x | Decision tree canvas in Lecturer's Case Review editor |
 | **State Management**| Zustand | Lightweight client stores (Auth, UI state) |
 | **HTTP Client** | Axios | Centralized client with JWT auth interceptors |
 | **Backend Gateway** | Node.js 20 LTS, NestJS 10, TypeScript | REST API Gateway, Auth, RBAC, Business State |
@@ -178,7 +211,7 @@ flowchart TD
 ## 📁 Repository Structure
 
 ```
-CaseTree-AI/
+Edu-Branch-AI/
 ├── backend/                         ← NestJS 10 Backend Gateway (Node.js 20)
 │   ├── src/
 │   │   ├── app.module.ts            ← Main application module
@@ -191,7 +224,7 @@ CaseTree-AI/
 │   │       ├── material/            ← Teaching material files
 │   │       ├── case/                ← Case lifecycle & decision tree graphs
 │   │       ├── branching-attempt/   ← Branching Study student attempts & navigation
-│   │       ├── reasoning/           ← Student reasoning per attempt
+│   │       ├── reasoning/           ← Student reasoning (captured in REVIEW phase)
 │   │       ├── challenge-support/   ← AI Reasoning/Challenge Support session state
 │   │       ├── review-study/        ← Review Study submissions & workflow
 │   │       ├── lecturer-feedback/   ← Lecturer Review/Feedback on student work
@@ -207,7 +240,7 @@ CaseTree-AI/
 │   │   ├── providers/               ← Provider abstraction (Gemini / OpenAI)
 │   │   ├── ingestion/               ← Document parser (PDF/DOCX) & chunker
 │   │   ├── retrieval/               ← pgvector similarity search & LangChain
-│   │   ├── generation/              ← Structured decision tree generation schemas
+│   │   ├── generation/              ← Structured case generation schemas
 │   │   ├── challenge_support/       ← AI challenge support schemas & 2-round cap
 │   │   └── evaluation/              ← Research evaluation helper stubs
 │   ├── requirements.txt
@@ -319,7 +352,7 @@ npm run dev
 
 ## 🔒 Git Safety & Secret Protection
 
-CaseTree AI enforces strict repository rules to prevent the accidental leakage of secrets, keys, and environment files.
+Edu-Branch-AI enforces strict repository rules to prevent the accidental leakage of secrets, keys, and environment files.
 
 ### 1. Pre-commit Hook Safeguard
 A zero-dependency pre-commit hook is provided in `.githooks/pre-commit`. It scans staged files and rejects commits containing:

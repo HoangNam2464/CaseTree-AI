@@ -1,13 +1,13 @@
-﻿# Contributing to CaseTree AI
+# Contributing to Edu-Branch-AI
 
-> Applies to all development on **CaseTree AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching**.
+> Applies to all development on **Edu-Branch-AI — AI Platform for Experiential Case-Based Learning in University Teaching**.
 > All code changes must comply with these standards before being integrated into `develop` or `main`.
 
 ---
 
-## 🌳 1. Git Branching Strategy
+## 🌿 1. Git Branching Strategy
 
-CaseTree AI uses **Git Feature Branch Workflow**. **Never** push code directly to `main` or `develop`.
+Edu-Branch-AI uses **Git Feature Branch Workflow**. **Never** push code directly to `main` or `develop`.
 
 ```
 feature/<name>  →  develop  →  main
@@ -28,10 +28,10 @@ feature/<name>  →  develop  →  main
 | Type | Pattern | Example |
 | :--- | :--- | :--- |
 | Feature | `feature/<module>-<short-name>` | `feature/rag-case-generator` |
-| Bug fix | `fix/<module>-<description>` | `fix/simulation-node-traversal` |
+| Bug fix | `fix/<module>-<description>` | `fix/branching-node-traversal` |
 | Hotfix | `hotfix/<description>` | `hotfix/jwt-expiry` |
-| Refactor | `refactor/<module>` | `refactor/debate-assistant-api` |
-| Docs | `docs/<topic>` | `docs/decision-tree-model` |
+| Refactor | `refactor/<module>` | `refactor/challenge-support-api` |
+| Docs | `docs/<topic>` | `docs/branching-study-review-phase` |
 
 ---
 
@@ -52,7 +52,7 @@ Every commit message must follow:
 | `docs` | Documentation update | `docs: update RAG pipeline architecture diagram` |
 | `style` | Code formatting (no logic change) | `style(frontend): apply prettier formatting` |
 | `refactor` | Code restructuring | `refactor(ai-service): optimize pgvector retrieval query` |
-| `test` | Add or fix tests | `test(backend): add simulation session integration test` |
+| `test` | Add or fix tests | `test(backend): add branching attempt integration test` |
 | `chore` | Library updates, config | `chore: upgrade nestjs to 10.x` |
 | `ci` | CI/CD workflow changes | `ci: add ai-service pytest job to github actions` |
 
@@ -63,8 +63,8 @@ Every commit message must follow:
 ### A. Frontend — React 19 + TypeScript + Vite
 
 **Naming conventions:**
-- Components & Component files: `PascalCase` → `CaseSimulator.tsx`, `DebatePanel.tsx`
-- Custom hooks: `camelCase` starting with `use` → `useSimulation.ts`, `useDebate.ts`
+- Components & Component files: `PascalCase` → `BranchingCasePlayerPage.tsx`, `BranchingReviewPage.tsx`
+- Custom hooks: `camelCase` starting with `use` → `useBranchingAttempt.ts`, `useReviewJourney.ts`
 - Utils / Services / Stores: `camelCase` → `apiClient.ts`, `authStore.ts`
 
 **Component architecture:**
@@ -84,15 +84,15 @@ Controller → Service (Interface + Impl) → Repository → Entity / DTO
 **Rules:**
 - Mandatory use of **DTO** (Data Transfer Objects) with `class-validator` when receiving and returning API data
 - **Never** expose raw database entities directly in REST responses
-- Module by feature/domain: `auth/`, `user/`, `course/`, `material/`, `case/`, `simulation/`, `argument/`, `debate/`, `statistics/`, `evaluation/`, `notification/`, `common/`
+- Module by feature/domain: `auth/`, `user/`, `course/`, `material/`, `case/`, `branching-attempt/`, `reasoning/`, `challenge-support/`, `review-study/`, `lecturer-feedback/`, `statistics/`, `evaluation/`, `notification/`, `common/`
 - Use NestJS Guards for authentication/authorization enforcement
 - Use NestJS Interceptors for response transformation and logging
 
 ### C. AI Service — Python 3.12 + FastAPI
 
 **Rules:**
-- Package by domain: `core/`, `providers/`, `ingestion/`, `retrieval/`, `generation/`, `debate/`, `evaluation/`
-- **Always** use provider abstraction (`providers/base.py`) — never hardcode vendor-specific SDK logic in route handlers
+- Package by domain: `core/`, `providers/`, `ingestion/`, `retrieval/`, `generation/`, `challenge_support/`, `evaluation/`
+- **Always** use provider abstraction (`providers/factory.py`) — never hardcode vendor-specific SDK logic in route handlers
 - Pydantic v2 models for all: request schemas, response schemas, structured AI outputs
 - Retrieved document content is **untrusted data** — always wrap in `<sources>...</sources>` boundary before passing to LLM
 
@@ -128,7 +128,9 @@ Controller → Service (Interface + Impl) → Repository → Entity / DTO
 | AI Service is internal | The AI Service is not exposed to the public internet |
 | Untrusted document content | Retrieved chunks MUST be wrapped in `<sources>...</sources>` |
 | Human-in-the-loop mandatory | Cases start as DRAFT; lecturer must APPROVE before publication |
-| AI does not grade | The Debate Assistant generates counter-questions only; never grades or decides pass/fail |
+| AI does not grade | The AI Reasoning / Challenge Support generates Socratic counter-questions only; never grades, scores, or decides pass/fail |
+| AI does not alter approved cases | AI must never change branch structures, consequences, or outcomes after Lecturer approval |
+| Experience-first in Branching Study | No reasoning form, no consequence card, no blocking step between consecutive Decision Points during the Experience phase |
 | Own your domain | Never leak Backend Gateway business logic into the AI Service, and vice versa |
 
 ---

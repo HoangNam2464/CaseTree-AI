@@ -1,4 +1,4 @@
-# Feature: Deadline & Case Notification System
+﻿# Feature: Deadline & Case Notification System
 
 > **Authoritative Traceability**: Item 27 (Proposal Section 4 p. 7)  
 > **Target Package / Module**: Backend `notification/` (Future Extension Boundary)  
@@ -30,7 +30,7 @@ Provides targeted educational reminders to university students to complete assig
 - **FR-NOTIF-01**: The system shall allow a lecturer to set an optional deadline (`due_date`) when publishing or assigning a case study to a course cohort.
 - **FR-NOTIF-02**: The system shall generate reminder notifications for enrolled students who have not completed the assigned case study prior to the deadline.
 - **FR-NOTIF-03**: The system architecture shall support Proposal-level delivery options:
-  - **Option A (In-App)**: Notifications visible when the student logs into the CaseTree AI web application.
+  - **Option A (In-App)**: Notifications visible when the student logs into the Edu-Branch-AI web application.
   - **Option B (Email)**: Direct notification sent to the student's registered university email address.
   - **Option C (Hybrid)**: In-app notification with an optional email reminder closer to the deadline.
 - **FR-NOTIF-04**: The system shall allow students to dismiss or mark notifications as read.

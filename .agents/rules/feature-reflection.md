@@ -1,5 +1,5 @@
----
-description: Rules for Student Reflection in CaseTree AI.
+﻿---
+description: Rules for Student Reflection in Edu-Branch-AI.
 trigger: keyword
 keywords: [reflection, student reflection, post-outcome, reflection text, reflect]
 ---

@@ -1,5 +1,5 @@
 ﻿---
-description: Rules for the notification extension point in CaseTree AI.
+description: Rules for the notification extension point in Edu-Branch-AI.
 trigger: keyword
 keywords: [notification, email, reminder, deadline, assignment]
 ---

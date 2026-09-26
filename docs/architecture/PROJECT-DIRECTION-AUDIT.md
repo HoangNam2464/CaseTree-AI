@@ -1,7 +1,7 @@
-# CaseTree AI — Project Direction Audit
+﻿# Edu-Branch-AI — Project Direction Audit
 
 > **Audit Type**: Read-Only Source-of-Truth & Architectural Direction Audit  
-> **Target System**: CaseTree AI (`https://github.com/HoangNam2464/CaseTree-AI`)  
+> **Target System**: Edu-Branch-AI (`https://github.com/HoangNam2464/CaseTree-AI`)  
 > **Primary Benchmark (Priority 1)**: `C1SE_65-CaseTree-AI-Proposal_V1.0.docx`  
 > **Project Owner Decisions (Priority 2)**: 3-tier boundary (Frontend → Backend → AI Service), PostgreSQL+pgvector, Redis, MinIO, separate internal AI service, skeleton/docs only.  
 > **Engineering Reference (Priority 4)**: `ai-teacher-copilot` (`D:\DU_AN_2026\Python\ai-teacher-copilot`)  
@@ -27,7 +27,7 @@
 
 Extracted directly from `C1SE_65-CaseTree-AI-Proposal_V1.0.docx`:
 
-- **Full Project Identity**: *"CaseTree AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching"* (Acronym: EBA, Lead: International School, Duy Tan University, Capstone 1, 2026).
+- **Full Project Identity**: *"Edu-Branch-AI — AI Platform for Interactive Branching Case Studies and Open Review in University Teaching"* (Acronym: EBA, Lead: International School, Duy Tan University, Capstone 1, 2026).
 - **Target Audience & Actors**:
   - Higher education / university teaching (Business, Law, Medicine, IT, Engineering).
   - Primary Actors: **Lecturer** and **Student**.
@@ -241,7 +241,7 @@ The current repository reflects the state after bootstrap scaffolding and docume
 - **Bloom's Taxonomy Categorization**: Specific to K-12 test question generation.
 - **Word/DOCX Export Engines**: Specific to lesson plan exporting.
 
-### 9.3 Reference-Specific Business Concepts Leaked into CaseTree AI
+### 9.3 Reference-Specific Business Concepts Leaked into Edu-Branch-AI
 - **Finding**: Zero business logic leaks found in source code or feature documentation.
 - **Minor Artifact**: In `frontend/src/layouts/LecturerLayout.tsx` line 3, a comment reads `/** Lecturer workspace layout — navigation sidebar + content area. */`. The term "workspace" was inherited colloquially from `ai-teacher-copilot`, though the layout itself is just a standard navigation shell.
 
@@ -345,7 +345,7 @@ Verified across the entire codebase:
 ## 17. Final Verdict
 
 ### **YELLOW**
-**The project direction is generally well-aligned with the CaseTree AI Proposal, but contains technical inheritance debt and rule contradictions that must be formally resolved before feature development begins.**
+**The project direction is generally well-aligned with the Edu-Branch-AI Proposal, but contains technical inheritance debt and rule contradictions that must be formally resolved before feature development begins.**
 
 - **Why Not GREEN?** The hardcoding of Spring Boot 3 across all `.agents/rules/` contradicts both the Proposal's primary backend options (Node.js/FastAPI) and the Project Owner's explicit directive to treat backend frameworks as candidate options. Additionally, minor frontend dependency version mismatches exist.
 - **Why Not RED?** The repository has **zero scope drift** into K-12 features, strictly **zero business implementation**, flawless service boundary isolation, valid Flyway DDL syntax, and 100% valid documentation link integrity. The core pedagogical value stream (Material → RAG → Case Tree → Review → Simulator → Debate → Stats) is perfectly captured.
