@@ -1,5 +1,5 @@
--- ==============================================================================
--- CaseTree AI — Initial Schema Migration V1
+﻿-- ==============================================================================
+-- Edu-Branch-AI — Initial Schema Migration V1
 -- ==============================================================================
 -- NOTE: For Proposal V1.1 flow (Branching Study, Review Study, Attempt model,
 -- Student Reasoning, AI Challenge Support, Lecturer Feedback), see V2__new_flow_schema.sql.

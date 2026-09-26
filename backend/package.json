@@ -1,7 +1,7 @@
 {
-  "name": "CaseTree-backend",
+  "name": "edu-branch-backend",
   "version": "1.0.0",
-  "description": "CaseTree AI — Backend Gateway (NestJS + TypeScript)",
+  "description": "Edu-Branch-AI — Backend Gateway (NestJS + TypeScript)",
   "author": "C1SE.65 Capstone Team",
   "private": true,
   "license": "UNLICENSED",

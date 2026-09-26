@@ -1,5 +1,5 @@
 ﻿# ==============================================================================
-# CaseTree AI — Local Development Infrastructure
+# Edu-Branch-AI — Local Development Infrastructure
 # ==============================================================================
 # Starts infrastructure services only:
 #   - PostgreSQL 16 + pgvector   (business data + vector embeddings)

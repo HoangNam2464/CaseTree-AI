@@ -1,4 +1,4 @@
-﻿import { NestFactory } from "@nestjs/core";
+import { NestFactory } from "@nestjs/core";
 import { ValidationPipe } from "@nestjs/common";
 import { AppModule } from "./app.module";
 
@@ -29,7 +29,7 @@ async function bootstrap() {
 
   const port = process.env.SERVER_PORT || 8080;
   await app.listen(port);
-  console.log(`CaseTree AI Backend Gateway listening on port ${port} (prefix: /api/v1)`);
+  console.log(`Edu-Branch-AI Backend Gateway listening on port ${port} (prefix: /api/v1)`);
 }
 
 bootstrap();

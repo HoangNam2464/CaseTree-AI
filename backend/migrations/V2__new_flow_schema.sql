@@ -1,5 +1,5 @@
--- ==============================================================================
--- CaseTree AI — V2 New Flow Schema Migration
+﻿-- ==============================================================================
+-- Edu-Branch-AI — V2 New Flow Schema Migration
 -- Source of Truth: Proposal V1.1 (C1SE_65-CaseTree-AI-Proposal_V1_1.docx)
 -- All decisions confirmed: 2026-09-22
 -- ==============================================================================
