@@ -1,5 +1,5 @@
-﻿/**
- * CaseTree AI — Authentication State Store (Zustand)
+/**
+ * Edu-Branch-AI � Authentication State Store (Zustand)
  */
 
 import { create } from "zustand";

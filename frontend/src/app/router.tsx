@@ -1,5 +1,5 @@
 /**
- * CaseTree AI — Application Router
+ * Edu-Branch-AI — Application Router
  * Source of Truth: Proposal V1.1 & Final Migration Plan Rev 2
  */
 

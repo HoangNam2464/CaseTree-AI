@@ -1,5 +1,5 @@
 /**
- * CaseTree AI — Centralized Axios API Client
+ * Edu-Branch-AI — Centralized Axios API Client
  *
  * RULE: All API calls go through this client — never call FastAPI directly.
  * RULE: Never store secrets in frontend environment variables.

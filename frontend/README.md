@@ -1,6 +1,6 @@
-﻿# CaseTree AI — Frontend
+﻿# Edu-Branch-AI — Frontend
 
-React 19 + Vite + TypeScript + TailwindCSS v4 UI for the CaseTree AI platform.
+React 19 + Vite + TypeScript + TailwindCSS v4 UI for the Edu-Branch-AI platform.
 
 ## Responsibilities
 
