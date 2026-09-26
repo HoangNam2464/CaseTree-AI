@@ -1,5 +1,5 @@
 """
-Edu-Branch-AI — FastAPI Internal Service Security
+Edu-Branch-AI â€” FastAPI Internal Service Security
 
 Validates the internal API key used for Backend Gateway ? Internal AI Service communication.
 This service is NOT exposed to the internet.

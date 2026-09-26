@@ -1,10 +1,10 @@
 """
-Edu-Branch-AI — Document Chunker.
+Edu-Branch-AI â€” Document Chunker.
 
 Splits parsed document text into overlapping chunks suitable for embedding.
 Uses LangChain text splitters.
 
-Status: Scaffolded — implementation in feature/document-processing
+Status: Scaffolded â€” implementation in feature/document-processing
 """
 
 from dataclasses import dataclass
@@ -43,6 +43,6 @@ class DocumentChunker:
         Returns:
             List of DocumentChunk objects
 
-        Status: TODO — implement in feature/document-processing
+        Status: TODO â€” implement in feature/document-processing
         """
         raise NotImplementedError("Document chunking not yet implemented")

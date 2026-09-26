@@ -20,11 +20,11 @@ UI must be: **simple, clean, functional, and consistent.**
 
 ## 3. Anti-Clutter Rules
 
-1. **No unnecessary decorative elements** — every UI element must serve a function
-2. **No excessive explanatory text** — labels must be concise and self-explanatory
-3. **No "AI-looking" clutter** — no typing animations, no AI avatar faces, no gimmicks
-4. **Consistent spacing** — follow TailwindCSS spacing scale (4, 8, 12, 16, 24, 32)
-5. **Consistent colors** — use the TailwindCSS color palette, avoid arbitrary hex values
+1. **No unnecessary decorative elements** â€” every UI element must serve a function
+2. **No excessive explanatory text** â€” labels must be concise and self-explanatory
+3. **No "AI-looking" clutter** â€” no typing animations, no AI avatar faces, no gimmicks
+4. **Consistent spacing** â€” follow TailwindCSS spacing scale (4, 8, 12, 16, 24, 32)
+5. **Consistent colors** â€” use the TailwindCSS color palette, avoid arbitrary hex values
 
 ## 4. Component Rules
 
@@ -38,19 +38,19 @@ UI must be: **simple, clean, functional, and consistent.**
 > Route list mirrors the live `frontend/src/app/router.tsx` (see `docs/design/GLOBAL-DESIGN-SYSTEM.md` and `docs/design/screens/` for full per-screen specs).
 
 ### Lecturer Pages
-- `/lecturer/courses` — course list and creation
-- `/lecturer/courses/:courseId/materials` — material upload and status
-- `/lecturer/courses/:courseId/cases` — case list, filter by learning mode, trigger AI case generation
-- `/lecturer/cases/:caseId/review` — decision tree review (ReactFlow) for Branching Study / form editor for Review Study — edit, approve, publish
-- `/lecturer/cases/:caseId/feedback` — review student Review Study submissions / Branching Study attempts, write lecturer feedback
-- `/lecturer/statistics` — simple participation and branch statistics
+- `/lecturer/courses` â€” course list and creation
+- `/lecturer/courses/:courseId/materials` â€” material upload and status
+- `/lecturer/courses/:courseId/cases` â€” case list, filter by learning mode, trigger AI case generation
+- `/lecturer/cases/:caseId/review` â€” decision tree review (ReactFlow) for Branching Study / form editor for Review Study â€” edit, approve, publish
+- `/lecturer/cases/:caseId/feedback` â€” review student Review Study submissions / Branching Study attempts, write lecturer feedback
+- `/lecturer/statistics` â€” simple participation and branch statistics
 
 ### Student Pages
-- `/student/cases/:caseId/branching-play` — Branching Case Player (situation ? options ? reasoning ? consequence ? next node ? outcome)
-- `/student/cases/:caseId/attempt/:attemptId/reflect` — post-outcome reflection
-- `/student/cases/:caseId/challenge/:sessionId` — AI Reasoning / Challenge Support (max 2 rounds; supports both Branching Study and Review Study targets)
-- `/student/cases/:caseId/review-study` — Review Study case analysis, proposed solution, and reasoning
-- `/student/cases/:caseId/review-study/:submissionId/feedback` — lecturer feedback + reflection for a Review Study submission
+- `/student/cases/:caseId/branching-play` â€” Branching Case Player (situation ? options ? reasoning ? consequence ? next node ? outcome)
+- `/student/cases/:caseId/attempt/:attemptId/reflect` â€” post-outcome reflection
+- `/student/cases/:caseId/challenge/:sessionId` â€” AI Reasoning / Challenge Support (max 2 rounds; supports both Branching Study and Review Study targets)
+- `/student/cases/:caseId/review-study` â€” Review Study case analysis, proposed solution, and reasoning
+- `/student/cases/:caseId/review-study/:submissionId/feedback` â€” lecturer feedback + reflection for a Review Study submission
 
 ## 6. Decision Tree Visualization
 

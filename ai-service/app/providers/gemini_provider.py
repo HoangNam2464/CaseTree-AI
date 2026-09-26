@@ -1,5 +1,5 @@
 """
-Edu-Branch-AI — Google Gemini LLM Provider Implementation.
+Edu-Branch-AI â€” Google Gemini LLM Provider Implementation.
 
 Implements BaseLLMProvider using the Google Generative AI SDK.
 Used when app.core.config.settings.ai_provider == "gemini".

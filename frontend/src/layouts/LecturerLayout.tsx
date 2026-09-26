@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-/** Lecturer layout — navigation sidebar + content area. */
+/** Lecturer layout â€” navigation sidebar + content area. */
 export function LecturerLayout() {
   return (
     <div className="min-h-screen bg-gray-50">

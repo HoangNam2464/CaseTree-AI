@@ -1,10 +1,10 @@
 """
-Edu-Branch-AI — Document Parser.
+Edu-Branch-AI â€” Document Parser.
 
 Parses PDF and DOCX teaching material files into plain text.
 Uses PyPDF for PDF parsing and python-docx for DOCX parsing.
 
-Status: Scaffolded — implementation in feature/document-processing
+Status: Scaffolded â€” implementation in feature/document-processing
 """
 
 from pathlib import Path
